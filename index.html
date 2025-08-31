@@ -1,406 +1,72 @@
+
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-    <meta name="description" content="نظام حسابات مطبعة الإسراء - تطبيق يعمل بدون إنترنت">
-    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;📊&lt;/text&gt;&lt;/svg&gt;">
-    <link rel="manifest" href="/manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطبعة الإسراء - آلة حاسبة متطورة</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<script src="main.js" defer></script>
 
-        body {
-            background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1e3a8a 100%);
-            color: white;
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 100%;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: linear-gradient(45deg, #1e3a8a, #3b82f6, #1e40af);
-            border-radius: 20px;
-            animation: glow 3s infinite alternate;
-        }
-
-        @keyframes glow {
-            0% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
-            100% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .section {
-            margin-bottom: 35px;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .section-title {
-            color: #3b82f6;
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            text-align: center;
-            font-weight: bold;
-            border-bottom: 3px solid #3b82f6;
-            padding-bottom: 10px;
-        }
-
-        .input-group {
-            margin-bottom: 25px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 12px;
-            color: #93c5fd;
-            font-weight: bold;
-            font-size: 1.3rem;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 18px;
-            border: 3px solid #3b82f6;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: #ff6b6b;
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(1.02);
-            box-shadow: 0 0 25px rgba(255, 107, 107, 0.3);
-        }
-
-        .formula-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin: 25px 0;
-        }
-
-        .formula-btn {
-            padding: 18px;
-            background: linear-gradient(45deg, #3b82f6, #1e40af);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 1.3rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        .formula-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
-            background: linear-gradient(45deg, #1e40af, #3b82f6);
-        }
-
-        .formula-btn:active {
-            transform: translateY(0);
-        }
-
-        .btn {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            border: none;
-            padding: 20px;
-            border-radius: 12px;
-            font-size: 1.4rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 20px;
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
-            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
-        }
-
-        .result {
-            margin-top: 30px;
-            padding: 25px;
-            background: rgba(59, 130, 246, 0.2);
-            border-radius: 15px;
-            border-left: 5px solid #3b82f6;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .result h3 {
-            color: #93c5fd;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-            text-align: center;
-        }
-
-        .result-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #ff6b6b;
-            text-align: center;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .formula-display {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            text-align: center;
-            color: #93c5fd;
-            font-size: 1.1rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 2.2rem;
-            }
-            
-            .formula-buttons {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .input-field, .btn, .formula-btn {
-                padding: 15px;
-                font-size: 1.1rem;
-            }
-        }
-    </style>
+    <title>Document</title>
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1>مطبعة الإسراء</h1>
+        <header>
+            <h2>Omar Osama </h2>
+            
+
+<div class="dropdown">
+  <button class="dropbtn">Projects</button>
+  <div class="dropdown-content">
+    <a href="https://omarosama50ga-boop.github.io/tests/" target="_blank"> Projects 1 </a>
+    <a href="https://omarosama50ga-boop.github.io/html-css-colorr/" target="_blank"> Projects 2 </a>
+    <a href="https://omarosama50ga-boop.github.io/doctor/" target="_blank"> Projects 3 </a>
+    <a href="https://omarosama50ga-boop.github.io/Indomiee/" target="_blank"> Projects 4 </a>
+
+  </div>
+</div>
+<a href="#">Home</a>
+            
+            <small></small>
         </header>
+        <div class="card">
+            <div>
+            <button class="button">Available in the field of programming</button>
+            <h1>Hi , I'm  <span> Omar  <br> Osama</span> </h1>
+            <h2>I am a front-end developer.</h2>
+          
+         <h3>I work in the field of programming as a professional <br>front-end developer with  clean  <br>and maintainable code. If you want to contact me<br> You can contact and follow us on the emails below.</h3> 
+        <div class="Phone">  <a id="button" href="tel:+201143708997"> 📞 اتصل بنا </a>  
+          <a id="button" href="tel:+201556527636"> 📞 اتصل بنا </a>
+        
+        </div>   
+  
+                    <div class="emails">
 
-        <!-- قسم المعادلات -->
-        <div class="section">
-            <h2 class="section-title">اختر المعادلة</h2>
+                 <a href="https://wa.me/201143708997" target="_blank" class="whatsapp"> <i class="fa-brands fa-whatsapp"></i> whatsapp </a>    
+                 <a href="https://www.facebook.com/share/1Ge7VJiDy3/" target="_blank"><i class="fa-brands fa-facebook"></i>  facebook</a>
+                 <a href="https://www.instagram.com/ossama.omar.9?igsh=ZGFoZDF3NzdkMjNh" target="_blank"><i class="fa-brands fa-instagram"></i> instagram</a> 
+                 <a href="https://www.tiktok.com/@omarosama982?_t=ZS-8z2qne60wEb&_r=1" target="_blank"><i class="fa-brands fa-tiktok"></i> tiktok </a> 
+
+                        </div>
+
+             
+            </div>
             
-            <div class="formula-buttons">
-                <button class="formula-btn" onclick="setFormula('11*2')">11*2</button>
-                <button class="formula-btn" onclick="setFormula('20*30')">20*30</button>
-                <button class="formula-btn" onclick="setFormula('11*4')">11*4</button>
-                <button class="formula-btn" onclick="setFormula('2*9')">2*9</button>
-                <button class="formula-btn" onclick="setFormula('9')">9</button>
-                <button class="formula-btn" onclick="setFormula('9*4')">9*4</button>
-                <button class="formula-btn" onclick="setFormula('2*8')">2*8</button>
-                <button class="formula-btn" onclick="setFormula('8')">8</button>
-                <button class="formula-btn" onclick="setFormula('4*8')">4*8</button>
-            </div>
+            
+        <div class="card-img"> <img src="img/1.jpeg" alt=""></div>
+          
 
-            <div class="input-group">
-                <label for="selectedFormula">المعادلة المختارة:</label>
-                <input type="text" id="selectedFormula" class="input-field" readonly placeholder="اختر معادلة من الأعلى">
-            </div>
 
-            <div class="input-group">
-                <label for="numberOfBooks">عدد الدفاتر:</label>
-                <input type="number" id="numberOfBooks" class="input-field" placeholder="أدخل عدد الدفاتر" value="0" step="0.01">
-            </div>
-
-            <button class="btn" onclick="calculateFormula()">احسب الناتج</button>
-
-            <div class="result">
-                <h3>نتيجة المعادلة:</h3>
-                <div class="result-value" id="formulaResult">0.00</div>
-                <div class="formula-display" id="formulaDisplay">لم يتم اختيار معادلة</div>
-            </div>
         </div>
 
-        <!-- قسم التكاليف الإضافية -->
-        <div class="section">
-            <h2 class="section-title">التكاليف الإضافية</h2>
-            
-            <div class="input-group">
-                <label for="numberOfPapers">عدد الورق:</label>
-                <input type="number" id="numberOfPapers" class="input-field" placeholder="أدخل عدد الورق" value="0" step="0.01">
-            </div>
 
-            <div class="input-group">
-                <label for="paperPrice">سعر الورق (للورقة):</label>
-                <input type="number" id="paperPrice" class="input-field" placeholder="أدخل سعر الورق" value="0" step="0.01">
-            </div>
 
-            <div class="input-group">
-                <label for="numberOfZinc">عدد الزنكات:</label>
-                <input type="number" id="numberOfZinc" class="input-field" placeholder="أدخل عدد الزنكات" value="0" step="0.01">
-            </div>
 
-            <div class="input-group">
-                <label for="numberOfPrints">عدد التراجات:</label>
-                <input type="number" id="numberOfPrints" class="input-field" placeholder="أدخل عدد التراجات" value="0" step="0.01">
-            </div>
-
-            <div class="input-group">
-                <label for="bindingPrice">سعر التجليد:</label>
-                <input type="number" id="bindingPrice" class="input-field" placeholder="أدخل سعر التجليد" value="0" step="0.01">
-            </div>
-
-            <button class="btn" onclick="calculateTotal()">احسب الإجمالي الكلي</button>
-
-            <div class="result">
-                <h3>الإجمالي الكلي:</h3>
-                <div class="result-value" id="totalResult">0.00 جنيه</div>
-            </div>
-        </div>
     </div>
 
-    <script>
-        let currentFormula = '';
-
-        function setFormula(formula) {
-            currentFormula = formula;
-            document.getElementById('selectedFormula').value = formula;
-            
-            // أنيميشن للزر المحدد
-            document.querySelectorAll('.formula-btn').forEach(btn => {
-                btn.style.background = 'linear-gradient(45deg, #3b82f6, #1e40af)';
-            });
-            event.target.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
-        }
-
-        function calculateFormula() {
-            if (!currentFormula) {
-                alert('برجاء اختيار معادلة أولاً');
-                return;
-            }
-
-            const numberOfBooks = parseFloat(document.getElementById('numberOfBooks').value) || 0;
-            let result = 0;
-            let formulaText = '';
-
-            if (currentFormula === '11*2') {
-                result = (50 / 2) / 11;
-                formulaText = '50 ÷ 2 ÷ 11';
-            } else if (currentFormula === '20*30') {
-                result = 50 / 11;
-                formulaText = '50 ÷ 11';
-            } else if (currentFormula === '11*4') {
-                result = (50 / 4) / 11;
-                formulaText = '50 ÷ 4 ÷ 11';
-            } else if (currentFormula === '2*9') {
-                result = (50 / 9) / 2;
-                formulaText = '50 ÷ 9 ÷ 2';
-            } else if (currentFormula === '9') {
-                result = 50 / 9;
-                formulaText = '50 ÷ 9';
-            } else if (currentFormula === '9*4') {
-                result = (50 / 9) / 4;
-                formulaText = '50 ÷ 9 ÷ 4';
-            } else if (currentFormula === '2*8') {
-                result = (50 / 8) / 2;
-                formulaText = '50 ÷ 8 ÷ 2';
-            } else if (currentFormula === '8') {
-                result = 50 / 8;
-                formulaText = '50 ÷ 8';
-            } else if (currentFormula === '4*8') {
-                result = (50 / 8) / 4;
-                formulaText = '50 ÷ 8 ÷ 4';
-            }
-
-            const finalResult = result * numberOfBooks;
-            document.getElementById('formulaResult').textContent = finalResult.toFixed(2);
-            document.getElementById('formulaDisplay').textContent = `المعادلة: ${formulaText} × ${numberOfBooks} = ${finalResult.toFixed(2)}`;
-        }
-
-        function calculateTotal() {
-            const numberOfPapers = parseFloat(document.getElementById('numberOfPapers').value) || 0;
-            const paperPrice = parseFloat(document.getElementById('paperPrice').value) || 0;
-            const numberOfZinc = parseFloat(document.getElementById('numberOfZinc').value) || 0;
-            const numberOfPrints = parseFloat(document.getElementById('numberOfPrints').value) || 0;
-            const bindingPrice = parseFloat(document.getElementById('bindingPrice').value) || 0;
-            const formulaResult = parseFloat(document.getElementById('formulaResult').textContent) || 0;
-
-            const totalPaperCost = numberOfPapers * paperPrice;
-            const totalZincCost = numberOfZinc * 50;
-            const totalPrintCost = numberOfPrints * 75;
-
-            const total =  totalPaperCost + totalZincCost + totalPrintCost + bindingPrice;
-            document.getElementById('totalResult').textContent = total.toFixed(2) + ' جنيه';
-        }
-
-        // أنيميشن للصفحة عند التحميل
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('.container').style.opacity = '0';
-            document.querySelector('.container').style.transform = 'translateY(50px)';
-            
-            setTimeout(() => {
-                document.querySelector('.container').style.transition = 'all 0.8s ease';
-                document.querySelector('.container').style.opacity = '1';
-                document.querySelector('.container').style.transform = 'translateY(0)';
-            }, 100);
-        });
-    
-    </script>
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then((registration) => {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch((error) => {
-                    console.log('Service Worker registration failed:', error);
-                });
-        });
-    }
-</script>
 
 </body>
 </html>
+
