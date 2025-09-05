@@ -1,287 +1,42 @@
+/* الأنماط الأساسية تبقى كما هي */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1e3a8a 100%); color: white; min-height: 100vh; padding: 20px; display: flex; justify-content: center; align-items: center; }
+.container { max-width: 800px; width: 100%; padding: 30px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); }
+.header { text-align: center; margin-bottom: 40px; padding: 30px; background: linear-gradient(45deg, #1e3a8a, #3b82f6, #1e40af); border-radius: 20px; animation: glow 3s infinite alternate; }
+@keyframes glow { 0% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); } 100% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); } }
+.header h1 { font-size: 3rem; font-weight: bold; color: white; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+.section { margin-bottom: 35px; padding: 25px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.15); }
+.section-title { color: #3b82f6; font-size: 1.8rem; margin-bottom: 25px; text-align: center; font-weight: bold; border-bottom: 3px solid #3b82f6; padding-bottom: 10px; }
+.input-group { margin-bottom: 25px; }
+.input-group label { display: block; margin-bottom: 12px; color: #93c5fd; font-weight: bold; font-size: 1.3rem; }
+.input-field { width: 100%; padding: 18px; border: 3px solid #3b82f6; border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: white; font-size: 1.3rem; transition: all 0.3s ease; }
+.input-field:focus { outline: none; border-color: #ff6b6b; background: rgba(255, 255, 255, 0.15); transform: scale(1.02); box-shadow: 0 0 25px rgba(255, 107, 107, 0.3); }
+.btn { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border: none; padding: 20px; border-radius: 12px; font-size: 1.4rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; width: 100%; margin-top: 20px; box-shadow: 0 5px 20px rgba(255, 107, 107, 0.3); }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5); background: linear-gradient(45deg, #4ecdc4, #ff6b6b); }
+.result { margin-top: 30px; padding: 25px; background: rgba(59, 130, 246, 0.2); border-radius: 15px; border-left: 5px solid #3b82f6; }
+.result h3 { color: #93c5fd; margin-bottom: 15px; font-size: 1.5rem; text-align: center; }
+.result-value { font-size: 2.5rem; font-weight: bold; color: #ff6b6b; text-align: center; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+.formula-display { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px; text-align: center; color: #93c5fd; font-size: 1.1rem; }
 
-*{
-    padding: 0;
-     margin: 0;
-    text-decoration: none;
-    text-transform: none;
+/* أنماط القسم الجديد لإدارة المعادلات */
+.add-formula-form { padding: 20px; background: rgba(0,0,0,0.2); border-radius: 15px; margin-bottom: 30px; }
+.add-btn { background: linear-gradient(45deg, #28a745, #218838); box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3); }
+.add-btn:hover { background: linear-gradient(45deg, #218838, #28a745); box-shadow: 0 10px 30px rgba(40, 167, 69, 0.5); }
+.sub-title { text-align: center; color: #93c5fd; font-size: 1.5rem; margin-bottom: 20px; }
+.formula-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 25px 0; }
+.formula-btn-wrapper { position: relative; }
+.formula-btn { width: 100%; padding: 18px; background: linear-gradient(45deg, #3b82f6, #1e40af); border: none; border-radius: 12px; color: white; font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
+.formula-btn.base-formula { padding-right: 18px; } /* المعادلات الأساسية بدون مساحة للحذف */
+.formula-btn.custom-formula { padding-right: 40px; } /* المعادلات المخصصة مع مساحة للحذف */
+.formula-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5); background: linear-gradient(45deg, #1e40af, #3b82f6); }
+.formula-btn.selected { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); }
+.delete-btn { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: none; border: none; color: rgba(255, 255, 255, 0.7); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; }
+.delete-btn:hover { color: #ff6b6b; }
 
-
+/* تعديلات للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .container { padding: 20px; }
+    .header h1 { font-size: 2.2rem; }
+    .formula-buttons { grid-template-columns: repeat(2, 1fr); }
+    .input-field, .btn, .formula-btn { padding: 15px; font-size: 1.1rem; }
 }
-body{
-    margin: 0;
-width: 100%;
-
-min-height: 100vh;
-background-image: linear-gradient( to left , #02026e  , black  );
-background-repeat: no-repeat;
-}
-.container{
-margin: auto;
-width: 80%;
-
-}
-header{
-color: white;
-display: flex;
-align-items: center;
-justify-content: space-between;
-
-font-size: 20px;
-
-}
-header h2 {
-animation-name: osama;
-animation-delay: 5s;
-animation-iteration-count: infinite;
-animation-duration: 5s;
-
-
-}
-@keyframes osama{
-    0%{
-        color: fuchsia;
-
-    }
-
-
-}
-
-header a{
-display: inline-block;
-padding: 7px;
-color: white;
-border-radius: 3px;
-transition: 0.5s;
-
-}
-header a:hover{
-background-color: blueviolet;
-
-
-}
-.card{
-    color: white;
-    margin: 60px 0 0 0;
-    line-height: 50px;
-    display: flex;
-
-}
-.card h1{
-text-transform: capitalize;
-font-size: 40px;
-
-}
-.card span{
-color: blue;
-
-
-}
-.card .button{
-margin: 20px;
-padding: 5px;
-border-radius: 5px;
-border: none;
-background-color: hwb(258 5% 17% / 0.747);
-color: white;
-
-
-}
-.card h3{
-    margin-top: 15px;
-line-height: 24px;
-
-}
- #button{
-color: white;
-    display: inline-block;
-    padding: 10px;
-    width: 90px;
-    margin-top:10px;
-    border-radius: 20px;
-    
-
-    background-color: blue;
-
-}
-.Phone {
-    display: flex;
-    gap: 50px;
-
-
-}
-.emails{
-    display: flex;
-    position: relative;
-    top: 10px;
-   gap: 70px;
- 
-
-}
-  .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    .dropbtn {
-      background: #0c3fe9;
-      border-radius: 20px;
-      color: white;
-      padding: 10px;
-      border: none;
-      cursor: pointer;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background: #231bc064;
-      min-width: 150px;
-      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    }
-    .dropdown-content a {
-      padding: 10px;
-      display: block;
-      color: rgb(252, 252, 252);
-    }
-    .dropdown:hover .dropdown-content {
-      display: block; /* تظهر لما تقف بالماوس */
-    }
-.emails a{
-   display: inline-block;
- color: white;
- padding: 5px;
-border-radius: 30px;
-transition: 0.5s;
-}
-.emails a:hover{
-
-background-color: blue;
-
-
-}
-
-.card-img{
-width: 400px;
-height:400px;
-overflow: hidden;
-border-radius: 200px;
-border: solid rgb(48, 12, 252) 4px;
-
-
-}
-.card-img img{
-width: 100%;
-flex-shrink: 1;
-object-fit: cover;
-}
-small{
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    background-color: rgb(255, 0, 128);
-    position: relative;
-    top: 40px;
-    right: 200px;
-    margin: 0;
-animation-name: colored-ball;
-animation-delay: 1s;
-animation-iteration-count: infinite;
-animation-duration: 15s;
-
-
-}
-@keyframes colored-ball{
-
-    0%{
-
-        translate: 0  0 ;
-
-
-    }
-    25%{
-        translate: 250px  0 ;
-        background-color: aqua;
-        rotate: 360deg;
-
-
-    }
-    50%{
-        translate: -250px  0 ;
-        background-color: #0547ee52;
-        rotate: 360deg;
-
-
-    }
-  
-
-    }
-
-/* 📱 الموبايل و التابلت */
-@media (max-width: 900px) {
-  .card {
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
-  }
-
-  .card h1 {
-    font-size: 32px;
-  }
-
-  .card-img {
-    width: 250px;
-    height: 250px;
-  }
-
-  .emails {
-    justify-content: center;
-    top: 20px;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-}
-
-/* الموبايل و التابلت */
-@media (max-width: 900px) {
-
-  body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* يشيل أي سكرول يمين */
-  }
-
-  section {
-    padding: 40px 20px; /* يظبط الهوامش من غير فراغ كبير */
-  }
-
-  /* الكارد بتاع المشاريع */
-  .card {
-    flex-direction: column; /* الصورة فوق والنص تحت */
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-  }
-
-  .card-img {
-    width: 250px;
-    height: 250px;
-    margin: 0 auto;
-  }
-
-  /* الأزرار */
-  .btn {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    text-align: center;
-  }
-}
-
-/* الموبايل الصغير جدًا */
-@media (max-width: 600px) {
-  .card-img {
-    width: 180px;
-    height: 180px;
-  }
-}
-
-
-
