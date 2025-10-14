@@ -4,13 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مطبعة الإسراء - آلة حاسبة ديناميكية</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="آلة حاسبة ديناميكية لمطبعة الإسراء لإدارة المعادلات والورق والتكاليف">
+    <meta name="theme-color" content="#3b82f6">
+    
+    <!-- إعدادات PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="مطبعة الإسراء">
+   <link rel="stylesheet" href="style.css"> 
+   
 </head>
 <body>
     <div class="container">
         <header class="header">
             <h1>مطبعة الإسراء</h1>
+         
         </header>
+
+        <!-- قسم إدارة أنواع الورق - تم نقله للأعلى -->
+        <div class="section">
+            <h2 class="section-title">إدارة أنواع الورق</h2>
+            
+            <div class="add-formula-form">
+                <div class="input-group">
+                    <label for="paperName">اسم نوع الورق:</label>
+                    <input type="text" id="paperName" class="input-field" placeholder="مثال: أصل+1">
+                </div>
+                <div class="input-group">
+                    <label for="paperPriceInput">سعر الورقة:</label>
+                    <input type="number" id="paperPriceInput" class="input-field" placeholder="مثال: 9.90" step="0.01">
+                </div>
+                <button class="btn add-btn" id="addPaperBtn">أضف نوع ورق جديد</button>
+            </div>
+
+            <h3 class="sub-title">أنواع الورق المتاحة</h3>
+            <div class="paper-types-grid" id="paperTypesContainer">
+                <!-- بطاقات أنواع الورق ستتم إضافتها هنا بواسطة الجافاسكريبت -->
+            </div>
+        </div>
 
         <!-- قسم إدارة المعادلات -->
         <div class="section">
@@ -56,8 +90,27 @@
         <!-- قسم التكاليف الإضافية -->
         <div class="section">
             <h2 class="section-title">التكاليف الإضافية</h2>
-            <div class="input-group"><label for="numberOfPapers">عدد الورق:</label><input type="number" id="numberOfPapers" class="input-field" value="0" step="0.01"></div>
-            <div class="input-group"><label for="paperPrice">سعر الورق (للورقة):</label><input type="number" id="paperPrice" class="input-field" value="0" step="0.01"></div>
+            <div class="input-group">
+                <label for="paperTypeSelect">نوع الورق:</label>
+                <div class="paper-select-container">
+                    <select id="paperTypeSelect" class="select-field">
+                        <option value="">اختر نوع الورق</option>
+                        <!-- سيتم تعبئة الخيارات بواسطة الجافاسكريبت -->
+                    </select>
+                    <div class="paper-select-info" id="selectedPaperPrice">السعر: 0.00 جنيه</div>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="numberOfPapers">عدد الورق:</label>
+                <input type="number" id="numberOfPapers" class="input-field" value="0" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="paperPrice">سعر الورق (للورقة):</label>
+                <div class="paper-price-input-group">
+                    <input type="number" id="paperPrice" class="input-field" value="0" step="0.01">
+                    <button class="btn" id="applyPaperPriceBtn">تطبيق السعر</button>
+                </div>
+            </div>
             <div class="input-group"><label for="numberOfZinc">عدد الزنكات:</label><input type="number" id="numberOfZinc" class="input-field" value="0" step="0.01"></div>
             <div class="input-group"><label for="numberOfPrints">عدد التراجات:</label><input type="number" id="numberOfPrints" class="input-field" value="0" step="0.01"></div>
             <div class="input-group"><label for="bindingPrice">سعر التجليد:</label><input type="number" id="bindingPrice" class="input-field" value="0" step="0.01"></div>
@@ -69,6 +122,13 @@
         </div>
     </div>
 
-    <script src="main.js"></script>
+    <!-- إشعار التثبيت -->
+    <div class="install-prompt" id="installPrompt">
+        <p>تثبيت تطبيق مطبعة الإسراء لاستخدامه بدون إنترنت</p>
+        <button id="installBtn">تثبيت</button>
+        <button id="dismissBtn">تجاهل</button>
+    </div>
+
+    <script  src="main.js"></script>
 </body>
 </html>
