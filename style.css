@@ -1,3 +1,4 @@
+
         /* الأنماط الأساسية */
         * { 
             margin: 0; 
@@ -181,37 +182,27 @@
             margin-bottom: 15px; 
         }
         
+        /* أنماط المعادلات المحفوظة - الشكل الأصلي */
         .formula-buttons { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
-            gap: 12px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 10px; 
             margin: 20px 0; 
-        }
-        
-        .formula-btn-wrapper { 
-            position: relative; 
+            justify-content: center;
         }
         
         .formula-btn { 
-            width: 100%; 
-            padding: 15px; 
             background: linear-gradient(45deg, #3b82f6, #1e40af); 
             border: none; 
-            border-radius: 10px; 
+            border-radius: 8px; 
             color: white; 
             font-size: 1.1rem; 
             font-weight: bold; 
             cursor: pointer; 
             transition: all 0.3s ease; 
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); 
-        }
-        
-        .formula-btn.base-formula { 
-            padding-right: 15px; 
-        }
-        
-        .formula-btn.custom-formula { 
-            padding-right: 35px; 
+            padding: 12px 20px;
+            min-width: 100px;
         }
         
         .formula-btn:hover { 
@@ -223,28 +214,11 @@
         .formula-btn.selected { 
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
         }
-        
-        .delete-btn { 
-            position: absolute; 
-            top: 50%; 
-            right: 8px; 
-            transform: translateY(-50%); 
-            background: none; 
-            border: none; 
-            color: rgba(255, 255, 255, 0.7); 
-            font-size: 1.3rem; 
-            cursor: pointer; 
-            transition: color 0.3s; 
-        }
-        
-        .delete-btn:hover { 
-            color: #ff6b6b; 
-        }
 
         /* أنماط قسم إدارة أنواع الورق */
         .paper-types-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
             gap: 15px; 
             margin-top: 15px; 
         }
@@ -252,11 +226,15 @@
         .paper-type-card { 
             background: rgba(255, 255, 255, 0.1); 
             border-radius: 10px; 
-            padding: 12px; 
+            padding: 15px; 
             text-align: center; 
             position: relative; 
             border: 2px solid #3b82f6; 
             transition: all 0.3s ease; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 120px;
         }
         
         .paper-type-card:hover { 
@@ -267,31 +245,33 @@
         
         .paper-name { 
             font-weight: bold; 
-            margin-bottom: 5px; 
-            font-size: 1.1rem; 
+            margin-bottom: 8px; 
+            font-size: 1.2rem; 
             color: white; 
         }
         
         .paper-price { 
             color: #ff6b6b; 
             font-weight: bold; 
-            font-size: 1rem; 
+            font-size: 1.1rem; 
+            margin-bottom: 10px;
         }
         
         .paper-actions { 
             display: flex; 
             justify-content: space-between; 
-            margin-top: 8px; 
+            gap: 8px;
         }
         
         .paper-action-btn { 
-            padding: 6px 10px; 
+            padding: 8px 12px; 
             border-radius: 5px; 
             border: none; 
             cursor: pointer; 
             font-weight: bold; 
             transition: all 0.3s ease; 
             font-size: 0.9rem;
+            flex: 1;
         }
         
         .edit-btn { 
@@ -387,8 +367,13 @@
             }
             
             .formula-buttons { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 10px;
+                gap: 8px;
+            }
+            
+            .formula-btn {
+                padding: 10px 15px;
+                font-size: 1rem;
+                min-width: 80px;
             }
             
             .input-field, .btn, .formula-btn { 
@@ -396,9 +381,15 @@
                 font-size: 1rem; 
             }
             
+            /* إصلاح عرض أنواع الورق - 2 بطاقات بجوار بعض */
             .paper-types-grid { 
                 grid-template-columns: repeat(2, 1fr); 
-                gap: 10px;
+                gap: 12px;
+            }
+            
+            .paper-type-card {
+                padding: 12px;
+                min-height: 110px;
             }
             
             .paper-price-input-group { 
@@ -444,11 +435,24 @@
             }
             
             .formula-buttons {
-                grid-template-columns: 1fr;
+                gap: 6px;
             }
             
+            .formula-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                min-width: 70px;
+            }
+            
+            /* تأكيد عرض 2 بطاقات بجوار بعض على الهواتف الصغيرة */
             .paper-types-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .paper-type-card {
+                padding: 10px;
+                min-height: 100px;
             }
             
             .input-group label {

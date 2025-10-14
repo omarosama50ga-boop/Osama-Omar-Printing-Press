@@ -1,5 +1,4 @@
-      // الكود JavaScript يبقى كما هو بدون تغييرات
-        document.addEventListener('DOMContentLoaded', () => {
+       document.addEventListener('DOMContentLoaded', () => {
             // ===================================================================
             // =================  1. تحديد كل العناصر المهمة في الصفحة =================
             // ===================================================================
@@ -99,29 +98,46 @@
 
             // دالة لإنشاء زر معادلة (أساسي أو مخصص)
             function createButton(name, isDeletable) {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'formula-btn-wrapper';
-
                 const button = document.createElement('button');
                 button.className = 'formula-btn';
-                button.classList.add(isDeletable ? 'custom-formula' : 'base-formula');
                 button.textContent = name;
                 button.onclick = () => setFormula(name);
 
-                wrapper.appendChild(button);
-
+                // إضافة زر الحذف فقط للمعادلات المخصصة
                 if (isDeletable) {
                     const deleteBtn = document.createElement('button');
                     deleteBtn.className = 'delete-btn';
-                    deleteBtn.innerHTML = '&times;';
+                    deleteBtn.innerHTML = '✕';
+                    deleteBtn.style.cssText = `
+                        background: #dc3545;
+                        border: none;
+                        color: white;
+                        border-radius: 50%;
+                        width: 24px;
+                        height: 24px;
+                        cursor: pointer;
+                        margin-right: 5px;
+                        font-size: 12px;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                    `;
                     deleteBtn.onclick = (e) => {
                         e.stopPropagation();
                         deleteFormula(name);
                     };
+                    
+                    // إنشاء حاوية للزر وزر الحذف
+                    const wrapper = document.createElement('div');
+                    wrapper.style.cssText = 'display: flex; align-items: center; margin: 5px;';
                     wrapper.appendChild(deleteBtn);
+                    wrapper.appendChild(button);
+                    
+                    formulaButtonsContainer.appendChild(wrapper);
+                } else {
+                    // للمعادلات الأساسية، نضيف الزر مباشرة
+                    formulaButtonsContainer.appendChild(button);
                 }
-                
-                formulaButtonsContainer.appendChild(wrapper);
             }
 
             // ===================================================================
