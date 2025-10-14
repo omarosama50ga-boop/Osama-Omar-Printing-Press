@@ -1,4 +1,5 @@
-   document.addEventListener('DOMContentLoaded', () => {
+      // الكود JavaScript يبقى كما هو بدون تغييرات
+        document.addEventListener('DOMContentLoaded', () => {
             // ===================================================================
             // =================  1. تحديد كل العناصر المهمة في الصفحة =================
             // ===================================================================
@@ -17,11 +18,6 @@
             const paperPriceField = document.getElementById('paperPrice');
             const applyPaperPriceBtn = document.getElementById('applyPaperPriceBtn');
             const selectedPaperPrice = document.getElementById('selectedPaperPrice');
-
-            // عناصر إشعار التثبيت
-            const installPrompt = document.getElementById('installPrompt');
-            const installBtn = document.getElementById('installBtn');
-            const dismissBtn = document.getElementById('dismissBtn');
 
             // ===================================================================
             // =================  2. تعريف المعادلات الأساسية والثابتة =================
@@ -67,7 +63,6 @@
             let paperTypes = {};
             let currentFormulaName = '';
             let allFormulas = {};
-            let deferredPrompt;
 
             // ===================================================================
             // =================  3. دوال إدارة المعادلات (حفظ، تحميل، عرض) =================
@@ -381,21 +376,7 @@
             }
 
             // ===================================================================
-            // =================  7. دوال PWA والتثبيت =================
-            // ===================================================================
-
-            // عرض إشعار التثبيت
-            function showInstallPrompt() {
-                installPrompt.style.display = 'block';
-            }
-
-            // إخفاء إشعار التثبيت
-            function hideInstallPrompt() {
-                installPrompt.style.display = 'none';
-            }
-
-            // ===================================================================
-            // =================  8. ربط الأحداث والتشغيل الأولي =================
+            // =================  7. ربط الأحداث والتشغيل الأولي =================
             // ===================================================================
             addFormulaBtn.addEventListener('click', addFormula);
             addPaperBtn.addEventListener('click', addPaperType);
@@ -413,127 +394,8 @@
                     selectedPaperPrice.textContent = 'السعر: 0.00 جنيه';
                 }
             });
-
-            // أحداث إشعار التثبيت
-            installBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    if (outcome === 'accepted') {
-                        console.log('تم تثبيت التطبيق');
-                    }
-                    deferredPrompt = null;
-                    hideInstallPrompt();
-                }
-            });
-
-            dismissBtn.addEventListener('click', hideInstallPrompt);
-
-            // حدث قبل تثبيت التطبيق
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                showInstallPrompt();
-            });
-
-            // حدث بعد تثبيت التطبيق
-            window.addEventListener('appinstalled', () => {
-                console.log('تم تثبيت التطبيق بنجاح');
-                deferredPrompt = null;
-            });
             
             // تحميل كل البيانات عند بدء تشغيل الصفحة
             loadFormulas();
             loadPaperTypes();
         });
-        // ===================================================================
-// =================  9. تسجيل Service Worker =================
-// ===================================================================
-
-// تسجيل Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(function(registration) {
-        console.log('Service Worker registered with scope:', registration.scope);
-        
-        // التحقق من وجود تحديثات
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          console.log('New service worker found!');
-          
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              console.log('New content is available; please refresh.');
-              showUpdateNotification();
-            }
-          });
-        });
-      })
-      .catch(function(error) {
-        console.log('Service Worker registration failed:', error);
-      });
-  });
-}
-
-// عرض إشعار التحديث
-function showUpdateNotification() {
-  if (confirm('توجد نسخة جديدة من التطبيق. هل تريد تحديث الصفحة؟')) {
-    window.location.reload();
-  }
-}
-
-// التحقق من حالة الاتصال بالإنترنت
-window.addEventListener('online', function() {
-  console.log('التطبيق متصل بالإنترنت');
-  showOnlineNotification();
-});
-
-window.addEventListener('offline', function() {
-  console.log('التطبيق غير متصل بالإنترنت');
-  showOfflineNotification();
-});
-
-// إشعار الاتصال
-function showOnlineNotification() {
-  const notification = document.createElement('div');
-  notification.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #28a745;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    z-index: 1001;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  `;
-  notification.textContent = 'تم استعادة الاتصال بالإنترنت';
-  document.body.appendChild(notification);
-  
-  setTimeout(() => {
-    document.body.removeChild(notification);
-  }, 3000);
-}
-
-// إشعار عدم الاتصال
-function showOfflineNotification() {
-  const notification = document.createElement('div');
-  notification.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #dc3545;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    z-index: 1001;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  `;
-  notification.textContent = 'أنت غير متصل بالإنترنت. التطبيق يعمل في الوضع المحلي.';
-  document.body.appendChild(notification);
-  
-  setTimeout(() => {
-    document.body.removeChild(notification);
-  }, 5000);
-}

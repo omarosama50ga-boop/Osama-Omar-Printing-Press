@@ -1,108 +1,511 @@
-
         /* الأنماط الأساسية */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1e3a8a 100%); color: white; min-height: 100vh; padding: 20px; display: flex; justify-content: center; align-items: center; }
-        .container { max-width: 1000px; width: 100%; padding: 30px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); }
-        .header { text-align: center; margin-bottom: 40px; padding: 30px; background: linear-gradient(45deg, #1e3a8a, #3b82f6, #1e40af); border-radius: 20px; animation: glow 3s infinite alternate; }
-        @keyframes glow { 0% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); } 100% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); } }
-        .header h1 { font-size: 3rem; font-weight: bold; color: white; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
-        .section { margin-bottom: 35px; padding: 25px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.15); }
-        .section-title { color: #3b82f6; font-size: 1.8rem; margin-bottom: 25px; text-align: center; font-weight: bold; border-bottom: 3px solid #3b82f6; padding-bottom: 10px; }
-        .input-group { margin-bottom: 25px; }
-        .input-group label { display: block; margin-bottom: 12px; color: #93c5fd; font-weight: bold; font-size: 1.3rem; }
-        .input-field, .select-field { width: 100%; padding: 18px; border: 3px solid #3b82f6; border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: white; font-size: 1.3rem; transition: all 0.3s ease; }
-        .input-field:focus, .select-field:focus { outline: none; border-color: #ff6b6b; background: rgba(255, 255, 255, 0.15); transform: scale(1.02); box-shadow: 0 0 25px rgba(255, 107, 107, 0.3); }
-        .btn { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border: none; padding: 20px; border-radius: 12px; font-size: 1.4rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; width: 100%; margin-top: 20px; box-shadow: 0 5px 20px rgba(255, 107, 107, 0.3); }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5); background: linear-gradient(45deg, #4ecdc4, #ff6b6b); }
-        .result { margin-top: 30px; padding: 25px; background: rgba(59, 130, 246, 0.2); border-radius: 15px; border-left: 5px solid #3b82f6; }
-        .result h3 { color: #93c5fd; margin-bottom: 15px; font-size: 1.5rem; text-align: center; }
-        .result-value { font-size: 2.5rem; font-weight: bold; color: #ff6b6b; text-align: center; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
-        .formula-display { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px; text-align: center; color: #93c5fd; font-size: 1.1rem; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+        
+        body { 
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1e3a8a 100%); 
+            color: white; 
+            min-height: 100vh; 
+            padding: 15px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start;
+            overflow-x: hidden;
+        }
+        
+        .container { 
+            max-width: 1000px; 
+            width: 100%; 
+            padding: 20px; 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(15px); 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            margin: 10px 0;
+        }
+        
+        .header { 
+            text-align: center; 
+            margin-bottom: 30px; 
+            padding: 20px; 
+            background: linear-gradient(45deg, #1e3a8a, #3b82f6, #1e40af); 
+            border-radius: 15px; 
+            animation: glow 3s infinite alternate; 
+        }
+        
+        @keyframes glow { 
+            0% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); } 
+            100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); } 
+        }
+        
+        .header h1 { 
+            font-size: 2.2rem; 
+            font-weight: bold; 
+            color: white; 
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
+            line-height: 1.3;
+        }
+        
+        .section { 
+            margin-bottom: 25px; 
+            padding: 20px; 
+            background: rgba(255, 255, 255, 0.08); 
+            border-radius: 12px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+        }
+        
+        .section-title { 
+            color: #3b82f6; 
+            font-size: 1.5rem; 
+            margin-bottom: 20px; 
+            text-align: center; 
+            font-weight: bold; 
+            border-bottom: 2px solid #3b82f6; 
+            padding-bottom: 8px; 
+        }
+        
+        .input-group { 
+            margin-bottom: 20px; 
+        }
+        
+        .input-group label { 
+            display: block; 
+            margin-bottom: 10px; 
+            color: #93c5fd; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+        }
+        
+        .input-field, .select-field { 
+            width: 100%; 
+            padding: 15px; 
+            border: 2px solid #3b82f6; 
+            border-radius: 10px; 
+            background: rgba(255, 255, 255, 0.1); 
+            color: white; 
+            font-size: 1.1rem; 
+            transition: all 0.3s ease; 
+        }
+        
+        .input-field:focus, .select-field:focus { 
+            outline: none; 
+            border-color: #ff6b6b; 
+            background: rgba(255, 255, 255, 0.15); 
+            transform: scale(1.02); 
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); 
+        }
+        
+        .btn { 
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 10px; 
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            width: 100%; 
+            margin-top: 15px; 
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3); 
+        }
+        
+        .btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5); 
+            background: linear-gradient(45deg, #4ecdc4, #ff6b6b); 
+        }
+        
+        .result { 
+            margin-top: 25px; 
+            padding: 20px; 
+            background: rgba(59, 130, 246, 0.2); 
+            border-radius: 12px; 
+            border-left: 4px solid #3b82f6; 
+        }
+        
+        .result h3 { 
+            color: #93c5fd; 
+            margin-bottom: 12px; 
+            font-size: 1.3rem; 
+            text-align: center; 
+        }
+        
+        .result-value { 
+            font-size: 2rem; 
+            font-weight: bold; 
+            color: #ff6b6b; 
+            text-align: center; 
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
+            word-break: break-word;
+        }
+        
+        .formula-display { 
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-top: 12px; 
+            text-align: center; 
+            color: #93c5fd; 
+            font-size: 1rem; 
+            word-break: break-word;
+        }
 
         /* أنماط القسم الجديد لإدارة المعادلات */
-        .add-formula-form { padding: 20px; background: rgba(0,0,0,0.2); border-radius: 15px; margin-bottom: 30px; }
-        .add-btn { background: linear-gradient(45deg, #28a745, #218838); box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3); }
-        .add-btn:hover { background: linear-gradient(45deg, #218838, #28a745); box-shadow: 0 10px 30px rgba(40, 167, 69, 0.5); }
-        .sub-title { text-align: center; color: #93c5fd; font-size: 1.5rem; margin-bottom: 20px; }
-        .formula-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 25px 0; }
-        .formula-btn-wrapper { position: relative; }
-        .formula-btn { width: 100%; padding: 18px; background: linear-gradient(45deg, #3b82f6, #1e40af); border: none; border-radius: 12px; color: white; font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
-        .formula-btn.base-formula { padding-right: 18px; } /* المعادلات الأساسية بدون مساحة للحذف */
-        .formula-btn.custom-formula { padding-right: 40px; } /* المعادلات المخصصة مع مساحة للحذف */
-        .formula-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5); background: linear-gradient(45deg, #1e40af, #3b82f6); }
-        .formula-btn.selected { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); }
-        .delete-btn { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: none; border: none; color: rgba(255, 255, 255, 0.7); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; }
-        .delete-btn:hover { color: #ff6b6b; }
+        .add-formula-form { 
+            padding: 15px; 
+            background: rgba(0,0,0,0.2); 
+            border-radius: 12px; 
+            margin-bottom: 25px; 
+        }
+        
+        .add-btn { 
+            background: linear-gradient(45deg, #28a745, #218838); 
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); 
+        }
+        
+        .add-btn:hover { 
+            background: linear-gradient(45deg, #218838, #28a745); 
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5); 
+        }
+        
+        .sub-title { 
+            text-align: center; 
+            color: #93c5fd; 
+            font-size: 1.3rem; 
+            margin-bottom: 15px; 
+        }
+        
+        .formula-buttons { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            gap: 12px; 
+            margin: 20px 0; 
+        }
+        
+        .formula-btn-wrapper { 
+            position: relative; 
+        }
+        
+        .formula-btn { 
+            width: 100%; 
+            padding: 15px; 
+            background: linear-gradient(45deg, #3b82f6, #1e40af); 
+            border: none; 
+            border-radius: 10px; 
+            color: white; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); 
+        }
+        
+        .formula-btn.base-formula { 
+            padding-right: 15px; 
+        }
+        
+        .formula-btn.custom-formula { 
+            padding-right: 35px; 
+        }
+        
+        .formula-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); 
+            background: linear-gradient(45deg, #1e40af, #3b82f6); 
+        }
+        
+        .formula-btn.selected { 
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
+        }
+        
+        .delete-btn { 
+            position: absolute; 
+            top: 50%; 
+            right: 8px; 
+            transform: translateY(-50%); 
+            background: none; 
+            border: none; 
+            color: rgba(255, 255, 255, 0.7); 
+            font-size: 1.3rem; 
+            cursor: pointer; 
+            transition: color 0.3s; 
+        }
+        
+        .delete-btn:hover { 
+            color: #ff6b6b; 
+        }
 
         /* أنماط قسم إدارة أنواع الورق */
-        .paper-types-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
-        .paper-type-card { background: rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 15px; text-align: center; position: relative; border: 2px solid #3b82f6; transition: all 0.3s ease; }
-        .paper-type-card:hover { transform: translateY(-5px); border-color: #ff6b6b; box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3); }
-        .paper-name { font-weight: bold; margin-bottom: 5px; font-size: 1.2rem; color: white; }
-        .paper-price { color: #ff6b6b; font-weight: bold; font-size: 1.1rem; }
-        .paper-actions { display: flex; justify-content: space-between; margin-top: 10px; }
-        .paper-action-btn { padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; transition: all 0.3s ease; }
-        .edit-btn { background: #3b82f6; color: white; }
-        .edit-btn:hover { background: #1e40af; }
-        .delete-paper-btn { background: #dc3545; color: white; }
-        .delete-paper-btn:hover { background: #c82333; }
+        .paper-types-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 15px; 
+            margin-top: 15px; 
+        }
+        
+        .paper-type-card { 
+            background: rgba(255, 255, 255, 0.1); 
+            border-radius: 10px; 
+            padding: 12px; 
+            text-align: center; 
+            position: relative; 
+            border: 2px solid #3b82f6; 
+            transition: all 0.3s ease; 
+        }
+        
+        .paper-type-card:hover { 
+            transform: translateY(-3px); 
+            border-color: #ff6b6b; 
+            box-shadow: 0 8px 15px rgba(255, 107, 107, 0.3); 
+        }
+        
+        .paper-name { 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+            font-size: 1.1rem; 
+            color: white; 
+        }
+        
+        .paper-price { 
+            color: #ff6b6b; 
+            font-weight: bold; 
+            font-size: 1rem; 
+        }
+        
+        .paper-actions { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-top: 8px; 
+        }
+        
+        .paper-action-btn { 
+            padding: 6px 10px; 
+            border-radius: 5px; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: all 0.3s ease; 
+            font-size: 0.9rem;
+        }
+        
+        .edit-btn { 
+            background: #3b82f6; 
+            color: white; 
+        }
+        
+        .edit-btn:hover { 
+            background: #1e40af; 
+        }
+        
+        .delete-paper-btn { 
+            background: #dc3545; 
+            color: white; 
+        }
+        
+        .delete-paper-btn:hover { 
+            background: #c82333; 
+        }
 
         /* تحسينات للشكل العام */
-        .paper-price-input-group { display: flex; align-items: center; gap: 10px; }
-        .paper-price-input-group .input-field { flex: 1; }
-        .paper-price-input-group .btn { width: auto; margin-top: 0; padding: 10px 15px; font-size: 1.1rem; }
+        .paper-price-input-group { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        
+        .paper-price-input-group .input-field { 
+            flex: 1; 
+        }
+        
+        .paper-price-input-group .btn { 
+            width: auto; 
+            margin-top: 0; 
+            padding: 10px 12px; 
+            font-size: 1rem; 
+        }
         
         /* تحسينات لقائمة اختيار الورق - خلفية بيضاء ونص داكن */
-        .paper-select-container { position: relative; }
+        .paper-select-container { 
+            position: relative; 
+        }
+        
         .paper-select-container .select-field { 
             background: white; 
             color: #333; 
-            padding-right: 50px; 
-            border: 3px solid #3b82f6;
+            padding-right: 45px; 
+            border: 2px solid #3b82f6;
         }
+        
         .paper-select-info { 
             position: absolute; 
-            left: 15px; 
+            left: 12px; 
             top: 50%; 
             transform: translateY(-50%); 
             background: rgba(59, 130, 246, 0.9); 
-            padding: 5px 10px; 
-            border-radius: 6px; 
-            font-size: 1rem; 
+            padding: 4px 8px; 
+            border-radius: 5px; 
+            font-size: 0.9rem; 
             color: white;
         }
         
         /* تعديلات للشاشات الصغيرة */
         @media (max-width: 768px) {
-            .container { padding: 20px; }
-            .header h1 { font-size: 2.2rem; }
-            .formula-buttons { grid-template-columns: repeat(2, 1fr); }
-            .input-field, .btn, .formula-btn { padding: 15px; font-size: 1.1rem; }
-            .paper-types-grid { grid-template-columns: repeat(2, 1fr); }
-            .paper-price-input-group { flex-direction: column; }
-            .paper-select-info { position: static; transform: none; margin-top: 10px; }
+            body {
+                padding: 10px;
+                align-items: stretch;
+            }
+            
+            .container { 
+                padding: 15px; 
+                margin: 5px 0;
+                border-radius: 12px;
+            }
+            
+            .header { 
+                margin-bottom: 20px; 
+                padding: 15px; 
+            }
+            
+            .header h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .section { 
+                margin-bottom: 20px; 
+                padding: 15px; 
+            }
+            
+            .section-title { 
+                font-size: 1.3rem; 
+                margin-bottom: 15px; 
+            }
+            
+            .formula-buttons { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px;
+            }
+            
+            .input-field, .btn, .formula-btn { 
+                padding: 12px; 
+                font-size: 1rem; 
+            }
+            
+            .paper-types-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px;
+            }
+            
+            .paper-price-input-group { 
+                flex-direction: column; 
+            }
+            
+            .paper-select-info { 
+                position: static; 
+                transform: none; 
+                margin-top: 8px; 
+                display: inline-block;
+            }
+            
+            .result-value {
+                font-size: 1.7rem;
+            }
         }
         
-        /* إشعار التثبيت */
-        .install-prompt {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            max-width: 300px;
-            display: none;
+        /* تعديلات للشاشات الصغيرة جداً (الهواتف الصغيرة) */
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+            
+            .container {
+                padding: 12px;
+            }
+            
+            .header {
+                padding: 12px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .section {
+                padding: 12px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .formula-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .paper-types-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-group label {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 14px;
+                font-size: 1.1rem;
+            }
+            
+            .result-value {
+                font-size: 1.5rem;
+            }
+            
+            .paper-actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .paper-action-btn {
+                width: 100%;
+            }
         }
-        .install-prompt button {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
+        
+        /* تعديلات للوضع الأفقي على الهواتف */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                align-items: flex-start;
+                padding: 10px;
+            }
+            
+            .container {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            
+            .section {
+                margin-bottom: 15px;
+                padding: 15px;
+            }
+            
+            .input-group {
+                margin-bottom: 15px;
+            }
+        }
+        
+        /* تحسينات إضافية للشاشات الكبيرة */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1100px;
+            }
+        }
+        
+        /* منع التكبير المفرط على الهواتف */
+        @media (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px !important; /* منع التكبير التلقائي في iOS */
+            }
         }
