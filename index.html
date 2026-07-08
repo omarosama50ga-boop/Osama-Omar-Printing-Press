@@ -22,7 +22,7 @@
             justify-content: center; 
             align-items: flex-start;
             overflow-x: hidden;
-            font-size: 18px; /* زيادة حجم الخط الأساسي */
+            font-size: 18px;
         }
         
         .container { 
@@ -52,7 +52,7 @@
         }
         
         .header h1 { 
-            font-size: 2.5rem; /* زيادة حجم العنوان */
+            font-size: 2.5rem;
             font-weight: bold; 
             color: white; 
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
@@ -69,7 +69,7 @@
         
         .section-title { 
             color: #3b82f6; 
-            font-size: 1.8rem; /* زيادة حجم عناوين الأقسام */
+            font-size: 1.8rem;
             margin-bottom: 20px; 
             text-align: center; 
             font-weight: bold; 
@@ -83,20 +83,20 @@
         
         .input-group label { 
             display: block; 
-            margin-bottom: 12px; /* زيادة المسافة */
+            margin-bottom: 12px;
             color: #93c5fd; 
             font-weight: bold; 
-            font-size: 1.3rem; /* زيادة حجم التسميات */
+            font-size: 1.3rem;
         }
         
         .input-field, .select-field { 
             width: 100%; 
-            padding: 18px; /* زيادة الحشوة */
+            padding: 18px;
             border: 2px solid #3b82f6; 
             border-radius: 10px; 
             background: rgba(255, 255, 255, 0.1); 
             color: white; 
-            font-size: 1.2rem; /* زيادة حجم الخط */
+            font-size: 1.2rem;
             transition: all 0.3s ease; 
         }
         
@@ -112,9 +112,9 @@
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
             color: white; 
             border: none; 
-            padding: 20px; /* زيادة الحشوة */
+            padding: 20px;
             border-radius: 10px; 
-            font-size: 1.4rem; /* زيادة حجم الخط */
+            font-size: 1.4rem;
             font-weight: bold; 
             cursor: pointer; 
             transition: all 0.3s ease; 
@@ -140,12 +140,12 @@
         .result h3 { 
             color: #93c5fd; 
             margin-bottom: 12px; 
-            font-size: 1.5rem; /* زيادة حجم العنوان */
+            font-size: 1.5rem;
             text-align: center; 
         }
         
         .result-value { 
-            font-size: 2.5rem; /* زيادة حجم النتائج */
+            font-size: 2.5rem;
             font-weight: bold; 
             color: #ff6b6b; 
             text-align: center; 
@@ -160,7 +160,7 @@
             margin-top: 12px; 
             text-align: center; 
             color: #93c5fd; 
-            font-size: 1.1rem; /* زيادة حجم الخط */
+            font-size: 1.1rem;
             word-break: break-word;
         }
 
@@ -185,7 +185,7 @@
         .sub-title { 
             text-align: center; 
             color: #93c5fd; 
-            font-size: 1.5rem; /* زيادة حجم العناوين الفرعية */
+            font-size: 1.5rem;
             margin-bottom: 15px; 
         }
         
@@ -203,13 +203,13 @@
             border: none; 
             border-radius: 8px; 
             color: white; 
-            font-size: 1.3rem; /* زيادة حجم الخط */
+            font-size: 1.3rem;
             font-weight: bold; 
             cursor: pointer; 
             transition: all 0.3s ease; 
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); 
-            padding: 15px 25px; /* زيادة الحشوة */
-            min-width: 120px; /* زيادة العرض الأدنى */
+            padding: 15px 25px;
+            min-width: 120px;
         }
         
         .formula-btn:hover { 
@@ -222,10 +222,60 @@
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
         }
 
+        /* أنماط أزرار عدد الفورم (معدل) */
+        .form-count-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-count-btn, .no-form-btn {
+            background: linear-gradient(45deg, #6c757d, #495057);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+            padding: 12px 20px;
+            min-width: 60px;
+            flex: 1 0 auto;
+            max-width: 80px;
+        }
+
+        .no-form-btn {
+            background: linear-gradient(45deg, #28a745, #218838);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            max-width: 120px;
+            flex: 0 0 auto;
+        }
+
+        .no-form-btn:hover {
+            background: linear-gradient(45deg, #218838, #28a745);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .form-count-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.5);
+            background: linear-gradient(45deg, #495057, #6c757d);
+        }
+
+        .form-count-btn.selected-form, .no-form-btn.selected-form {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
         /* أنماط قسم إدارة أنواع الورق */
         .paper-types-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* زيادة العرض الأدنى */
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 15px; 
             margin-top: 15px; 
         }
@@ -233,7 +283,7 @@
         .paper-type-card { 
             background: rgba(255, 255, 255, 0.1); 
             border-radius: 10px; 
-            padding: 18px; /* زيادة الحشوة */
+            padding: 18px;
             text-align: center; 
             position: relative; 
             border: 2px solid #3b82f6; 
@@ -241,7 +291,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 140px; /* زيادة الارتفاع */
+            min-height: 140px;
         }
         
         .paper-type-card:hover { 
@@ -253,14 +303,14 @@
         .paper-name { 
             font-weight: bold; 
             margin-bottom: 8px; 
-            font-size: 1.4rem; /* زيادة حجم الخط */
+            font-size: 1.4rem;
             color: white; 
         }
         
         .paper-price { 
             color: #ff6b6b; 
             font-weight: bold; 
-            font-size: 1.3rem; /* زيادة حجم الخط */
+            font-size: 1.3rem;
             margin-bottom: 12px;
         }
         
@@ -271,13 +321,13 @@
         }
         
         .paper-action-btn { 
-            padding: 10px 15px; /* زيادة الحشوة */
+            padding: 10px 15px;
             border-radius: 5px; 
             border: none; 
             cursor: pointer; 
             font-weight: bold; 
             transition: all 0.3s ease; 
-            font-size: 1rem; /* زيادة حجم الخط */
+            font-size: 1rem;
             flex: 1;
         }
         
@@ -319,7 +369,7 @@
             background: rgba(59, 130, 246, 0.9); 
             padding: 4px 8px; 
             border-radius: 5px; 
-            font-size: 1rem; /* زيادة حجم الخط */
+            font-size: 1rem;
             color: white;
         }
         
@@ -328,7 +378,7 @@
             body {
                 padding: 10px;
                 align-items: stretch;
-                font-size: 16px; /* تعديل حجم الخط للهواتف */
+                font-size: 16px;
             }
             
             .container { 
@@ -366,12 +416,11 @@
                 min-width: 100px;
             }
             
-            .input-field, .btn, .formula-btn { 
+            .input-field, .btn, .formula-btn, .form-count-btn, .no-form-btn { 
                 padding: 16px; 
                 font-size: 1.1rem; 
             }
             
-            /* إصلاح عرض أنواع الورق - 2 بطاقات بجوار بعض */
             .paper-types-grid { 
                 grid-template-columns: repeat(2, 1fr); 
                 gap: 12px;
@@ -391,6 +440,18 @@
             
             .result-value {
                 font-size: 2rem;
+            }
+
+            .form-count-btn, .no-form-btn {
+                padding: 10px 16px;
+                font-size: 1rem;
+                min-width: 50px;
+                max-width: 70px;
+            }
+
+            .no-form-btn {
+                max-width: 100px;
+                flex: 0 0 auto;
             }
         }
         
@@ -431,7 +492,6 @@
                 min-width: 90px;
             }
             
-            /* تأكيد عرض 2 بطاقات بجوار بعض على الهواتف الصغيرة */
             .paper-types-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
@@ -463,6 +523,18 @@
             .paper-action-btn {
                 width: 100%;
                 padding: 8px 12px;
+            }
+
+            .form-count-btn, .no-form-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                min-width: 45px;
+                max-width: 60px;
+            }
+
+            .no-form-btn {
+                max-width: 90px;
+                flex: 0 0 auto;
             }
         }
         
@@ -498,7 +570,7 @@
         /* منع التكبير المفرط على الهواتف */
         @media (max-width: 768px) {
             input, select, textarea {
-                font-size: 16px !important; /* منع التكبير التلقائي في iOS */
+                font-size: 16px !important;
             }
         }
     </style>
@@ -564,10 +636,20 @@
                 <label for="numberOfBooks">عدد الدفاتر:</label>
                 <input type="number" id="numberOfBooks" class="input-field" placeholder="أدخل عدد الدفاتر" value="0" step="0.01">
             </div>
-            <button class="btn" onclick="calculateFormula()">احسب الناتج</button>
+
+            <!-- بداية: قسم اختيار عدد الفورم (معدل) -->
+            <div class="input-group">
+                <label>عدد الفورم (اختر "بدون" إذا لم ترد استخدام فورم):</label>
+                <div class="form-count-wrapper" id="formCountWrapper">
+                    <!-- سيتم إنشاء الأزرار بواسطة الجافاسكريبت -->
+                </div>
+            </div>
+            <!-- نهاية: قسم اختيار عدد الفورم -->
+
+            <button class="btn" onclick="calculateFormula()">احسب عدد الورق</button>
             <div class="result">
-                <h3>نتيجة المعادلة:</h3>
-                <div class="result-value" id="formulaResult">0.00</div>
+                <h3>عدد الورق:</h3>
+                <div class="result-value" id="formulaResult">0.00 ورقة</div>
                 <div class="formula-display" id="formulaDisplay">لم يتم اختيار معادلة</div>
             </div>
         </div>
@@ -592,7 +674,6 @@
             <div class="input-group">
                 <label for="paperPrice">سعر الورق (للورقة):</label>
                 <input type="number" id="paperPrice" class="input-field" value="0" step="0.01">
-                <!-- تم إزالة زر "تطبيق السعر" -->
             </div>
             <div class="input-group"><label for="numberOfZinc">عدد الزنكات:</label><input type="number" id="numberOfZinc" class="input-field" value="0" step="0.01"></div>
             <div class="input-group"><label for="numberOfPrints">عدد التراجات:</label><input type="number" id="numberOfPrints" class="input-field" value="0" step="0.01"></div>
@@ -624,6 +705,11 @@
             const paperTypeSelect = document.getElementById('paperTypeSelect');
             const paperPriceField = document.getElementById('paperPrice');
             const selectedPaperPrice = document.getElementById('selectedPaperPrice');
+
+            // عناصر عدد الفورم (جديد)
+            const formCountWrapper = document.getElementById('formCountWrapper');
+            let selectedFormCount = 1; // القيمة الافتراضية (بدون فورم)
+            let isNoFormSelected = true; // لتتبع حالة الزر "بدون"
 
             // ===================================================================
             // =================  2. تعريف المعادلات الأساسية والثابتة =================
@@ -955,7 +1041,7 @@
             }
 
             // ===================================================================
-            // =================  6. دوال الحسابات =================
+            // =================  6. دوال الحسابات (معدلة) =================
             // ===================================================================
 
             window.calculateFormula = function() {
@@ -967,9 +1053,12 @@
                 const formulaString = allFormulas[currentFormulaName];
                 try {
                     const result = eval(formulaString);
-                    const finalResult = result * numberOfBooks;
-                    document.getElementById('formulaResult').textContent = finalResult.toFixed(2);
-                    document.getElementById('formulaDisplay').textContent = `(${formulaString}) × ${numberOfBooks} = ${finalResult.toFixed(2)}`;
+                    // القسمة على عدد الفورم المختار (1 إذا كان "بدون")
+                    const finalResult = (result * numberOfBooks) / selectedFormCount;
+                    document.getElementById('formulaResult').textContent = finalResult.toFixed(2) + ' ورقة';
+                    let formText = (isNoFormSelected) ? 'بدون فورم' : `${selectedFormCount} فورم`;
+                    document.getElementById('formulaDisplay').textContent = 
+                        `(${formulaString}) × ${numberOfBooks} / ${(isNoFormSelected ? '1' : selectedFormCount)} = ${finalResult.toFixed(2)} ورقة (${formText})`;
                 } catch (error) {
                     alert('خطأ في المعادلة المدخلة. يرجى مراجعتها.');
                     console.error("Formula Error:", error);
@@ -983,14 +1072,62 @@
                 const numberOfPrints = parseFloat(document.getElementById('numberOfPrints').value) || 0;
                 const bindingPrice = parseFloat(document.getElementById('bindingPrice').value) || 0;
                 const totalPaperCost = numberOfPapers * paperPrice;
-                const totalZincCost = numberOfZinc * 50;
-                const totalPrintCost = numberOfPrints * 75;
+                // التعديل: سعر الزنكة 60، وسعر التراج 100
+                const totalZincCost = numberOfZinc * 60;
+                const totalPrintCost = numberOfPrints * 100;
                 const total = totalPaperCost + totalZincCost + totalPrintCost + bindingPrice;
                 document.getElementById('totalResult').textContent = total.toFixed(2) + ' جنيه';
             }
 
             // ===================================================================
-            // =================  7. ربط الأحداث والتشغيل الأولي =================
+            // =================  7. دوال إدارة عدد الفورم (معدلة) =================
+            // ===================================================================
+
+            function initFormCountButtons() {
+                formCountWrapper.innerHTML = '';
+
+                // زر "بدون فورم"
+                const noFormBtn = document.createElement('button');
+                noFormBtn.className = 'no-form-btn selected-form'; // مختار افتراضياً
+                noFormBtn.textContent = 'بدون';
+                noFormBtn.dataset.value = '1';
+                noFormBtn.onclick = function() {
+                    // إزالة التحديد من جميع الأزرار
+                    document.querySelectorAll('.form-count-btn, .no-form-btn').forEach(b => b.classList.remove('selected-form'));
+                    this.classList.add('selected-form');
+                    selectedFormCount = 1;
+                    isNoFormSelected = true;
+                };
+                formCountWrapper.appendChild(noFormBtn);
+
+                // أزرار 1 إلى 8
+                for (let i = 1; i <= 8; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = 'form-count-btn';
+                    if (i === 1) {
+                        // الزر 1 سيكون غير محدد افتراضياً لأن "بدون" هو المختار
+                        // لكننا نضيف نفس القيمة
+                    }
+                    btn.textContent = i;
+                    btn.dataset.value = i;
+                    btn.onclick = function() {
+                        // إزالة التحديد من جميع الأزرار
+                        document.querySelectorAll('.form-count-btn, .no-form-btn').forEach(b => b.classList.remove('selected-form'));
+                        this.classList.add('selected-form');
+                        selectedFormCount = parseInt(this.dataset.value);
+                        isNoFormSelected = false;
+                    };
+                    formCountWrapper.appendChild(btn);
+                }
+
+                // تعيين القيمة الافتراضية
+                selectedFormCount = 1;
+                isNoFormSelected = true;
+                // نترك زر "بدون" محدداً بالفعل (تمت إضافة class selected-form)
+            }
+
+            // ===================================================================
+            // =================  8. ربط الأحداث والتشغيل الأولي =================
             // ===================================================================
             addFormulaBtn.addEventListener('click', addFormula);
             addPaperBtn.addEventListener('click', addPaperType);
@@ -1011,6 +1148,7 @@
             // تحميل كل البيانات عند بدء تشغيل الصفحة
             loadFormulas();
             loadPaperTypes();
+            initFormCountButtons(); // تهيئة أزرار عدد الفورم
         });
     </script>
 </body>
