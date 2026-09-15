@@ -730,25 +730,43 @@
             const basePaperTypes = {
                 'paper_base_1': {
                     name: 'أصل+1',
-                    price: 9.90
+                    price: 7.25
                 },
                 'paper_base_2': {
                     name: 'أصل+2',
-                    price: 13.40
+                    price: 11.20
                 },
                 'paper_base_3': {
                     name: 'أصل+3',
-                    price: 16.90
+                    price: 15.15
                 },
                 'paper_base_4': {
                     name: 'أصل+4',
-                    price: 20.40
+                    price: 19.10
                 },
                 'paper_base_5': {
                     name: 'أصل+5',
-                    price: 23.90
+                    price: 23.05
+                    
                 }
+                  ,
+                'paper_base_6': {
+                    name: 'أصل+6',
+                    price: 27.00
+                }
+                ,
+                'paper_base_7': {
+                    name: 'أصل+7',
+                    price: 30.00
+                }
+                ,
+                'paper_base_8': {
+                    name: 'أصل+8',
+                    price: 34.90
+                }
+
             };
+            
 
             // متغيرات لحفظ الحالة
             let customFormulas = {};
@@ -1072,8 +1090,8 @@
                 const numberOfPrints = parseFloat(document.getElementById('numberOfPrints').value) || 0;
                 const bindingPrice = parseFloat(document.getElementById('bindingPrice').value) || 0;
                 const totalPaperCost = numberOfPapers * paperPrice;
-                // التعديل: سعر الزنكة 60، وسعر التراج 100
-                const totalZincCost = numberOfZinc * 60;
+                // التعديل: سعر الزنكة 70، وسعر التراج 100
+                const totalZincCost = numberOfZinc * 70;
                 const totalPrintCost = numberOfPrints * 100;
                 const total = totalPaperCost + totalZincCost + totalPrintCost + bindingPrice;
                 document.getElementById('totalResult').textContent = total.toFixed(2) + ' جنيه';
