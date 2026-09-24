@@ -1090,8 +1090,8 @@
                 const numberOfPrints = parseFloat(document.getElementById('numberOfPrints').value) || 0;
                 const bindingPrice = parseFloat(document.getElementById('bindingPrice').value) || 0;
                 const totalPaperCost = numberOfPapers * paperPrice;
-                // التعديل: سعر الزنكة 70، وسعر التراج 100
-                const totalZincCost = numberOfZinc * 70;
+                // التعديل: سعر الزنكة 65، وسعر التراج 100
+                const totalZincCost = numberOfZinc * 65;
                 const totalPrintCost = numberOfPrints * 100;
                 const total = totalPaperCost + totalZincCost + totalPrintCost + bindingPrice;
                 document.getElementById('totalResult').textContent = total.toFixed(2) + ' جنيه';
