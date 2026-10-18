@@ -136,7 +136,7 @@
             border-color: #3b82f6;
         }
 
-        /* أزرار المقاسات والفورم والإضافات */
+        /* أزرار المقاسات والفورم */
         .pills-container {
             display: flex;
             flex-wrap: wrap;
@@ -161,11 +161,6 @@
             background: linear-gradient(45deg, #2563eb, #3b82f6);
             border-color: #93c5fd;
             color: white;
-        }
-
-        .pill-btn.extra-pill.active {
-            background: linear-gradient(45deg, #0d9488, #14b8a6);
-            border-color: #5eead4;
         }
 
         /* منطقة حساب الورق والعداد (الكاونتر) */
@@ -519,23 +514,18 @@
             </div>
         </div>
 
-        <!-- 4. الإضافات (قص / خدمات) والنسبة المئوية -->
+        <!-- 4. الإضافات اليدوية والنسبة المئوية -->
         <div class="card">
-            <div class="card-title">➕ الإضافات (قص / تكسير / خدمات) والنسبة المئوية</div>
-            
-            <div class="input-group">
-                <label>اختر من الإضافات السريعة (يمكنك اختيار أكثر من واحدة):</label>
-                <div class="pills-container" id="extraPillsContainer"></div>
-            </div>
+            <div class="card-title">➕ الإضافات والنسبة المئوية</div>
 
             <div class="grid-2">
                 <div class="input-group" style="margin-bottom:0;">
                     <label>بيان الإضافات (اختياري):</label>
-                    <input type="text" id="extraNoteInput" class="input-field" placeholder="مثال: قص + سلوفان" oninput="calculateFinalTotal()">
+                    <input type="text" id="extraNoteInput" class="input-field" placeholder="مثال: قص  - تغليف" oninput="calculateFinalTotal()">
                 </div>
 
                 <div class="input-group" style="margin-bottom:0;">
-                    <label>إجمالي مبلغ الإضافات (جنيه):</label>
+                    <label>مبلغ الإضافات (جنيه):</label>
                     <input type="number" id="extraCostInput" class="input-field" value="0" step="1" placeholder="0" oninput="calculateFinalTotal()">
                 </div>
             </div>
@@ -649,19 +639,7 @@
             <div class="items-grid" id="bindingCardsContainer"></div>
         </div>
 
-        <!-- د) إدارة الإضافات الثابتة (قص، تكسير، ترقيم...) -->
-        <div class="card">
-            <div class="card-title">✂️ قائمة الإضافات السريعة (قص / تكسير / خدمات)</div>
-            <div class="grid-2">
-                <input type="text" id="newExtraName" class="input-field" placeholder="اسم الإضافة (مثال: قص ورق)">
-                <input type="number" id="newExtraPrice" class="input-field" placeholder="السعر الافتراضي (مثال: 50)" step="1">
-            </div>
-            <button class="btn-green" onclick="addExtra()">+ حفظ في قائمة الإضافات</button>
-
-            <div class="items-grid" id="extraCardsContainer"></div>
-        </div>
-
-        <!-- هـ) إدارة المقاسات والمعادلات -->
+        <!-- د) إدارة المقاسات والمعادلات -->
         <div class="card">
             <div class="card-title">📐 إدارة المقاسات والمعادلات</div>
             <div class="grid-3">
@@ -682,7 +660,7 @@
     </div>
 </div>
 
-<!-- نافذة منبثقة لتعديل الورق أو التجليد أو الإضافات أو المقاس -->
+<!-- نافذة منبثقة لتعديل الورق أو التجليد أو المقاس -->
 <div class="modal-overlay" id="editModal">
     <div class="modal-box">
         <div class="modal-title" id="modalTitle">تعديل البيانات</div>
@@ -746,23 +724,14 @@
         'b9': { name: '4*8', price: 1.50 }
     };
 
-    const defaultExtras = {
-        'e1': { name: 'قص ورق', price: 50 },
-        'e2': { name: 'تكسير / ريجة', price: 100 },
-        'e3': { name: 'ترقيم', price: 50 },
-        'e4': { name: 'سلوفان', price: 150 }
-    };
-
     let settings = {};
     let papers = {};
     let formulas = {};
     let bindings = {};
-    let extras = {};
 
     let currentFormula = '20*30';
     let currentTrajForm = 1;
     let lastSuggestedPaper = 0;
-    let selectedExtraIds = new Set();
 
     let lastCalcData = {};
     let editMode = '';
@@ -772,11 +741,10 @@
     // 2. التحميل والحفظ
     // =========================================================================
     function loadAll() {
-        settings = JSON.parse(localStorage.getItem('esraa_settings_v5')) || { ...defaultSettings };
-        papers   = JSON.parse(localStorage.getItem('esraa_papers_v5'))   || { ...defaultPapers };
-        formulas = JSON.parse(localStorage.getItem('esraa_formulas_v5')) || { ...defaultFormulas };
-        bindings = JSON.parse(localStorage.getItem('esraa_bindings_v5')) || { ...defaultBindings };
-        extras   = JSON.parse(localStorage.getItem('esraa_extras_v5'))   || { ...defaultExtras };
+        settings = JSON.parse(localStorage.getItem('esraa_settings_v6')) || { ...defaultSettings };
+        papers   = JSON.parse(localStorage.getItem('esraa_papers_v6'))   || { ...defaultPapers };
+        formulas = JSON.parse(localStorage.getItem('esraa_formulas_v6')) || { ...defaultFormulas };
+        bindings = JSON.parse(localStorage.getItem('esraa_bindings_v6')) || { ...defaultBindings };
 
         document.getElementById('setZincPrice').value = settings.zincPrice;
         document.getElementById('setTrajPrice').value = settings.trajPrice;
@@ -787,11 +755,10 @@
     }
 
     function saveAll() {
-        localStorage.setItem('esraa_settings_v5', JSON.stringify(settings));
-        localStorage.setItem('esraa_papers_v5', JSON.stringify(papers));
-        localStorage.setItem('esraa_formulas_v5', JSON.stringify(formulas));
-        localStorage.setItem('esraa_bindings_v5', JSON.stringify(bindings));
-        localStorage.setItem('esraa_extras_v5', JSON.stringify(extras));
+        localStorage.setItem('esraa_settings_v6', JSON.stringify(settings));
+        localStorage.setItem('esraa_papers_v6', JSON.stringify(papers));
+        localStorage.setItem('esraa_formulas_v6', JSON.stringify(formulas));
+        localStorage.setItem('esraa_bindings_v6', JSON.stringify(bindings));
     }
 
     function saveGeneralSettings() {
@@ -808,7 +775,6 @@
     function renderAll() {
         renderPapers();
         renderBindings();
-        renderExtras();
         renderFormulas();
     }
 
@@ -881,45 +847,6 @@
         if (prev && (bindings[prev] || prev === 'none')) sel.value = prev;
     }
 
-    function renderExtras() {
-        const pillsContainer = document.getElementById('extraPillsContainer');
-        const grid = document.getElementById('extraCardsContainer');
-
-        pillsContainer.innerHTML = '';
-        grid.innerHTML = '';
-
-        // زر مسح الإضافات
-        const clearBtn = document.createElement('button');
-        clearBtn.type = 'button';
-        clearBtn.className = 'pill-btn extra-pill' + (selectedExtraIds.size === 0 ? ' active' : '');
-        clearBtn.textContent = 'بدون إضافات (0)';
-        clearBtn.onclick = () => clearExtras();
-        pillsContainer.appendChild(clearBtn);
-
-        for (const id in extras) {
-            const ex = extras[id];
-            const isSelected = selectedExtraIds.has(id);
-
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'pill-btn extra-pill' + (isSelected ? ' active' : '');
-            btn.textContent = `${ex.name} (+${ex.price} ج)`;
-            btn.onclick = () => toggleExtraPill(id);
-            pillsContainer.appendChild(btn);
-
-            grid.innerHTML += `
-                <div class="item-card">
-                    <h4>${ex.name}</h4>
-                    <div class="price-tag">${ex.price.toFixed(2)} جنيه</div>
-                    <div class="card-actions">
-                        <button class="sm-btn edit-btn" onclick="openEditModal('extra', '${id}')">تعديل</button>
-                        <button class="sm-btn delete-btn" onclick="deleteItem('extra', '${id}')">حذف</button>
-                    </div>
-                </div>
-            `;
-        }
-    }
-
     function renderFormulas() {
         const pills = document.getElementById('calcFormulaPills');
         const grid = document.getElementById('formulaCardsContainer');
@@ -954,38 +881,8 @@
     }
 
     // =========================================================================
-    // 4. منطق الإضافات والنسبة والحسابات التلقائية
+    // 4. منطق النسبة والحسابات التلقائية
     // =========================================================================
-    function toggleExtraPill(id) {
-        if (selectedExtraIds.has(id)) {
-            selectedExtraIds.delete(id);
-        } else {
-            selectedExtraIds.add(id);
-        }
-
-        let totalExtra = 0;
-        let names = [];
-        selectedExtraIds.forEach(extId => {
-            if (extras[extId]) {
-                totalExtra += extras[extId].price;
-                names.push(extras[extId].name);
-            }
-        });
-
-        document.getElementById('extraCostInput').value = totalExtra;
-        document.getElementById('extraNoteInput').value = names.join(' + ');
-        renderExtras();
-        calculateFinalTotal();
-    }
-
-    function clearExtras() {
-        selectedExtraIds.clear();
-        document.getElementById('extraCostInput').value = 0;
-        document.getElementById('extraNoteInput').value = '';
-        renderExtras();
-        calculateFinalTotal();
-    }
-
     function setQuickPercent(pct) {
         document.getElementById('profitPercent').value = pct;
         highlightPercentBtns(pct);
@@ -1100,7 +997,7 @@
         const bindUnit = (bindId && bindings[bindId]) ? bindings[bindId].price : 0;
         const bindCost = numBooks * bindUnit;
 
-        const extraNote = document.getElementById('extraNoteInput').value.trim() || 'قص / خدمات';
+        const extraNote = document.getElementById('extraNoteInput').value.trim() || 'إضافات';
         const extraCost = parseFloat(document.getElementById('extraCostInput').value) || 0;
 
         // الإجمالي قبل النسبة
@@ -1175,7 +1072,6 @@
         let text = '';
 
         if (mode === 'summary') {
-            // 1. رسالة مختصرة للعميل: عدد الدفاتر وإجمالي السعر فقط
             text = `*مطبعة الإسراء* 🖨️\n` +
                    `━━━━━━━━━━━━━━\n` +
                    `📘 *عدد الدفاتر:* ${d.numBooks} دفتر\n` +
@@ -1183,7 +1079,6 @@
                    `━━━━━━━━━━━━━━\n` +
                    `💰 *إجمالي السعر:* ${d.grandTotal.toFixed(2)} جنيه`;
         } else {
-            // 2. رسالة بالتفاصيل الكاملة للشغلانة
             text = `*مطبعة الإسراء - تفاصيل حساب الشغلانة* 🖨️\n` +
                    `━━━━━━━━━━━━━━\n` +
                    `📘 *عدد الدفاتر:* ${d.numBooks} دفتر\n` +
@@ -1195,7 +1090,7 @@
                    `📚 *التجليد (${d.bindName}):* ${d.bindCost.toFixed(2)} ج\n`;
 
             if (d.extraCost > 0) {
-                text += `✂️ *الإضافات (${d.extraName}):* ${d.extraCost.toFixed(2)} ج\n`;
+                text += `➕ *الإضافات (${d.extraName}):* ${d.extraCost.toFixed(2)} ج\n`;
             }
             if (d.profitPercent > 0) {
                 text += `📊 *الإجمالي قبل النسبة:* ${d.subTotal.toFixed(2)} ج\n`;
@@ -1239,18 +1134,6 @@
         document.getElementById('newBindPrice').value = '';
     }
 
-    function addExtra() {
-        const name = document.getElementById('newExtraName').value.trim();
-        const price = parseFloat(document.getElementById('newExtraPrice').value);
-        if (!name || isNaN(price)) return alert('أدخل اسم وسعر الإضافة');
-
-        extras['e_' + Date.now()] = { name, price };
-        saveAll();
-        renderExtras();
-        document.getElementById('newExtraName').value = '';
-        document.getElementById('newExtraPrice').value = '';
-    }
-
     function addFormula() {
         const name = document.getElementById('newFormulaName').value.trim();
         const exp = document.getElementById('newFormulaExp').value.trim();
@@ -1288,14 +1171,6 @@
             document.getElementById('modalLabel2').textContent = 'سعر الدفتر:';
             document.getElementById('modalInput2').value = b.price;
             g3.style.display = 'none';
-        } else if (type === 'extra') {
-            const ex = extras[id];
-            document.getElementById('modalTitle').textContent = 'تعديل الإضافة';
-            document.getElementById('modalLabel1').textContent = 'اسم الإضافة:';
-            document.getElementById('modalInput1').value = ex.name;
-            document.getElementById('modalLabel2').textContent = 'السعر الافتراضي:';
-            document.getElementById('modalInput2').value = ex.price;
-            g3.style.display = 'none';
         } else if (type === 'formula') {
             const f = formulas[id];
             document.getElementById('modalTitle').textContent = 'تعديل المقاس';
@@ -1331,12 +1206,6 @@
                 price: parseFloat(val2) || 0
             };
             renderBindings();
-        } else if (editMode === 'extra') {
-            extras[editTargetId] = {
-                name: val1,
-                price: parseFloat(val2) || 0
-            };
-            renderExtras();
         } else if (editMode === 'formula') {
             const newForm = parseInt(val3, 10) || 1;
             if (val1 !== editTargetId) {
@@ -1360,7 +1229,6 @@
         if (!confirm('هل أنت متأكد من الحذف؟')) return;
         if (type === 'paper') { delete papers[id]; renderPapers(); }
         if (type === 'binding') { delete bindings[id]; renderBindings(); }
-        if (type === 'extra') { selectedExtraIds.delete(id); delete extras[id]; renderExtras(); }
         if (type === 'formula') { delete formulas[id]; renderFormulas(); }
         saveAll();
         onInputsChange(false);
