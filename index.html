@@ -3,1171 +3,1378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>مطبعة الإسراء - آلة حاسبة ديناميكية</title>
+    <title>مطبعة الإسراء - الحاسبة المتكاملة</title>
     <style>
-        /* الأنماط الأساسية */
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        }
-        
-        body { 
-            background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1e3a8a 100%); 
-            color: white; 
-            min-height: 100vh; 
-            padding: 15px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: flex-start;
-            overflow-x: hidden;
-            font-size: 18px;
-        }
-        
-        .container { 
-            max-width: 1000px; 
-            width: 100%; 
-            padding: 20px; 
-            background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(15px); 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            margin: 10px 0;
-        }
-        
-        .header { 
-            text-align: center; 
-            margin-bottom: 30px; 
-            padding: 25px; 
-            background: linear-gradient(45deg, #1e3a8a, #3b82f6, #1e40af); 
-            border-radius: 15px; 
-            animation: glow 3s infinite alternate; 
-        }
-        
-        @keyframes glow { 
-            0% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); } 
-            100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); } 
-        }
-        
-        .header h1 { 
-            font-size: 2.5rem;
-            font-weight: bold; 
-            color: white; 
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
-            line-height: 1.3;
-        }
-        
-        .section { 
-            margin-bottom: 25px; 
-            padding: 20px; 
-            background: rgba(255, 255, 255, 0.08); 
-            border-radius: 12px; 
-            border: 1px solid rgba(255, 255, 255, 0.15); 
-        }
-        
-        .section-title { 
-            color: #3b82f6; 
-            font-size: 1.8rem;
-            margin-bottom: 20px; 
-            text-align: center; 
-            font-weight: bold; 
-            border-bottom: 2px solid #3b82f6; 
-            padding-bottom: 8px; 
-        }
-        
-        .input-group { 
-            margin-bottom: 20px; 
-        }
-        
-        .input-group label { 
-            display: block; 
-            margin-bottom: 12px;
-            color: #93c5fd; 
-            font-weight: bold; 
-            font-size: 1.3rem;
-        }
-        
-        .input-field, .select-field { 
-            width: 100%; 
-            padding: 18px;
-            border: 2px solid #3b82f6; 
-            border-radius: 10px; 
-            background: rgba(255, 255, 255, 0.1); 
-            color: white; 
-            font-size: 1.2rem;
-            transition: all 0.3s ease; 
-        }
-        
-        .input-field:focus, .select-field:focus { 
-            outline: none; 
-            border-color: #ff6b6b; 
-            background: rgba(255, 255, 255, 0.15); 
-            transform: scale(1.02); 
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); 
-        }
-        
-        .btn { 
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
-            color: white; 
-            border: none; 
-            padding: 20px;
-            border-radius: 10px; 
-            font-size: 1.4rem;
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            width: 100%; 
-            margin-top: 15px; 
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3); 
-        }
-        
-        .btn:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5); 
-            background: linear-gradient(45deg, #4ecdc4, #ff6b6b); 
-        }
-        
-        .result { 
-            margin-top: 25px; 
-            padding: 20px; 
-            background: rgba(59, 130, 246, 0.2); 
-            border-radius: 12px; 
-            border-left: 4px solid #3b82f6; 
-        }
-        
-        .result h3 { 
-            color: #93c5fd; 
-            margin-bottom: 12px; 
-            font-size: 1.5rem;
-            text-align: center; 
-        }
-        
-        .result-value { 
-            font-size: 2.5rem;
-            font-weight: bold; 
-            color: #ff6b6b; 
-            text-align: center; 
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
-            word-break: break-word;
-        }
-        
-        .formula-display { 
-            background: rgba(255, 255, 255, 0.1); 
-            padding: 12px; 
-            border-radius: 8px; 
-            margin-top: 12px; 
-            text-align: center; 
-            color: #93c5fd; 
-            font-size: 1.1rem;
-            word-break: break-word;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* أنماط القسم الجديد لإدارة المعادلات */
-        .add-formula-form { 
-            padding: 15px; 
-            background: rgba(0,0,0,0.2); 
-            border-radius: 12px; 
-            margin-bottom: 25px; 
-        }
-        
-        .add-btn { 
-            background: linear-gradient(45deg, #28a745, #218838); 
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); 
-        }
-        
-        .add-btn:hover { 
-            background: linear-gradient(45deg, #218838, #28a745); 
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5); 
-        }
-        
-        .sub-title { 
-            text-align: center; 
-            color: #93c5fd; 
-            font-size: 1.5rem;
-            margin-bottom: 15px; 
-        }
-        
-        /* أنماط المعادلات المحفوظة - الشكل الأصلي */
-        .formula-buttons { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 10px; 
-            margin: 20px 0; 
-            justify-content: center;
-        }
-        
-        .formula-btn { 
-            background: linear-gradient(45deg, #3b82f6, #1e40af); 
-            border: none; 
-            border-radius: 8px; 
-            color: white; 
-            font-size: 1.3rem;
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); 
-            padding: 15px 25px;
-            min-width: 120px;
-        }
-        
-        .formula-btn:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); 
-            background: linear-gradient(45deg, #1e40af, #3b82f6); 
-        }
-        
-        .formula-btn.selected { 
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
-        }
-
-        /* أنماط أزرار عدد الفورم (معدل) */
-        .form-count-wrapper {
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 12px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 8px;
-            align-items: center;
             justify-content: center;
+            align-items: flex-start;
         }
 
-        .form-count-btn, .no-form-btn {
-            background: linear-gradient(45deg, #6c757d, #495057);
-            border: none;
-            border-radius: 8px;
+        .container {
+            max-width: 820px;
+            width: 100%;
+            background: rgba(30, 41, 59, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 16px;
+            background: linear-gradient(45deg, #1e40af, #3b82f6);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
             color: white;
-            font-size: 1.2rem;
+        }
+
+        /* التبويبات */
+        .tabs-nav {
+            display: flex;
+            background: #0f172a;
+            border-bottom: 2px solid #334155;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 10px;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
-            padding: 12px 20px;
-            min-width: 60px;
-            flex: 1 0 auto;
-            max-width: 80px;
+            transition: 0.2s;
+            border-bottom: 3px solid transparent;
         }
 
-        .no-form-btn {
-            background: linear-gradient(45deg, #28a745, #218838);
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-            max-width: 120px;
-            flex: 0 0 auto;
+        .tab-btn.active {
+            color: #60a5fa;
+            border-bottom-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
         }
 
-        .no-form-btn:hover {
-            background: linear-gradient(45deg, #218838, #28a745);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .form-count-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.5);
-            background: linear-gradient(45deg, #495057, #6c757d);
-        }
-
-        .form-count-btn.selected-form, .no-form-btn.selected-form {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-        }
-
-        /* أنماط قسم إدارة أنواع الورق */
-        .paper-types-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px; 
-            margin-top: 15px; 
-        }
-        
-        .paper-type-card { 
-            background: rgba(255, 255, 255, 0.1); 
-            border-radius: 10px; 
+        .tab-content {
+            display: none;
             padding: 18px;
-            text-align: center; 
-            position: relative; 
-            border: 2px solid #3b82f6; 
-            transition: all 0.3s ease; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 140px;
         }
-        
-        .paper-type-card:hover { 
-            transform: translateY(-3px); 
-            border-color: #ff6b6b; 
-            box-shadow: 0 8px 15px rgba(255, 107, 107, 0.3); 
+
+        .tab-content.active {
+            display: block;
         }
-        
-        .paper-name { 
-            font-weight: bold; 
-            margin-bottom: 8px; 
-            font-size: 1.4rem;
-            color: white; 
+
+        /* الكروت */
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
-        
-        .paper-price { 
-            color: #ff6b6b; 
-            font-weight: bold; 
-            font-size: 1.3rem;
+
+        .card-title {
+            color: #60a5fa;
+            font-size: 1.15rem;
+            font-weight: bold;
+            margin-bottom: 14px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(96, 165, 250, 0.25);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .input-group {
             margin-bottom: 12px;
         }
-        
-        .paper-actions { 
-            display: flex; 
-            justify-content: space-between; 
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #cbd5e1;
+            font-weight: bold;
+            font-size: 0.98rem;
+        }
+
+        .input-field, .select-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #334155;
+            border-radius: 10px;
+            background: #0f172a;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .input-field:focus, .select-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        /* أزرار المقاسات والفورم والإضافات */
+        .pills-container {
+            display: flex;
+            flex-wrap: wrap;
             gap: 8px;
         }
-        
-        .paper-action-btn { 
-            padding: 10px 15px;
-            border-radius: 5px; 
-            border: none; 
-            cursor: pointer; 
-            font-weight: bold; 
-            transition: all 0.3s ease; 
-            font-size: 1rem;
-            flex: 1;
-        }
-        
-        .edit-btn { 
-            background: #3b82f6; 
-            color: white; 
-        }
-        
-        .edit-btn:hover { 
-            background: #1e40af; 
-        }
-        
-        .delete-paper-btn { 
-            background: #dc3545; 
-            color: white; 
-        }
-        
-        .delete-paper-btn:hover { 
-            background: #c82333; 
+
+        .pill-btn {
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            color: #e2e8f0;
+            padding: 10px 14px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1 0 auto;
+            text-align: center;
+            transition: 0.2s;
         }
 
-        /* تحسينات لقائمة اختيار الورق - خلفية بيضاء ونص داكن */
-        .paper-select-container { 
-            position: relative; 
-        }
-        
-        .paper-select-container .select-field { 
-            background: white; 
-            color: #333; 
-            padding-right: 45px; 
-            border: 2px solid #3b82f6;
-        }
-        
-        .paper-select-info { 
-            position: absolute; 
-            left: 12px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            background: rgba(59, 130, 246, 0.9); 
-            padding: 4px 8px; 
-            border-radius: 5px; 
-            font-size: 1rem;
+        .pill-btn.active {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            border-color: #93c5fd;
             color: white;
         }
-        
-        /* تعديلات للشاشات الصغيرة */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-                align-items: stretch;
-                font-size: 16px;
-            }
-            
-            .container { 
-                padding: 15px; 
-                margin: 5px 0;
-                border-radius: 12px;
-            }
-            
-            .header { 
-                margin-bottom: 20px; 
-                padding: 20px; 
-            }
-            
-            .header h1 { 
-                font-size: 2rem; 
-            }
-            
-            .section { 
-                margin-bottom: 20px; 
-                padding: 15px; 
-            }
-            
-            .section-title { 
-                font-size: 1.5rem; 
-                margin-bottom: 15px; 
-            }
-            
-            .formula-buttons { 
-                gap: 8px;
-            }
-            
-            .formula-btn {
-                padding: 12px 18px;
-                font-size: 1.2rem;
-                min-width: 100px;
-            }
-            
-            .input-field, .btn, .formula-btn, .form-count-btn, .no-form-btn { 
-                padding: 16px; 
-                font-size: 1.1rem; 
-            }
-            
-            .paper-types-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 12px;
-            }
-            
-            .paper-type-card {
-                padding: 15px;
-                min-height: 130px;
-            }
-            
-            .paper-select-info { 
-                position: static; 
-                transform: none; 
-                margin-top: 8px; 
-                display: inline-block;
-            }
-            
-            .result-value {
-                font-size: 2rem;
-            }
 
-            .form-count-btn, .no-form-btn {
-                padding: 10px 16px;
-                font-size: 1rem;
-                min-width: 50px;
-                max-width: 70px;
-            }
+        .pill-btn.extra-pill.active {
+            background: linear-gradient(45deg, #0d9488, #14b8a6);
+            border-color: #5eead4;
+        }
 
-            .no-form-btn {
-                max-width: 100px;
-                flex: 0 0 auto;
-            }
+        /* منطقة حساب الورق والعداد (الكاونتر) */
+        .paper-calc-box {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px dashed #3b82f6;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
         }
-        
-        /* تعديلات للشاشات الصغيرة جداً (الهواتف الصغيرة) */
-        @media (max-width: 480px) {
-            body {
-                padding: 8px;
-                font-size: 16px;
-            }
-            
-            .container {
-                padding: 12px;
-            }
-            
-            .header {
-                padding: 15px;
-            }
-            
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .section {
-                padding: 12px;
-            }
-            
-            .section-title {
-                font-size: 1.4rem;
-            }
-            
-            .formula-buttons {
-                gap: 6px;
-            }
-            
-            .formula-btn {
-                padding: 10px 15px;
-                font-size: 1.1rem;
-                min-width: 90px;
-            }
-            
-            .paper-types-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            
-            .paper-type-card {
-                padding: 12px;
-                min-height: 120px;
-            }
-            
-            .input-group label {
-                font-size: 1.2rem;
-            }
-            
-            .btn {
-                padding: 16px;
-                font-size: 1.2rem;
-            }
-            
-            .result-value {
-                font-size: 1.8rem;
-            }
-            
-            .paper-actions {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .paper-action-btn {
-                width: 100%;
-                padding: 8px 12px;
-            }
 
-            .form-count-btn, .no-form-btn {
-                padding: 8px 12px;
-                font-size: 0.9rem;
-                min-width: 45px;
-                max-width: 60px;
-            }
+        .calc-val-text {
+            font-size: 1.05rem;
+            color: #93c5fd;
+        }
 
-            .no-form-btn {
-                max-width: 90px;
-                flex: 0 0 auto;
-            }
+        .calc-val-text strong {
+            font-size: 1.35rem;
+            color: #4ade80;
         }
-        
-        /* تعديلات للوضع الأفقي على الهواتف */
-        @media (max-height: 500px) and (orientation: landscape) {
-            body {
-                align-items: flex-start;
-                padding: 10px;
-            }
-            
-            .container {
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-            
-            .section {
-                margin-bottom: 15px;
-                padding: 15px;
-            }
-            
-            .input-group {
-                margin-bottom: 15px;
-            }
+
+        .use-paper-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.95rem;
         }
-        
-        /* تحسينات إضافية للشاشات الكبيرة */
-        @media (min-width: 1200px) {
-            .container {
-                max-width: 1100px;
-            }
+
+        .counter-wrapper {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-top: 8px;
+            flex-wrap: wrap;
         }
-        
-        /* منع التكبير المفرط على الهواتف */
-        @media (max-width: 768px) {
-            input, select, textarea {
-                font-size: 16px !important;
-            }
+
+        .counter-btn {
+            background: #334155;
+            color: white;
+            border: 1px solid #475569;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .counter-btn.plus { background: #059669; border-color: #10b981; }
+        .counter-btn.minus { background: #dc2626; border-color: #ef4444; }
+
+        /* ملخص التراجات السريع */
+        .traj-badge {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid #10b981;
+            color: #a7f3d0;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* أزرار النسبة السريعة */
+        .quick-percent-bar {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pct-btn {
+            flex: 1;
+            background: #1e293b;
+            border: 1px solid #475569;
+            color: #fbbf24;
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .pct-btn.active {
+            background: #d97706;
+            color: white;
+            border-color: #fbbf24;
+        }
+
+        /* الفاتورة النهائية */
+        .invoice-box {
+            background: linear-gradient(135deg, #1e3a8a, #0f172a);
+            border: 2px solid #3b82f6;
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .invoice-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+            font-size: 1.05rem;
+        }
+
+        .invoice-total {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4ade80;
+            text-align: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* أزرار مشاركة واتساب */
+        .whatsapp-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .wa-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .wa-btn.summary {
+            background: linear-gradient(45deg, #16a34a, #22c55e);
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .wa-btn.detailed {
+            background: linear-gradient(45deg, #0d9488, #14b8a6);
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+        }
+
+        .wa-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
+
+        /* بطاقات الإعدادات */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .item-card {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .item-card h4 {
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .item-card .price-tag {
+            color: #38bdf8;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .sm-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .edit-btn { background: #2563eb; }
+        .delete-btn { background: #dc2626; }
+
+        .btn-green {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        /* نافذة التعديل (Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-box {
+            background: #1e293b;
+            border: 2px solid #3b82f6;
+            border-radius: 14px;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            color: #60a5fa;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>مطبعة الإسراء</h1>
-        </header>
 
-        <!-- قسم إدارة أنواع الورق - تم نقله للأعلى -->
-        <div class="section">
-            <h2 class="section-title">إدارة أنواع الورق</h2>
+<div class="container">
+    <header class="header">
+        <h1>مطبعة الإسراء</h1>
+    </header>
+
+    <!-- شريط الصفحات -->
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('calcTab', this)">🧮 الحاسبة السريعة</button>
+        <button class="tab-btn" onclick="switchTab('settingsTab', this)">⚙️ الإعدادات والأسعار</button>
+    </nav>
+
+    <!-- ==================== 1. صفحة الحاسبة السريعة ==================== -->
+    <div id="calcTab" class="tab-content active">
+
+        <!-- 1. الدفاتر ونوع الورق -->
+        <div class="card">
+            <div class="grid-3">
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>عدد الدفاتر:</label>
+                    <input type="number" id="numBooks" class="input-field" value="100" min="1" oninput="onInputsChange(true)">
+                </div>
+
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>نوع الورق:</label>
+                    <select id="calcPaperSelect" class="select-field" onchange="onPaperChange()"></select>
+                </div>
+
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>سعر الورقة:</label>
+                    <input type="number" id="calcPaperPrice" class="input-field" step="0.01" oninput="calculateFinalTotal()">
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. المقاس وعدد الورق المطلوب -->
+        <div class="card">
+            <div class="card-title">مقاس الشغلانة وعدد الورق</div>
             
-            <div class="add-formula-form">
-                <div class="input-group">
-                    <label for="paperName">اسم نوع الورق:</label>
-                    <input type="text" id="paperName" class="input-field" placeholder="مثال: أصل+1">
-                </div>
-                <div class="input-group">
-                    <label for="paperPriceInput">سعر الورقة:</label>
-                    <input type="number" id="paperPriceInput" class="input-field" placeholder="مثال: 9.90" step="0.01">
-                </div>
-                <button class="btn add-btn" id="addPaperBtn">أضف نوع ورق جديد</button>
+            <div class="input-group">
+                <div class="pills-container" id="calcFormulaPills"></div>
             </div>
 
-            <h3 class="sub-title">أنواع الورق المتاحة</h3>
-            <div class="paper-types-grid" id="paperTypesContainer">
-                <!-- بطاقات أنواع الورق ستتم إضافتها هنا بواسطة الجافاسكريبت -->
+            <!-- ناتج المعادلة التلقائي + زر النسخ -->
+            <div class="paper-calc-box">
+                <div class="calc-val-text">
+                    الورق المحسوب بالمعادلة: <strong id="suggestedPaperText">0</strong> ورقة
+                </div>
+                <button type="button" class="use-paper-btn" onclick="applySuggestedPaper()">📋 نسخ الرقم للخانة</button>
+            </div>
+
+            <!-- خانة عدد الورق اليدوية + الكاونتر -->
+            <div class="input-group" style="margin-bottom: 0;">
+                <label>عدد الورق المطلوب (يدوي أو بالكاونتر):</label>
+                <input type="number" id="manualPapersInput" class="input-field" value="0" step="0.5" oninput="calculateFinalTotal()">
+                
+                <div class="counter-wrapper">
+                    <button type="button" class="counter-btn plus" onclick="adjustPaperCount(1)">+1 ورقة</button>
+                    <button type="button" class="counter-btn plus" onclick="adjustPaperCount(2)">+2</button>
+                    <button type="button" class="counter-btn plus" onclick="adjustPaperCount(5)">+5</button>
+                    <button type="button" class="counter-btn plus" onclick="adjustPaperCount(10)">+10</button>
+                    <button type="button" class="counter-btn minus" onclick="adjustPaperCount(-1)">-1</button>
+                    <button type="button" class="counter-btn minus" onclick="adjustPaperCount(-5)">-5</button>
+                </div>
             </div>
         </div>
 
-        <!-- قسم إدارة المعادلات -->
-        <div class="section">
-            <h2 class="section-title">إدارة المعادلات</h2>
+        <!-- 3. الزنكات والتراجات والتجليد -->
+        <div class="card">
+            <div class="grid-2">
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>عدد الزنكات:</label>
+                    <input type="number" id="numZinc" class="input-field" value="1" min="0" oninput="calculateFinalTotal()">
+                </div>
+
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>قسمة التراج على (عدد الفورم):</label>
+                    <div class="pills-container" id="trajFormPills">
+                        <button type="button" class="pill-btn active" data-form="1" onclick="setTrajForm(1)">1</button>
+                        <button type="button" class="pill-btn" data-form="2" onclick="setTrajForm(2)">2</button>
+                        <button type="button" class="pill-btn" data-form="3" onclick="setTrajForm(3)">3</button>
+                        <button type="button" class="pill-btn" data-form="4" onclick="setTrajForm(4)">4</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="traj-badge">
+                <span>عدد التراجات المحسوب تلقائياً:</span>
+                <strong id="autoTrajDisplay" style="font-size: 1.3rem; color: #4ade80;">0 تراج</strong>
+            </div>
+
+            <div class="input-group" style="margin-top: 14px; margin-bottom:0;">
+                <label>نوع التجليد (يختار تلقائياً مع المقاس):</label>
+                <select id="calcBindingSelect" class="select-field" onchange="calculateFinalTotal()"></select>
+            </div>
+        </div>
+
+        <!-- 4. الإضافات (قص / خدمات) والنسبة المئوية -->
+        <div class="card">
+            <div class="card-title">➕ الإضافات (قص / تكسير / خدمات) والنسبة المئوية</div>
             
-            <div class="add-formula-form">
-                <div class="input-group">
-                    <label for="formulaName">اسم المعادلة الجديدة (الاختصار):</label>
-                    <input type="text" id="formulaName" class="input-field" placeholder="مثال: 2*11 أو ربع فرخ">
-                </div>
-                <div class="input-group">
-                    <label for="formulaValue">المعادلة الحقيقية:</label>
-                    <input type="text" id="formulaValue" class="input-field" placeholder="مثال: (50 / 2) / 11">
-                </div>
-                <button class="btn add-btn" id="addFormulaBtn">أضف معادلة جديدة</button>
+            <div class="input-group">
+                <label>اختر من الإضافات السريعة (يمكنك اختيار أكثر من واحدة):</label>
+                <div class="pills-container" id="extraPillsContainer"></div>
             </div>
 
-            <h3 class="sub-title">المعادلات المحفوظة</h3>
-            <div class="formula-buttons" id="formulaButtonsContainer">
-                <!-- الأزرار ستتم إضافتها هنا بواسطة الجافاسكريبت -->
+            <div class="grid-2">
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>بيان الإضافات (اختياري):</label>
+                    <input type="text" id="extraNoteInput" class="input-field" placeholder="مثال: قص + سلوفان" oninput="calculateFinalTotal()">
+                </div>
+
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>إجمالي مبلغ الإضافات (جنيه):</label>
+                    <input type="number" id="extraCostInput" class="input-field" value="0" step="1" placeholder="0" oninput="calculateFinalTotal()">
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-top: 14px; margin-bottom:0;">
+                <label>النسبة المئوية فوق إجمالي الشغلانة (%):</label>
+                <input type="number" id="profitPercent" class="input-field" value="0" min="0" step="1" placeholder="مثال: 10 أو 15" oninput="onManualPercentInput()">
+                <div class="quick-percent-bar" id="quickPercentBar">
+                    <button type="button" class="pct-btn active" data-pct="0" onclick="setQuickPercent(0)">بدون (0%)</button>
+                    <button type="button" class="pct-btn" data-pct="5" onclick="setQuickPercent(5)">+5%</button>
+                    <button type="button" class="pct-btn" data-pct="10" onclick="setQuickPercent(10)">+10%</button>
+                    <button type="button" class="pct-btn" data-pct="15" onclick="setQuickPercent(15)">+15%</button>
+                    <button type="button" class="pct-btn" data-pct="20" onclick="setQuickPercent(20)">+20%</button>
+                    <button type="button" class="pct-btn" data-pct="25" onclick="setQuickPercent(25)">+25%</button>
+                </div>
             </div>
         </div>
 
-        <!-- قسم الحسابات -->
-        <div class="section">
-            <h2 class="section-title">الحسابات</h2>
-            <div class="input-group">
-                <label for="selectedFormula">المعادلة المختارة:</label>
-                <input type="text" id="selectedFormula" class="input-field" readonly placeholder="اختر معادلة من الأعلى">
+        <!-- 5. النتيجة والإجمالي الكلي + مشاركة واتساب -->
+        <div class="invoice-box">
+            <div class="invoice-row">
+                <span>حساب الورق (<span id="resPaperCount">0</span> ورقة):</span>
+                <strong id="resPaperCost">0.00 ج</strong>
             </div>
-            <div class="input-group">
-                <label for="numberOfBooks">عدد الدفاتر:</label>
-                <input type="number" id="numberOfBooks" class="input-field" placeholder="أدخل عدد الدفاتر" value="0" step="0.01">
+            <div class="invoice-row">
+                <span>حساب التراجات (<span id="resTrajCount">0</span> تراج):</span>
+                <strong id="resTrajCost">0.00 ج</strong>
+            </div>
+            <div class="invoice-row">
+                <span>حساب الزنكات (<span id="resZincCount">0</span> زنكة):</span>
+                <strong id="resZincCost">0.00 ج</strong>
+            </div>
+            <div class="invoice-row">
+                <span>حساب التجليد (<span id="resBindBooks">0</span> دفتر):</span>
+                <strong id="resBindCost">0.00 ج</strong>
+            </div>
+            <div class="invoice-row" id="resExtraRow" style="display: none; color: #38bdf8;">
+                <span>الإضافات (<span id="resExtraName">قص/خدمات</span>):</span>
+                <strong id="resExtraCost">0.00 ج</strong>
+            </div>
+            <div class="invoice-row" id="resSubTotalRow" style="display: none; color: #cbd5e1;">
+                <span>إجمالي الشغلانة قبل النسبة:</span>
+                <strong id="resSubTotalCost">0.00 ج</strong>
+            </div>
+            <div class="invoice-row" id="resProfitRow" style="display: none; color: #fbbf24;">
+                <span>قيمة النسبة المضافة (<span id="resProfitPct">0</span>%):</span>
+                <strong id="resProfitCost">0.00 ج</strong>
             </div>
 
-            <!-- بداية: قسم اختيار عدد الفورم (معدل) -->
-            <div class="input-group">
-                <label>عدد الفورم (اختر "بدون" إذا لم ترد استخدام فورم):</label>
-                <div class="form-count-wrapper" id="formCountWrapper">
-                    <!-- سيتم إنشاء الأزرار بواسطة الجافاسكريبت -->
-                </div>
+            <div class="invoice-total">
+                الإجمالي النهائي: <span id="grandTotalText">0.00</span> جنيه
             </div>
-            <!-- نهاية: قسم اختيار عدد الفورم -->
 
-            <button class="btn" onclick="calculateFormula()">احسب عدد الورق</button>
-            <div class="result">
-                <h3>عدد الورق:</h3>
-                <div class="result-value" id="formulaResult">0.00 ورقة</div>
-                <div class="formula-display" id="formulaDisplay">لم يتم اختيار معادلة</div>
+            <!-- أزرار الواتساب -->
+            <div class="whatsapp-actions">
+                <button type="button" class="wa-btn summary" onclick="shareWhatsApp('summary')">
+                    💬 مشاركة الملخص (الدفاتر والإجمالي فقط)
+                </button>
+                <button type="button" class="wa-btn detailed" onclick="shareWhatsApp('detailed')">
+                    📋 مشاركة التفاصيل الكاملة للشغلانة
+                </button>
             </div>
         </div>
 
-        <!-- قسم التكاليف الإضافية -->
-        <div class="section">
-            <h2 class="section-title">التكاليف الإضافية</h2>
-            <div class="input-group">
-                <label for="paperTypeSelect">نوع الورق:</label>
-                <div class="paper-select-container">
-                    <select id="paperTypeSelect" class="select-field">
-                        <option value="">اختر نوع الورق</option>
-                        <!-- سيتم تعبئة الخيارات بواسطة الجافاسكريبت -->
-                    </select>
-                    <div class="paper-select-info" id="selectedPaperPrice">السعر: 0.00 جنيه</div>
-                </div>
-            </div>
-            <div class="input-group">
-                <label for="numberOfPapers">عدد الورق:</label>
-                <input type="number" id="numberOfPapers" class="input-field" value="0" step="0.01">
-            </div>
-            <div class="input-group">
-                <label for="paperPrice">سعر الورق (للورقة):</label>
-                <input type="number" id="paperPrice" class="input-field" value="0" step="0.01">
-            </div>
-            <div class="input-group"><label for="numberOfZinc">عدد الزنكات:</label><input type="number" id="numberOfZinc" class="input-field" value="0" step="0.01"></div>
-            <div class="input-group"><label for="numberOfPrints">عدد التراجات:</label><input type="number" id="numberOfPrints" class="input-field" value="0" step="0.01"></div>
-            <div class="input-group"><label for="bindingPrice">سعر التجليد:</label><input type="number" id="bindingPrice" class="input-field" value="0" step="0.01"></div>
-            <button class="btn" onclick="calculateTotal()">احسب الإجمالي الكلي</button>
-            <div class="result">
-                <h3>الإجمالي الكلي:</h3>
-                <div class="result-value" id="totalResult">0.00 جنيه</div>
-            </div>
-        </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // ===================================================================
-            // =================  1. تحديد كل العناصر المهمة في الصفحة =================
-            // ===================================================================
-            const formulaNameInput = document.getElementById('formulaName');
-            const formulaValueInput = document.getElementById('formulaValue');
-            const addFormulaBtn = document.getElementById('addFormulaBtn');
-            const formulaButtonsContainer = document.getElementById('formulaButtonsContainer');
-            const selectedFormulaInput = document.getElementById('selectedFormula');
-            
-            // عناصر إدارة الورق
-            const paperNameInput = document.getElementById('paperName');
-            const paperPriceInput = document.getElementById('paperPriceInput');
-            const addPaperBtn = document.getElementById('addPaperBtn');
-            const paperTypesContainer = document.getElementById('paperTypesContainer');
-            const paperTypeSelect = document.getElementById('paperTypeSelect');
-            const paperPriceField = document.getElementById('paperPrice');
-            const selectedPaperPrice = document.getElementById('selectedPaperPrice');
+    <!-- ==================== 2. صفحة الإعدادات والأسعار ==================== -->
+    <div id="settingsTab" class="tab-content">
 
-            // عناصر عدد الفورم (جديد)
-            const formCountWrapper = document.getElementById('formCountWrapper');
-            let selectedFormCount = 1; // القيمة الافتراضية (بدون فورم)
-            let isNoFormSelected = true; // لتتبع حالة الزر "بدون"
+        <!-- أ) الثوابت العامة (الزنكة، التراج، ورق الدفتر) -->
+        <div class="card">
+            <div class="card-title">⚙️ الأسعار والثوابت العامة</div>
+            <div class="grid-3">
+                <div class="input-group">
+                    <label>سعر الزنكة الواحدة (جنيه):</label>
+                    <input type="number" id="setZincPrice" class="input-field" value="65" oninput="saveGeneralSettings()">
+                </div>
+                <div class="input-group">
+                    <label>سعر التراج الواحد (جنيه):</label>
+                    <input type="number" id="setTrajPrice" class="input-field" value="100" oninput="saveGeneralSettings()">
+                </div>
+                <div class="input-group">
+                    <label>عدد ورق الدفتر الثابت:</label>
+                    <input type="number" id="setSheetsPerBook" class="input-field" value="50" oninput="saveGeneralSettings()">
+                </div>
+            </div>
+        </div>
 
-            // ===================================================================
-            // =================  2. تعريف المعادلات الأساسية والثابتة =================
-            // ===================================================================
-            const baseFormulas = {
-                '11*2': '(50 / 2) / 11',
-                '20*30': '50 / 11',
-                '11*4': '(50 / 4) / 11',
-                '2*9': '(50 / 9) / 2',
-                '9': '50 / 9',
-                '9*4': '(50 / 9) / 4',
-                '2*8': '(50 / 8) / 2',
-                '8': '50 / 8',
-                '4*8': '(50 / 8) / 4'
-            };
+        <!-- ب) إدارة أنواع الورق -->
+        <div class="card">
+            <div class="card-title">📄 أنواع الورق المتاحة</div>
+            <div class="grid-3">
+                <input type="text" id="newPaperName" class="input-field" placeholder="الاسم (مثال: أصل+1)">
+                <input type="number" id="newPaperPrice" class="input-field" placeholder="السعر (مثال: 7.25)" step="0.01">
+                <input type="number" id="newPaperCopies" class="input-field" placeholder="عدد النسخ (مثال: 2)">
+            </div>
+            <button class="btn-green" onclick="addPaper()">+ إضافة نوع ورق جديد</button>
 
-            // أنواع الورق الأساسية
-            const basePaperTypes = {
-                'paper_base_1': {
-                    name: 'أصل+1',
-                    price: 7.25
-                },
-                'paper_base_2': {
-                    name: 'أصل+2',
-                    price: 11.20
-                },
-                'paper_base_3': {
-                    name: 'أصل+3',
-                    price: 15.15
-                },
-                'paper_base_4': {
-                    name: 'أصل+4',
-                    price: 19.10
-                },
-                'paper_base_5': {
-                    name: 'أصل+5',
-                    price: 23.05
-                    
-                }
-                  ,
-                'paper_base_6': {
-                    name: 'أصل+6',
-                    price: 27.00
-                }
-                ,
-                'paper_base_7': {
-                    name: 'أصل+7',
-                    price: 30.00
-                }
-                ,
-                'paper_base_8': {
-                    name: 'أصل+8',
-                    price: 34.90
-                }
+            <div class="items-grid" id="paperCardsContainer"></div>
+        </div>
 
-            };
-            
+        <!-- ج) إدارة أسعار التجليد -->
+        <div class="card">
+            <div class="card-title">📚 قائمة أسعار التجليد (سمّيه بنفس اسم المقاس ليربط تلقائياً)</div>
+            <div class="grid-2">
+                <input type="text" id="newBindName" class="input-field" placeholder="اسم المقاس (مثال: 20*30 أو 11*2)">
+                <input type="number" id="newBindPrice" class="input-field" placeholder="سعر الدفتر (مثال: 3)" step="0.1">
+            </div>
+            <button class="btn-green" onclick="addBinding()">+ إضافة سعر تجليد</button>
 
-            // متغيرات لحفظ الحالة
-            let customFormulas = {};
-            let paperTypes = {};
-            let currentFormulaName = '';
-            let allFormulas = {};
+            <div class="items-grid" id="bindingCardsContainer"></div>
+        </div>
 
-            // ===================================================================
-            // =================  3. دوال إدارة المعادلات (حفظ، تحميل، عرض) =================
-            // ===================================================================
+        <!-- د) إدارة الإضافات الثابتة (قص، تكسير، ترقيم...) -->
+        <div class="card">
+            <div class="card-title">✂️ قائمة الإضافات السريعة (قص / تكسير / خدمات)</div>
+            <div class="grid-2">
+                <input type="text" id="newExtraName" class="input-field" placeholder="اسم الإضافة (مثال: قص ورق)">
+                <input type="number" id="newExtraPrice" class="input-field" placeholder="السعر الافتراضي (مثال: 50)" step="1">
+            </div>
+            <button class="btn-green" onclick="addExtra()">+ حفظ في قائمة الإضافات</button>
 
-            // دالة لحفظ المعادلات المخصصة فقط
-            function saveCustomFormulas() {
-                localStorage.setItem('savedCustomFormulas', JSON.stringify(customFormulas));
+            <div class="items-grid" id="extraCardsContainer"></div>
+        </div>
+
+        <!-- هـ) إدارة المقاسات والمعادلات -->
+        <div class="card">
+            <div class="card-title">📐 إدارة المقاسات والمعادلات</div>
+            <div class="grid-3">
+                <input type="text" id="newFormulaName" class="input-field" placeholder="اسم المقاس (مثال: 11*2)">
+                <input type="text" id="newFormulaExp" class="input-field" placeholder="المعادلة: (50/2)/11">
+                <select id="newFormulaTrajForm" class="select-field">
+                    <option value="1">فورم التراج: 1</option>
+                    <option value="2">فورم التراج: 2</option>
+                    <option value="3">فورم التراج: 3</option>
+                    <option value="4">فورم التراج: 4</option>
+                </select>
+            </div>
+            <button class="btn-green" onclick="addFormula()">+ إضافة مقاس جديد</button>
+
+            <div class="items-grid" id="formulaCardsContainer"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- نافذة منبثقة لتعديل الورق أو التجليد أو الإضافات أو المقاس -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-box">
+        <div class="modal-title" id="modalTitle">تعديل البيانات</div>
+        <div class="input-group">
+            <label id="modalLabel1">الاسم:</label>
+            <input type="text" id="modalInput1" class="input-field">
+        </div>
+        <div class="input-group">
+            <label id="modalLabel2">السعر:</label>
+            <input type="text" id="modalInput2" class="input-field">
+        </div>
+        <div class="input-group" id="modalGroup3" style="display: none;">
+            <label id="modalLabel3">عدد النسخ:</label>
+            <input type="number" id="modalInput3" class="input-field">
+        </div>
+        <div class="card-actions" style="margin-top: 15px;">
+            <button class="sm-btn edit-btn" style="padding: 12px;" onclick="saveModalEdit()">حفظ التعديل</button>
+            <button class="sm-btn delete-btn" style="padding: 12px;" onclick="closeModal()">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // =========================================================================
+    // 1. البيانات الافتراضية
+    // =========================================================================
+    const defaultSettings = { zincPrice: 65, trajPrice: 100, sheetsPerBook: 50 };
+
+    const defaultPapers = {
+        'p1': { name: 'أصل+1', price: 7.25, copies: 2 },
+        'p2': { name: 'أصل+2', price: 11.20, copies: 3 },
+        'p3': { name: 'أصل+3', price: 15.15, copies: 4 },
+        'p4': { name: 'أصل+4', price: 19.10, copies: 5 },
+        'p5': { name: 'أصل+5', price: 23.05, copies: 6 },
+        'p6': { name: 'أصل+6', price: 27.00, copies: 7 },
+        'p7': { name: 'أصل+7', price: 30.00, copies: 8 },
+        'p8': { name: 'أصل+8', price: 34.90, copies: 9 }
+    };
+
+    const defaultFormulas = {
+        '20*30': { exp: '50 / 11', trajForm: 1 },
+        '11*2':  { exp: '(50 / 2) / 11', trajForm: 2 },
+        '11*4':  { exp: '(50 / 4) / 11', trajForm: 4 },
+        '9':     { exp: '50 / 9', trajForm: 1 },
+        '2*9':   { exp: '(50 / 9) / 2', trajForm: 2 },
+        '9*4':   { exp: '(50 / 9) / 4', trajForm: 4 },
+        '8':     { exp: '50 / 8', trajForm: 1 },
+        '2*8':   { exp: '(50 / 8) / 2', trajForm: 2 },
+        '4*8':   { exp: '(50 / 8) / 4', trajForm: 4 }
+    };
+
+    const defaultBindings = {
+        'b1': { name: '20*30', price: 3.00 },
+        'b2': { name: '11*2', price: 2.00 },
+        'b3': { name: '11*4', price: 1.50 },
+        'b4': { name: '9', price: 3.00 },
+        'b5': { name: '2*9', price: 2.00 },
+        'b6': { name: '9*4', price: 1.50 },
+        'b7': { name: '8', price: 3.00 },
+        'b8': { name: '2*8', price: 2.00 },
+        'b9': { name: '4*8', price: 1.50 }
+    };
+
+    const defaultExtras = {
+        'e1': { name: 'قص ورق', price: 50 },
+        'e2': { name: 'تكسير / ريجة', price: 100 },
+        'e3': { name: 'ترقيم', price: 50 },
+        'e4': { name: 'سلوفان', price: 150 }
+    };
+
+    let settings = {};
+    let papers = {};
+    let formulas = {};
+    let bindings = {};
+    let extras = {};
+
+    let currentFormula = '20*30';
+    let currentTrajForm = 1;
+    let lastSuggestedPaper = 0;
+    let selectedExtraIds = new Set();
+
+    let lastCalcData = {};
+    let editMode = '';
+    let editTargetId = '';
+
+    // =========================================================================
+    // 2. التحميل والحفظ
+    // =========================================================================
+    function loadAll() {
+        settings = JSON.parse(localStorage.getItem('esraa_settings_v5')) || { ...defaultSettings };
+        papers   = JSON.parse(localStorage.getItem('esraa_papers_v5'))   || { ...defaultPapers };
+        formulas = JSON.parse(localStorage.getItem('esraa_formulas_v5')) || { ...defaultFormulas };
+        bindings = JSON.parse(localStorage.getItem('esraa_bindings_v5')) || { ...defaultBindings };
+        extras   = JSON.parse(localStorage.getItem('esraa_extras_v5'))   || { ...defaultExtras };
+
+        document.getElementById('setZincPrice').value = settings.zincPrice;
+        document.getElementById('setTrajPrice').value = settings.trajPrice;
+        document.getElementById('setSheetsPerBook').value = settings.sheetsPerBook;
+
+        renderAll();
+        selectFormula(currentFormula);
+    }
+
+    function saveAll() {
+        localStorage.setItem('esraa_settings_v5', JSON.stringify(settings));
+        localStorage.setItem('esraa_papers_v5', JSON.stringify(papers));
+        localStorage.setItem('esraa_formulas_v5', JSON.stringify(formulas));
+        localStorage.setItem('esraa_bindings_v5', JSON.stringify(bindings));
+        localStorage.setItem('esraa_extras_v5', JSON.stringify(extras));
+    }
+
+    function saveGeneralSettings() {
+        settings.zincPrice = parseFloat(document.getElementById('setZincPrice').value) || 0;
+        settings.trajPrice = parseFloat(document.getElementById('setTrajPrice').value) || 0;
+        settings.sheetsPerBook = parseFloat(document.getElementById('setSheetsPerBook').value) || 50;
+        saveAll();
+        onInputsChange(false);
+    }
+
+    // =========================================================================
+    // 3. بناء القوائم والبطاقات
+    // =========================================================================
+    function renderAll() {
+        renderPapers();
+        renderBindings();
+        renderExtras();
+        renderFormulas();
+    }
+
+    function extractCopies(name) {
+        const m = name.match(/\+\s*(\d+)/);
+        return m ? parseInt(m[1], 10) + 1 : 2;
+    }
+
+    function renderPapers() {
+        const sel = document.getElementById('calcPaperSelect');
+        const grid = document.getElementById('paperCardsContainer');
+        const prev = sel.value;
+
+        sel.innerHTML = '';
+        grid.innerHTML = '';
+
+        for (const id in papers) {
+            const p = papers[id];
+            if (!p.copies) p.copies = extractCopies(p.name);
+
+            const opt = document.createElement('option');
+            opt.value = id;
+            opt.textContent = p.name;
+            sel.appendChild(opt);
+
+            grid.innerHTML += `
+                <div class="item-card">
+                    <h4>${p.name}</h4>
+                    <div class="price-tag">${p.price.toFixed(2)} جنيه</div>
+                    <div style="font-size:0.85rem; color:#94a3b8; margin-bottom:8px;">عدد النسخ بالدفتر: ${p.copies}</div>
+                    <div class="card-actions">
+                        <button class="sm-btn edit-btn" onclick="openEditModal('paper', '${id}')">تعديل</button>
+                        <button class="sm-btn delete-btn" onclick="deleteItem('paper', '${id}')">حذف</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (prev && papers[prev]) sel.value = prev;
+        onPaperChange();
+    }
+
+    function renderBindings() {
+        const sel = document.getElementById('calcBindingSelect');
+        const grid = document.getElementById('bindingCardsContainer');
+        const prev = sel.value;
+
+        sel.innerHTML = '<option value="none">بدون تجليد (0 ج)</option>';
+        grid.innerHTML = '';
+
+        for (const id in bindings) {
+            const b = bindings[id];
+            const opt = document.createElement('option');
+            opt.value = id;
+            opt.textContent = `${b.name} (${b.price} ج)`;
+            sel.appendChild(opt);
+
+            grid.innerHTML += `
+                <div class="item-card">
+                    <h4>${b.name}</h4>
+                    <div class="price-tag">${b.price.toFixed(2)} جنيه</div>
+                    <div class="card-actions">
+                        <button class="sm-btn edit-btn" onclick="openEditModal('binding', '${id}')">تعديل</button>
+                        <button class="sm-btn delete-btn" onclick="deleteItem('binding', '${id}')">حذف</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (prev && (bindings[prev] || prev === 'none')) sel.value = prev;
+    }
+
+    function renderExtras() {
+        const pillsContainer = document.getElementById('extraPillsContainer');
+        const grid = document.getElementById('extraCardsContainer');
+
+        pillsContainer.innerHTML = '';
+        grid.innerHTML = '';
+
+        // زر مسح الإضافات
+        const clearBtn = document.createElement('button');
+        clearBtn.type = 'button';
+        clearBtn.className = 'pill-btn extra-pill' + (selectedExtraIds.size === 0 ? ' active' : '');
+        clearBtn.textContent = 'بدون إضافات (0)';
+        clearBtn.onclick = () => clearExtras();
+        pillsContainer.appendChild(clearBtn);
+
+        for (const id in extras) {
+            const ex = extras[id];
+            const isSelected = selectedExtraIds.has(id);
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'pill-btn extra-pill' + (isSelected ? ' active' : '');
+            btn.textContent = `${ex.name} (+${ex.price} ج)`;
+            btn.onclick = () => toggleExtraPill(id);
+            pillsContainer.appendChild(btn);
+
+            grid.innerHTML += `
+                <div class="item-card">
+                    <h4>${ex.name}</h4>
+                    <div class="price-tag">${ex.price.toFixed(2)} جنيه</div>
+                    <div class="card-actions">
+                        <button class="sm-btn edit-btn" onclick="openEditModal('extra', '${id}')">تعديل</button>
+                        <button class="sm-btn delete-btn" onclick="deleteItem('extra', '${id}')">حذف</button>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    function renderFormulas() {
+        const pills = document.getElementById('calcFormulaPills');
+        const grid = document.getElementById('formulaCardsContainer');
+        pills.innerHTML = '';
+        grid.innerHTML = '';
+
+        if (!formulas[currentFormula]) {
+            currentFormula = Object.keys(formulas)[0] || '';
+        }
+
+        for (const name in formulas) {
+            const f = formulas[name];
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'pill-btn' + (name === currentFormula ? ' active' : '');
+            btn.textContent = name;
+            btn.onclick = () => selectFormula(name);
+            pills.appendChild(btn);
+
+            grid.innerHTML += `
+                <div class="item-card">
+                    <h4>${name}</h4>
+                    <div class="price-tag" dir="ltr">${f.exp}</div>
+                    <div style="font-size:0.85rem; color:#94a3b8; margin-bottom:8px;">فورم التراج: ${f.trajForm || 1}</div>
+                    <div class="card-actions">
+                        <button class="sm-btn edit-btn" onclick="openEditModal('formula', '${name}')">تعديل</button>
+                        <button class="sm-btn delete-btn" onclick="deleteItem('formula', '${name}')">حذف</button>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // =========================================================================
+    // 4. منطق الإضافات والنسبة والحسابات التلقائية
+    // =========================================================================
+    function toggleExtraPill(id) {
+        if (selectedExtraIds.has(id)) {
+            selectedExtraIds.delete(id);
+        } else {
+            selectedExtraIds.add(id);
+        }
+
+        let totalExtra = 0;
+        let names = [];
+        selectedExtraIds.forEach(extId => {
+            if (extras[extId]) {
+                totalExtra += extras[extId].price;
+                names.push(extras[extId].name);
             }
-
-            // دالة لتحميل المعادلات المخصصة ودمجها مع الأساسية
-            function loadFormulas() {
-                const saved = localStorage.getItem('savedCustomFormulas');
-                if (saved) {
-                    customFormulas = JSON.parse(saved);
-                }
-                // دمج المعادلات الأساسية والمخصصة في مكان واحد للعرض
-                allFormulas = { ...baseFormulas, ...customFormulas };
-                renderFormulaButtons();
-            }
-
-            // دالة لعرض كل أزرار المعادلات على الشاشة
-            function renderFormulaButtons() {
-                formulaButtonsContainer.innerHTML = '';
-                // عرض المعادلات الأساسية أولاً
-                for (const name in baseFormulas) {
-                    createButton(name, false); // false = غير قابل للحذف
-                }
-                // عرض المعادلات المخصصة ثانيًا
-                for (const name in customFormulas) {
-                    createButton(name, true); // true = قابل للحذف
-                }
-            }
-
-            // دالة لإنشاء زر معادلة (أساسي أو مخصص)
-            function createButton(name, isDeletable) {
-                const button = document.createElement('button');
-                button.className = 'formula-btn';
-                button.textContent = name;
-                button.onclick = () => setFormula(name);
-
-                // إضافة زر الحذف فقط للمعادلات المخصصة
-                if (isDeletable) {
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'delete-btn';
-                    deleteBtn.innerHTML = '✕';
-                    deleteBtn.style.cssText = `
-                        background: #dc3545;
-                        border: none;
-                        color: white;
-                        border-radius: 50%;
-                        width: 28px;
-                        height: 28px;
-                        cursor: pointer;
-                        margin-right: 8px;
-                        font-size: 14px;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                    `;
-                    deleteBtn.onclick = (e) => {
-                        e.stopPropagation();
-                        deleteFormula(name);
-                    };
-                    
-                    // إنشاء حاوية للزر وزر الحذف
-                    const wrapper = document.createElement('div');
-                    wrapper.style.cssText = 'display: flex; align-items: center; margin: 5px;';
-                    wrapper.appendChild(deleteBtn);
-                    wrapper.appendChild(button);
-                    
-                    formulaButtonsContainer.appendChild(wrapper);
-                } else {
-                    // للمعادلات الأساسية، نضيف الزر مباشرة
-                    formulaButtonsContainer.appendChild(button);
-                }
-            }
-
-            // ===================================================================
-            // =================  4. دوال إدارة أنواع الورق =================
-            // ===================================================================
-
-            // دالة لحفظ أنواع الورق
-            function savePaperTypes() {
-                localStorage.setItem('paperTypes', JSON.stringify(paperTypes));
-            }
-
-            // دالة لتحميل أنواع الورق
-            function loadPaperTypes() {
-                const saved = localStorage.getItem('paperTypes');
-                if (saved) {
-                    paperTypes = JSON.parse(saved);
-                } else {
-                    // إذا لم تكن هناك أنواع ورق محفوظة، نستخدم الأنواع الأساسية
-                    paperTypes = { ...basePaperTypes };
-                    savePaperTypes();
-                }
-                renderPaperTypes();
-                updatePaperTypeSelect();
-            }
-
-            // دالة لعرض أنواع الورق
-            function renderPaperTypes() {
-                paperTypesContainer.innerHTML = '';
-                
-                for (const id in paperTypes) {
-                    const paper = paperTypes[id];
-                    createPaperCard(id, paper);
-                }
-            }
-
-            // دالة لإنشاء بطاقة نوع ورق
-            function createPaperCard(id, paper) {
-                const card = document.createElement('div');
-                card.className = 'paper-type-card';
-                
-                // معلومات الورق
-                const nameDiv = document.createElement('div');
-                nameDiv.className = 'paper-name';
-                nameDiv.textContent = paper.name;
-                
-                const priceDiv = document.createElement('div');
-                priceDiv.className = 'paper-price';
-                priceDiv.textContent = `${paper.price.toFixed(2)} جنيه`;
-                
-                // أزرار التعديل والحذف
-                const actionsDiv = document.createElement('div');
-                actionsDiv.className = 'paper-actions';
-                
-                const editBtn = document.createElement('button');
-                editBtn.className = 'paper-action-btn edit-btn';
-                editBtn.textContent = 'تعديل';
-                editBtn.onclick = () => editPaperType(id);
-                
-                const deleteBtn = document.createElement('button');
-                deleteBtn.className = 'paper-action-btn delete-paper-btn';
-                deleteBtn.textContent = 'حذف';
-                deleteBtn.onclick = () => deletePaperType(id);
-                
-                actionsDiv.appendChild(editBtn);
-                actionsDiv.appendChild(deleteBtn);
-                
-                // تجميع كل العناصر
-                card.appendChild(nameDiv);
-                card.appendChild(priceDiv);
-                card.appendChild(actionsDiv);
-                
-                paperTypesContainer.appendChild(card);
-            }
-
-            // دالة لتحديث قائمة اختيار أنواع الورق
-            function updatePaperTypeSelect() {
-                paperTypeSelect.innerHTML = '<option value="">اختر نوع الورق</option>';
-                
-                for (const id in paperTypes) {
-                    const paper = paperTypes[id];
-                    const option = document.createElement('option');
-                    option.value = id;
-                    // عرض اسم الورق فقط بدون السعر
-                    option.textContent = paper.name;
-                    paperTypeSelect.appendChild(option);
-                }
-            }
-
-            // ===================================================================
-            // =================  5. دوال التفاعل (إضافة، حذف، اختيار) =================
-            // ===================================================================
-
-            // دالة لإضافة معادلة مخصصة جديدة
-            function addFormula() {
-                const name = formulaNameInput.value.trim();
-                const value = formulaValueInput.value.trim();
-
-                if (!name || !value) {
-                    alert('يرجى إدخال اسم ومعادلة.');
-                    return;
-                }
-                if (baseFormulas[name]) {
-                    alert('لا يمكن استخدام اسم معادلة أساسية. يرجى اختيار اسم آخر.');
-                    return;
-                }
-
-                customFormulas[name] = value;
-                saveCustomFormulas();
-                loadFormulas(); // إعادة تحميل وعرض كل شيء
-
-                formulaNameInput.value = '';
-                formulaValueInput.value = '';
-            }
-
-            // دالة لحذف معادلة مخصصة فقط
-            function deleteFormula(name) {
-                if (confirm(`هل أنت متأكد من حذف معادلة "${name}"؟`)) {
-                    delete customFormulas[name];
-                    saveCustomFormulas();
-                    loadFormulas(); // إعادة تحميل وعرض كل شيء
-                    if (currentFormulaName === name) {
-                        currentFormulaName = '';
-                        selectedFormulaInput.value = '';
-                    }
-                }
-            }
-
-            // دالة لاختيار معادلة
-            window.setFormula = function(name) {
-                currentFormulaName = name;
-                selectedFormulaInput.value = name;
-                document.querySelectorAll('.formula-btn').forEach(btn => {
-                    btn.classList.remove('selected');
-                    if (btn.textContent === name) {
-                        btn.classList.add('selected');
-                    }
-                });
-            }
-
-            // دالة لإضافة نوع ورق جديد
-            function addPaperType() {
-                const name = paperNameInput.value.trim();
-                const price = parseFloat(paperPriceInput.value);
-
-                if (!name || isNaN(price)) {
-                    alert('يرجى إدخال اسم وسعر صحيحين لنوع الورق.');
-                    return;
-                }
-
-                // إنشاء معرف فريد لنوع الورق
-                const id = 'paper_' + Date.now();
-                
-                paperTypes[id] = {
-                    name: name,
-                    price: price
-                };
-                
-                savePaperTypes();
-                loadPaperTypes();
-                
-                // مسح الحقول
-                paperNameInput.value = '';
-                paperPriceInput.value = '';
-            }
-
-            // دالة لتعديل نوع ورق
-            function editPaperType(id) {
-                const paper = paperTypes[id];
-                
-                const newName = prompt('أدخل الاسم الجديد:', paper.name);
-                if (newName === null) return; // المستخدم ألغى
-                
-                const newPrice = parseFloat(prompt('أدخل السعر الجديد:', paper.price));
-                if (isNaN(newPrice)) {
-                    alert('يرجى إدخال سعر صحيح.');
-                    return;
-                }
-                
-                paperTypes[id] = {
-                    name: newName,
-                    price: newPrice
-                };
-                
-                savePaperTypes();
-                loadPaperTypes();
-                
-                // إذا كان هذا النوع هو المختار حالياً، قم بتحديث السعر
-                if (paperTypeSelect.value === id) {
-                    paperPriceField.value = newPrice;
-                    selectedPaperPrice.textContent = `السعر: ${newPrice.toFixed(2)} جنيه`;
-                }
-            }
-
-            // دالة لحذف نوع ورق
-            function deletePaperType(id) {
-                if (confirm(`هل أنت متأكد من حذف نوع الورق "${paperTypes[id].name}"؟`)) {
-                    delete paperTypes[id];
-                    savePaperTypes();
-                    loadPaperTypes();
-                    
-                    // إذا كان هذا النوع هو المختار حالياً، قم بإلغاء الاختيار
-                    if (paperTypeSelect.value === id) {
-                        paperTypeSelect.value = '';
-                        paperPriceField.value = 0;
-                        selectedPaperPrice.textContent = 'السعر: 0.00 جنيه';
-                    }
-                }
-            }
-
-            // ===================================================================
-            // =================  6. دوال الحسابات (معدلة) =================
-            // ===================================================================
-
-            window.calculateFormula = function() {
-                if (!currentFormulaName) {
-                    alert('برجاء اختيار معادلة أولاً');
-                    return;
-                }
-                const numberOfBooks = parseFloat(document.getElementById('numberOfBooks').value) || 0;
-                const formulaString = allFormulas[currentFormulaName];
-                try {
-                    const result = eval(formulaString);
-                    // القسمة على عدد الفورم المختار (1 إذا كان "بدون")
-                    const finalResult = (result * numberOfBooks) / selectedFormCount;
-                    document.getElementById('formulaResult').textContent = finalResult.toFixed(2) + ' ورقة';
-                    let formText = (isNoFormSelected) ? 'بدون فورم' : `${selectedFormCount} فورم`;
-                    document.getElementById('formulaDisplay').textContent = 
-                        `(${formulaString}) × ${numberOfBooks} / ${(isNoFormSelected ? '1' : selectedFormCount)} = ${finalResult.toFixed(2)} ورقة (${formText})`;
-                } catch (error) {
-                    alert('خطأ في المعادلة المدخلة. يرجى مراجعتها.');
-                    console.error("Formula Error:", error);
-                }
-            }
-
-            window.calculateTotal = function() {
-                const numberOfPapers = parseFloat(document.getElementById('numberOfPapers').value) || 0;
-                const paperPrice = parseFloat(document.getElementById('paperPrice').value) || 0;
-                const numberOfZinc = parseFloat(document.getElementById('numberOfZinc').value) || 0;
-                const numberOfPrints = parseFloat(document.getElementById('numberOfPrints').value) || 0;
-                const bindingPrice = parseFloat(document.getElementById('bindingPrice').value) || 0;
-                const totalPaperCost = numberOfPapers * paperPrice;
-                // التعديل: سعر الزنكة 65، وسعر التراج 100
-                const totalZincCost = numberOfZinc * 65;
-                const totalPrintCost = numberOfPrints * 100;
-                const total = totalPaperCost + totalZincCost + totalPrintCost + bindingPrice;
-                document.getElementById('totalResult').textContent = total.toFixed(2) + ' جنيه';
-            }
-
-            // ===================================================================
-            // =================  7. دوال إدارة عدد الفورم (معدلة) =================
-            // ===================================================================
-
-            function initFormCountButtons() {
-                formCountWrapper.innerHTML = '';
-
-                // زر "بدون فورم"
-                const noFormBtn = document.createElement('button');
-                noFormBtn.className = 'no-form-btn selected-form'; // مختار افتراضياً
-                noFormBtn.textContent = 'بدون';
-                noFormBtn.dataset.value = '1';
-                noFormBtn.onclick = function() {
-                    // إزالة التحديد من جميع الأزرار
-                    document.querySelectorAll('.form-count-btn, .no-form-btn').forEach(b => b.classList.remove('selected-form'));
-                    this.classList.add('selected-form');
-                    selectedFormCount = 1;
-                    isNoFormSelected = true;
-                };
-                formCountWrapper.appendChild(noFormBtn);
-
-                // أزرار 1 إلى 8
-                for (let i = 1; i <= 8; i++) {
-                    const btn = document.createElement('button');
-                    btn.className = 'form-count-btn';
-                    if (i === 1) {
-                        // الزر 1 سيكون غير محدد افتراضياً لأن "بدون" هو المختار
-                        // لكننا نضيف نفس القيمة
-                    }
-                    btn.textContent = i;
-                    btn.dataset.value = i;
-                    btn.onclick = function() {
-                        // إزالة التحديد من جميع الأزرار
-                        document.querySelectorAll('.form-count-btn, .no-form-btn').forEach(b => b.classList.remove('selected-form'));
-                        this.classList.add('selected-form');
-                        selectedFormCount = parseInt(this.dataset.value);
-                        isNoFormSelected = false;
-                    };
-                    formCountWrapper.appendChild(btn);
-                }
-
-                // تعيين القيمة الافتراضية
-                selectedFormCount = 1;
-                isNoFormSelected = true;
-                // نترك زر "بدون" محدداً بالفعل (تمت إضافة class selected-form)
-            }
-
-            // ===================================================================
-            // =================  8. ربط الأحداث والتشغيل الأولي =================
-            // ===================================================================
-            addFormulaBtn.addEventListener('click', addFormula);
-            addPaperBtn.addEventListener('click', addPaperType);
-            
-            // عند اختيار نوع ورق، قم بتعبئة سعر الورق تلقائياً
-            paperTypeSelect.addEventListener('change', function() {
-                const selectedId = this.value;
-                if (selectedId && paperTypes[selectedId]) {
-                    const selectedPaper = paperTypes[selectedId];
-                    paperPriceField.value = selectedPaper.price;
-                    selectedPaperPrice.textContent = `السعر: ${selectedPaper.price.toFixed(2)} جنيه`;
-                } else {
-                    paperPriceField.value = 0;
-                    selectedPaperPrice.textContent = 'السعر: 0.00 جنيه';
-                }
-            });
-            
-            // تحميل كل البيانات عند بدء تشغيل الصفحة
-            loadFormulas();
-            loadPaperTypes();
-            initFormCountButtons(); // تهيئة أزرار عدد الفورم
         });
-    </script>
+
+        document.getElementById('extraCostInput').value = totalExtra;
+        document.getElementById('extraNoteInput').value = names.join(' + ');
+        renderExtras();
+        calculateFinalTotal();
+    }
+
+    function clearExtras() {
+        selectedExtraIds.clear();
+        document.getElementById('extraCostInput').value = 0;
+        document.getElementById('extraNoteInput').value = '';
+        renderExtras();
+        calculateFinalTotal();
+    }
+
+    function setQuickPercent(pct) {
+        document.getElementById('profitPercent').value = pct;
+        highlightPercentBtns(pct);
+        calculateFinalTotal();
+    }
+
+    function onManualPercentInput() {
+        const pct = parseFloat(document.getElementById('profitPercent').value) || 0;
+        highlightPercentBtns(pct);
+        calculateFinalTotal();
+    }
+
+    function highlightPercentBtns(pct) {
+        document.querySelectorAll('#quickPercentBar .pct-btn').forEach(btn => {
+            btn.classList.toggle('active', parseFloat(btn.dataset.pct) === pct);
+        });
+    }
+
+    function onPaperChange() {
+        const id = document.getElementById('calcPaperSelect').value;
+        if (id && papers[id]) {
+            document.getElementById('calcPaperPrice').value = papers[id].price;
+        }
+        onInputsChange(false);
+    }
+
+    function selectFormula(name) {
+        currentFormula = name;
+        renderFormulas();
+
+        const f = formulas[name];
+        if (f && f.trajForm) {
+            setTrajForm(parseInt(f.trajForm, 10));
+        }
+
+        const bindSelect = document.getElementById('calcBindingSelect');
+        for (const id in bindings) {
+            if (bindings[id].name.trim() === name.trim()) {
+                bindSelect.value = id;
+                break;
+            }
+        }
+
+        onInputsChange(true);
+    }
+
+    function setTrajForm(num) {
+        currentTrajForm = num;
+        document.querySelectorAll('#trajFormPills .pill-btn').forEach(btn => {
+            btn.classList.toggle('active', parseInt(btn.dataset.form, 10) === num);
+        });
+        onInputsChange(false);
+    }
+
+    function onInputsChange(autoCopyPaper) {
+        const numBooks = parseFloat(document.getElementById('numBooks').value) || 0;
+
+        if (currentFormula && formulas[currentFormula]) {
+            try {
+                const rawVal = eval(formulas[currentFormula].exp) * numBooks;
+                lastSuggestedPaper = Math.round(rawVal * 100) / 100;
+                document.getElementById('suggestedPaperText').textContent = lastSuggestedPaper;
+                if (autoCopyPaper) {
+                    document.getElementById('manualPapersInput').value = Math.ceil(lastSuggestedPaper);
+                }
+            } catch (e) {
+                document.getElementById('suggestedPaperText').textContent = 'خطأ';
+            }
+        }
+
+        calculateFinalTotal();
+    }
+
+    function applySuggestedPaper() {
+        document.getElementById('manualPapersInput').value = lastSuggestedPaper;
+        calculateFinalTotal();
+    }
+
+    function adjustPaperCount(delta) {
+        const input = document.getElementById('manualPapersInput');
+        const current = parseFloat(input.value) || 0;
+        const next = Math.max(0, Math.round((current + delta) * 100) / 100);
+        input.value = next;
+        calculateFinalTotal();
+    }
+
+    function calculateFinalTotal() {
+        const numBooks = parseFloat(document.getElementById('numBooks').value) || 0;
+        const paperId = document.getElementById('calcPaperSelect').value;
+        const paperName = (paperId && papers[paperId]) ? papers[paperId].name : 'غير محدد';
+        const copies = (paperId && papers[paperId]) ? (papers[paperId].copies || extractCopies(papers[paperId].name)) : 2;
+
+        // 1. حساب التراجات تلقائياً
+        const pullsPerCopy = (settings.sheetsPerBook * numBooks) / currentTrajForm;
+        const totalPulls = pullsPerCopy * copies;
+        const trajCount = totalPulls > 0 ? Math.ceil(totalPulls / 1000) : 0;
+
+        document.getElementById('autoTrajDisplay').textContent = `${trajCount} تراج (${Math.round(totalPulls)} سحبة)`;
+
+        // 2. حساب التكاليف
+        const manualPapers = parseFloat(document.getElementById('manualPapersInput').value) || 0;
+        const paperPrice = parseFloat(document.getElementById('calcPaperPrice').value) || 0;
+        const paperCost = manualPapers * paperPrice;
+
+        const trajCost = trajCount * settings.trajPrice;
+
+        const numZinc = parseFloat(document.getElementById('numZinc').value) || 0;
+        const zincCost = numZinc * settings.zincPrice;
+
+        const bindId = document.getElementById('calcBindingSelect').value;
+        const bindName = (bindId && bindings[bindId]) ? bindings[bindId].name : 'بدون';
+        const bindUnit = (bindId && bindings[bindId]) ? bindings[bindId].price : 0;
+        const bindCost = numBooks * bindUnit;
+
+        const extraNote = document.getElementById('extraNoteInput').value.trim() || 'قص / خدمات';
+        const extraCost = parseFloat(document.getElementById('extraCostInput').value) || 0;
+
+        // الإجمالي قبل النسبة
+        const subTotal = paperCost + trajCost + zincCost + bindCost + extraCost;
+
+        // حساب النسبة المئوية فوق الإجمالي الكلي
+        const profitPercent = parseFloat(document.getElementById('profitPercent').value) || 0;
+        const profitCost = subTotal * (profitPercent / 100);
+        const grandTotal = subTotal + profitCost;
+
+        // 3. تحديث الفاتورة
+        document.getElementById('resPaperCount').textContent = manualPapers;
+        document.getElementById('resPaperCost').textContent = paperCost.toFixed(2) + ' ج';
+        document.getElementById('resTrajCount').textContent = trajCount;
+        document.getElementById('resTrajCost').textContent = trajCost.toFixed(2) + ' ج';
+        document.getElementById('resZincCount').textContent = numZinc;
+        document.getElementById('resZincCost').textContent = zincCost.toFixed(2) + ' ج';
+        document.getElementById('resBindBooks').textContent = numBooks;
+        document.getElementById('resBindCost').textContent = bindCost.toFixed(2) + ' ج';
+
+        const extraRow = document.getElementById('resExtraRow');
+        if (extraCost > 0) {
+            extraRow.style.display = 'flex';
+            document.getElementById('resExtraName').textContent = extraNote;
+            document.getElementById('resExtraCost').textContent = extraCost.toFixed(2) + ' ج';
+        } else {
+            extraRow.style.display = 'none';
+        }
+
+        const subTotalRow = document.getElementById('resSubTotalRow');
+        const profitRow = document.getElementById('resProfitRow');
+        if (profitPercent > 0) {
+            subTotalRow.style.display = 'flex';
+            profitRow.style.display = 'flex';
+            document.getElementById('resSubTotalCost').textContent = subTotal.toFixed(2) + ' ج';
+            document.getElementById('resProfitPct').textContent = profitPercent;
+            document.getElementById('resProfitCost').textContent = '+' + profitCost.toFixed(2) + ' ج';
+        } else {
+            subTotalRow.style.display = 'none';
+            profitRow.style.display = 'none';
+        }
+
+        document.getElementById('grandTotalText').textContent = grandTotal.toFixed(2);
+
+        lastCalcData = {
+            numBooks,
+            formula: currentFormula,
+            paperName,
+            manualPapers,
+            paperPrice,
+            paperCost,
+            trajCount,
+            trajCost,
+            numZinc,
+            zincCost,
+            bindName,
+            bindCost,
+            extraName: extraNote,
+            extraCost,
+            subTotal,
+            profitPercent,
+            profitCost,
+            grandTotal
+        };
+    }
+
+    // =========================================================================
+    // 5. مشاركة الحساب عبر واتساب (ملخص للعميل / أو تفاصيل كاملة)
+    // =========================================================================
+    function shareWhatsApp(mode) {
+        const d = lastCalcData;
+        let text = '';
+
+        if (mode === 'summary') {
+            // 1. رسالة مختصرة للعميل: عدد الدفاتر وإجمالي السعر فقط
+            text = `*مطبعة الإسراء* 🖨️\n` +
+                   `━━━━━━━━━━━━━━\n` +
+                   `📘 *عدد الدفاتر:* ${d.numBooks} دفتر\n` +
+                   `📐 *المقاس:* ${d.formula} (${d.paperName})\n` +
+                   `━━━━━━━━━━━━━━\n` +
+                   `💰 *إجمالي السعر:* ${d.grandTotal.toFixed(2)} جنيه`;
+        } else {
+            // 2. رسالة بالتفاصيل الكاملة للشغلانة
+            text = `*مطبعة الإسراء - تفاصيل حساب الشغلانة* 🖨️\n` +
+                   `━━━━━━━━━━━━━━\n` +
+                   `📘 *عدد الدفاتر:* ${d.numBooks} دفتر\n` +
+                   `📐 *المقاس:* ${d.formula} | *الورق:* ${d.paperName}\n` +
+                   `━━━━━━━━━━━━━━\n` +
+                   `📄 *الورق:* ${d.manualPapers} ورقة × ${d.paperPrice} ج = ${d.paperCost.toFixed(2)} ج\n` +
+                   `⚙️ *التراجات:* ${d.trajCount} تراج = ${d.trajCost.toFixed(2)} ج\n` +
+                   `💿 *الزنكات:* ${d.numZinc} زنكة = ${d.zincCost.toFixed(2)} ج\n` +
+                   `📚 *التجليد (${d.bindName}):* ${d.bindCost.toFixed(2)} ج\n`;
+
+            if (d.extraCost > 0) {
+                text += `✂️ *الإضافات (${d.extraName}):* ${d.extraCost.toFixed(2)} ج\n`;
+            }
+            if (d.profitPercent > 0) {
+                text += `📊 *الإجمالي قبل النسبة:* ${d.subTotal.toFixed(2)} ج\n`;
+                text += `📈 *النسبة المضافة (${d.profitPercent}%):* +${d.profitCost.toFixed(2)} ج\n`;
+            }
+
+            text += `━━━━━━━━━━━━━━\n` +
+                    `💰 *الإجمالي النهائي:* ${d.grandTotal.toFixed(2)} جنيه`;
+        }
+
+        const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(waUrl, '_blank');
+    }
+
+    // =========================================================================
+    // 6. الإضافة والتعديل السريع من داخل الصفحة (Modal)
+    // =========================================================================
+    function addPaper() {
+        const name = document.getElementById('newPaperName').value.trim();
+        const price = parseFloat(document.getElementById('newPaperPrice').value);
+        const copies = parseInt(document.getElementById('newPaperCopies').value, 10) || extractCopies(name);
+        if (!name || isNaN(price)) return alert('أدخل اسم وسعر الورق');
+
+        papers['p_' + Date.now()] = { name, price, copies };
+        saveAll();
+        renderPapers();
+        document.getElementById('newPaperName').value = '';
+        document.getElementById('newPaperPrice').value = '';
+        document.getElementById('newPaperCopies').value = '';
+    }
+
+    function addBinding() {
+        const name = document.getElementById('newBindName').value.trim();
+        const price = parseFloat(document.getElementById('newBindPrice').value);
+        if (!name || isNaN(price)) return alert('أدخل اسم وسعر التجليد');
+
+        bindings['b_' + Date.now()] = { name, price };
+        saveAll();
+        renderBindings();
+        document.getElementById('newBindName').value = '';
+        document.getElementById('newBindPrice').value = '';
+    }
+
+    function addExtra() {
+        const name = document.getElementById('newExtraName').value.trim();
+        const price = parseFloat(document.getElementById('newExtraPrice').value);
+        if (!name || isNaN(price)) return alert('أدخل اسم وسعر الإضافة');
+
+        extras['e_' + Date.now()] = { name, price };
+        saveAll();
+        renderExtras();
+        document.getElementById('newExtraName').value = '';
+        document.getElementById('newExtraPrice').value = '';
+    }
+
+    function addFormula() {
+        const name = document.getElementById('newFormulaName').value.trim();
+        const exp = document.getElementById('newFormulaExp').value.trim();
+        const trajForm = parseInt(document.getElementById('newFormulaTrajForm').value, 10) || 1;
+        if (!name || !exp) return alert('أدخل اسم المقاس والمعادلة');
+
+        formulas[name] = { exp, trajForm };
+        saveAll();
+        renderFormulas();
+        document.getElementById('newFormulaName').value = '';
+        document.getElementById('newFormulaExp').value = '';
+    }
+
+    function openEditModal(type, id) {
+        editMode = type;
+        editTargetId = id;
+        const modal = document.getElementById('editModal');
+        const g3 = document.getElementById('modalGroup3');
+
+        if (type === 'paper') {
+            const p = papers[id];
+            document.getElementById('modalTitle').textContent = 'تعديل نوع الورق';
+            document.getElementById('modalLabel1').textContent = 'اسم الورق:';
+            document.getElementById('modalInput1').value = p.name;
+            document.getElementById('modalLabel2').textContent = 'سعر الورقة:';
+            document.getElementById('modalInput2').value = p.price;
+            g3.style.display = 'block';
+            document.getElementById('modalLabel3').textContent = 'عدد النسخ بالدفتر:';
+            document.getElementById('modalInput3').value = p.copies || 2;
+        } else if (type === 'binding') {
+            const b = bindings[id];
+            document.getElementById('modalTitle').textContent = 'تعديل التجليد';
+            document.getElementById('modalLabel1').textContent = 'اسم التجليد / المقاس:';
+            document.getElementById('modalInput1').value = b.name;
+            document.getElementById('modalLabel2').textContent = 'سعر الدفتر:';
+            document.getElementById('modalInput2').value = b.price;
+            g3.style.display = 'none';
+        } else if (type === 'extra') {
+            const ex = extras[id];
+            document.getElementById('modalTitle').textContent = 'تعديل الإضافة';
+            document.getElementById('modalLabel1').textContent = 'اسم الإضافة:';
+            document.getElementById('modalInput1').value = ex.name;
+            document.getElementById('modalLabel2').textContent = 'السعر الافتراضي:';
+            document.getElementById('modalInput2').value = ex.price;
+            g3.style.display = 'none';
+        } else if (type === 'formula') {
+            const f = formulas[id];
+            document.getElementById('modalTitle').textContent = 'تعديل المقاس';
+            document.getElementById('modalLabel1').textContent = 'اسم المقاس:';
+            document.getElementById('modalInput1').value = id;
+            document.getElementById('modalLabel2').textContent = 'المعادلة:';
+            document.getElementById('modalInput2').value = f.exp;
+            g3.style.display = 'block';
+            document.getElementById('modalLabel3').textContent = 'فورم التراج (1 أو 2 أو 3 أو 4):';
+            document.getElementById('modalInput3').value = f.trajForm || 1;
+        }
+
+        modal.style.display = 'flex';
+    }
+
+    function saveModalEdit() {
+        const val1 = document.getElementById('modalInput1').value.trim();
+        const val2 = document.getElementById('modalInput2').value.trim();
+        const val3 = document.getElementById('modalInput3').value;
+
+        if (!val1 || !val2) return alert('يرجى ملء الخانات');
+
+        if (editMode === 'paper') {
+            papers[editTargetId] = {
+                name: val1,
+                price: parseFloat(val2) || 0,
+                copies: parseInt(val3, 10) || 2
+            };
+            renderPapers();
+        } else if (editMode === 'binding') {
+            bindings[editTargetId] = {
+                name: val1,
+                price: parseFloat(val2) || 0
+            };
+            renderBindings();
+        } else if (editMode === 'extra') {
+            extras[editTargetId] = {
+                name: val1,
+                price: parseFloat(val2) || 0
+            };
+            renderExtras();
+        } else if (editMode === 'formula') {
+            const newForm = parseInt(val3, 10) || 1;
+            if (val1 !== editTargetId) {
+                delete formulas[editTargetId];
+                if (currentFormula === editTargetId) currentFormula = val1;
+            }
+            formulas[val1] = { exp: val2, trajForm: newForm };
+            renderFormulas();
+        }
+
+        saveAll();
+        onInputsChange(false);
+        closeModal();
+    }
+
+    function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    function deleteItem(type, id) {
+        if (!confirm('هل أنت متأكد من الحذف؟')) return;
+        if (type === 'paper') { delete papers[id]; renderPapers(); }
+        if (type === 'binding') { delete bindings[id]; renderBindings(); }
+        if (type === 'extra') { selectedExtraIds.delete(id); delete extras[id]; renderExtras(); }
+        if (type === 'formula') { delete formulas[id]; renderFormulas(); }
+        saveAll();
+        onInputsChange(false);
+    }
+
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAll);
+</script>
+
 </body>
 </html>
