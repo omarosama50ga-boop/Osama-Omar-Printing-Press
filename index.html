@@ -457,13 +457,25 @@
             <div class="card-title">مقاس الشغلانة وعدد الورق</div>
             
             <div class="input-group">
+                <label>اختيار المقاس:</label>
                 <div class="pills-container" id="calcFormulaPills"></div>
             </div>
 
-            <!-- ناتج المعادلة التلقائي + زر النسخ -->
+            <!-- قسمة الفورم العادية (تُقسم عليها أفرخ الورق مباشرة) -->
+            <div class="input-group">
+                <label>قسمة الورق على (عدد الفورم العادية):</label>
+                <div class="pills-container" id="paperFormPills">
+                    <button type="button" class="pill-btn active" data-pform="1" onclick="setPaperForm(1)">1</button>
+                    <button type="button" class="pill-btn" data-pform="2" onclick="setPaperForm(2)">2</button>
+                    <button type="button" class="pill-btn" data-pform="3" onclick="setPaperForm(3)">3</button>
+                    <button type="button" class="pill-btn" data-pform="4" onclick="setPaperForm(4)">4</button>
+                </div>
+            </div>
+
+            <!-- ناتج المعادلة التلقائي بعد القسمة على الفورم العادية + زر النسخ -->
             <div class="paper-calc-box">
                 <div class="calc-val-text">
-                    الورق المحسوب بالمعادلة: <strong id="suggestedPaperText">0</strong> ورقة
+                    أفرخ الورق المحسوبة بالمعادلة (بعد القسمة على <span id="paperFormLabel">1</span>): <strong id="suggestedPaperText">0</strong> فرخ/ورقة
                 </div>
                 <button type="button" class="use-paper-btn" onclick="applySuggestedPaper()">📋 نسخ الرقم للخانة</button>
             </div>
@@ -493,7 +505,7 @@
                 </div>
 
                 <div class="input-group" style="margin-bottom:0;">
-                    <label>قسمة التراج على (عدد الفورم):</label>
+                    <label>قسمة التراج على (عدد فورم التراجات):</label>
                     <div class="pills-container" id="trajFormPills">
                         <button type="button" class="pill-btn active" data-form="1" onclick="setTrajForm(1)">1</button>
                         <button type="button" class="pill-btn" data-form="2" onclick="setTrajForm(2)">2</button>
@@ -730,7 +742,8 @@
     let bindings = {};
 
     let currentFormula = '20*30';
-    let currentTrajForm = 1;
+    let currentPaperForm = 1; // قسمة الفورم العادية للورق (1 أو 2 أو 3 أو 4)
+    let currentTrajForm = 1;  // قسمة فورم التراجات (1 أو 2 أو 3 أو 4)
     let lastSuggestedPaper = 0;
 
     let lastCalcData = {};
@@ -929,6 +942,17 @@
         onInputsChange(true);
     }
 
+    // دالة اختيار قسمة الفورم العادية (الخاصة بعدد أفرخ الورق)
+    function setPaperForm(num) {
+        currentPaperForm = num;
+        document.querySelectorAll('#paperFormPills .pill-btn').forEach(btn => {
+            btn.classList.toggle('active', parseInt(btn.dataset.pform, 10) === num);
+        });
+        document.getElementById('paperFormLabel').textContent = num;
+        onInputsChange(true);
+    }
+
+    // دالة اختيار قسمة فورم التراجات (الخاصة بحساب التراجات)
     function setTrajForm(num) {
         currentTrajForm = num;
         document.querySelectorAll('#trajFormPills .pill-btn').forEach(btn => {
@@ -942,7 +966,9 @@
 
         if (currentFormula && formulas[currentFormula]) {
             try {
-                const rawVal = eval(formulas[currentFormula].exp) * numBooks;
+                // حساب الورق بالمعادلة ثم قسمته على عدد الفورم العادية المختار (1 أو 2 أو 3 أو 4)
+                const baseVal = eval(formulas[currentFormula].exp) * numBooks;
+                const rawVal = baseVal / (currentPaperForm || 1);
                 lastSuggestedPaper = Math.round(rawVal * 100) / 100;
                 document.getElementById('suggestedPaperText').textContent = lastSuggestedPaper;
                 if (autoCopyPaper) {
@@ -975,7 +1001,7 @@
         const paperName = (paperId && papers[paperId]) ? papers[paperId].name : 'غير محدد';
         const copies = (paperId && papers[paperId]) ? (papers[paperId].copies || extractCopies(papers[paperId].name)) : 2;
 
-        // 1. حساب التراجات تلقائياً
+        // 1. حساب التراجات تلقائياً (باستخدام فورم التراجات المستقلة)
         const pullsPerCopy = (settings.sheetsPerBook * numBooks) / currentTrajForm;
         const totalPulls = pullsPerCopy * copies;
         const trajCount = totalPulls > 0 ? Math.ceil(totalPulls / 1000) : 0;
@@ -1045,6 +1071,8 @@
         lastCalcData = {
             numBooks,
             formula: currentFormula,
+            paperForm: currentPaperForm,
+            trajForm: currentTrajForm,
             paperName,
             manualPapers,
             paperPrice,
@@ -1081,6 +1109,7 @@
             text = 
                    `📘 *عدد الدفاتر:* ${d.numBooks} دفتر\n` +
                    `📐 *المقاس:* ${d.formula} | *الورق:* ${d.paperName}\n` +
+                   `🔢 *فورم الورق:* ${d.paperForm} | *فورم التراج:* ${d.trajForm}\n` +
                    `━━━━━━━━━━━━━━\n` +
                    `📄 *الورق:* ${d.manualPapers} ورقة × ${d.paperPrice} ج = ${d.paperCost.toFixed(2)} ج\n` +
                    `⚙️ *التراجات:* ${d.trajCount} تراج = ${d.trajCost.toFixed(2)} ج\n` +
