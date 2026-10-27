@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>  Dark Code - الحاسبة المتكاملة</title>
-    <link  rel="icon" href="./1.svg" type="Dark Code">
+    <title>Dark Code - الحاسبة المتكاملة</title>
+    <link rel="icon" href="./1.svg" type="Dark Code">
     <style>
         * {
             margin: 0;
@@ -24,7 +24,7 @@
         }
 
         .container {
-            max-width: 820px;
+            max-width: 840px;
             width: 100%;
             background: rgba(30, 41, 59, 0.95);
             border-radius: 16px;
@@ -118,7 +118,7 @@
             margin-bottom: 6px;
             color: #cbd5e1;
             font-weight: bold;
-            font-size: 0.98rem;
+            font-size: 0.96rem;
         }
 
         .input-field, .select-field {
@@ -164,7 +164,7 @@
             color: white;
         }
 
-        /* منطقة حساب الورق والعداد (الكاونتر) */
+        /* منطقة حساب الورق والعداد */
         .paper-calc-box {
             background: rgba(15, 23, 42, 0.7);
             border: 1px dashed #3b82f6;
@@ -179,7 +179,7 @@
         }
 
         .calc-val-text {
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             color: #93c5fd;
         }
 
@@ -222,7 +222,7 @@
         .counter-btn.plus { background: #059669; border-color: #10b981; }
         .counter-btn.minus { background: #dc2626; border-color: #ef4444; }
 
-        /* ملخص التراجات السريع */
+        /* ملخص التراجات والتجليد */
         .traj-badge {
             background: rgba(16, 185, 129, 0.12);
             border: 1px solid #10b981;
@@ -234,6 +234,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .binding-box {
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 14px;
+        }
+
+        .binding-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.15);
+            font-size: 0.98rem;
+            color: #cbd5e1;
         }
 
         /* أزرار النسبة السريعة */
@@ -322,15 +345,10 @@
             box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
         }
 
-        .wa-btn:hover {
-            transform: translateY(-2px);
-            opacity: 0.95;
-        }
-
         /* بطاقات الإعدادات */
         .items-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
             gap: 12px;
             margin-top: 12px;
         }
@@ -352,8 +370,15 @@
         .item-card .price-tag {
             color: #38bdf8;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.08rem;
+            margin-bottom: 6px;
+        }
+
+        .item-card .sub-tag {
+            font-size: 0.85rem;
+            color: #94a3b8;
             margin-bottom: 10px;
+            line-height: 1.4;
         }
 
         .card-actions {
@@ -387,6 +412,45 @@
             margin-top: 8px;
         }
 
+        /* منطقة الخطر البعيدة لمسح اللوكل ستورج */
+        .danger-zone {
+            margin-top: 60px;
+            padding: 16px;
+            border: 1px dashed rgba(239, 68, 68, 0.35);
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.6);
+            text-align: center;
+        }
+
+        .danger-toggle-btn {
+            background: transparent;
+            border: 1px solid #475569;
+            color: #64748b;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+
+        .danger-content {
+            display: none;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(239, 68, 68, 0.25);
+        }
+
+        .reset-storage-btn {
+            background: #991b1b;
+            color: #fecaca;
+            border: 1px solid #ef4444;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
         /* نافذة التعديل (Modal) */
         .modal-overlay {
             position: fixed;
@@ -405,7 +469,7 @@
             border-radius: 14px;
             padding: 20px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
         }
 
         .modal-title {
@@ -421,7 +485,7 @@
 
 <div class="container">
     <header class="header">
-        <h1>   Dark Code </h1>
+        <h1>Dark Code</h1>
     </header>
 
     <!-- شريط الصفحات -->
@@ -442,7 +506,7 @@
                 </div>
 
                 <div class="input-group" style="margin-bottom:0;">
-                    <label>نوع الورق:</label>
+                    <label>نوع الورق (الأصل والصورة):</label>
                     <select id="calcPaperSelect" class="select-field" onchange="onPaperChange()"></select>
                 </div>
 
@@ -453,30 +517,31 @@
             </div>
         </div>
 
-        <!-- 2. المقاس وعدد الورق المطلوب -->
+        <!-- 2. المقاس ودمج عدد الفورم والتراجات في اختيار واحد -->
         <div class="card">
-            <div class="card-title">مقاس الشغلانة وعدد الورق</div>
+            <div class="card-title">مقاس الشغلانة وعدد الفورم الموحد</div>
             
             <div class="input-group">
                 <label>اختيار المقاس:</label>
                 <div class="pills-container" id="calcFormulaPills"></div>
             </div>
 
-            <!-- قسمة الفورم العادية (تُقسم عليها أفرخ الورق مباشرة) -->
+            <!-- الزرار المدمج لعدد الفورم والتراجات (1 أو 2 أو 3 أو 4) -->
             <div class="input-group">
-                <label>قسمة الورق على (عدد الفورم العادية):</label>
-                <div class="pills-container" id="paperFormPills">
-                    <button type="button" class="pill-btn active" data-pform="1" onclick="setPaperForm(1)">1</button>
-                    <button type="button" class="pill-btn" data-pform="2" onclick="setPaperForm(2)">2</button>
-                    <button type="button" class="pill-btn" data-pform="3" onclick="setPaperForm(3)">3</button>
-                    <button type="button" class="pill-btn" data-pform="4" onclick="setPaperForm(4)">4</button>
+                <label>عدد الفورم (يقسم الورق والتراج معاً):</label>
+                <div class="pills-container" id="unifiedFormPills">
+                    <button type="button" class="pill-btn active" data-uform="1" onclick="setUnifiedForm(1, true)">فورمة 1</button>
+                    <button type="button" class="pill-btn" data-uform="2" onclick="setUnifiedForm(2, true)">فورمة 2</button>
+                    <button type="button" class="pill-btn" data-uform="3" onclick="setUnifiedForm(3, true)">فورمة 3</button>
+                    <button type="button" class="pill-btn" data-uform="4" onclick="setUnifiedForm(4, true)">فورمة 4</button>
                 </div>
             </div>
 
-            <!-- ناتج المعادلة التلقائي بعد القسمة على الفورم العادية + زر النسخ -->
+            <!-- ناتج المعادلة التلقائي + زر النسخ -->
             <div class="paper-calc-box">
                 <div class="calc-val-text">
-                    أفرخ الورق المحسوبة بالمعادلة (بعد القسمة على <span id="paperFormLabel">1</span>): <strong id="suggestedPaperText">0</strong> فرخ/ورقة
+                    أفرخ الورق المحسوبة بالمعادلة (<span id="formulaExpLabel" dir="ltr"></span> على فورمة <span id="unifiedFormLabel">1</span>):
+                    <strong id="suggestedPaperText">0</strong> فرخ/ورقة
                 </div>
                 <button type="button" class="use-paper-btn" onclick="applySuggestedPaper()">📋 نسخ الرقم للخانة</button>
             </div>
@@ -497,33 +562,40 @@
             </div>
         </div>
 
-        <!-- 3. الزنكات والتراجات والتجليد -->
+        <!-- 3. الزنكات والتراجات والتجليد السهل (تلقائي + يدوي) -->
         <div class="card">
-            <div class="grid-2">
+            <div class="card-title">الزنكات والتراجات والتجليد</div>
+
+            <div class="grid-2" style="align-items: end;">
                 <div class="input-group" style="margin-bottom:0;">
                     <label>عدد الزنكات:</label>
                     <input type="number" id="numZinc" class="input-field" value="1" min="0" oninput="calculateFinalTotal()">
                 </div>
 
-                <div class="input-group" style="margin-bottom:0;">
-                    <label>قسمة التراج على (عدد فورم التراجات):</label>
-                    <div class="pills-container" id="trajFormPills">
-                        <button type="button" class="pill-btn active" data-form="1" onclick="setTrajForm(1)">1</button>
-                        <button type="button" class="pill-btn" data-form="2" onclick="setTrajForm(2)">2</button>
-                        <button type="button" class="pill-btn" data-form="3" onclick="setTrajForm(3)">3</button>
-                        <button type="button" class="pill-btn" data-form="4" onclick="setTrajForm(4)">4</button>
-                    </div>
+                <div class="traj-badge" style="margin-top:0;">
+                    <span>التراجات (على فورمة <strong id="trajFormBadgeText">1</strong>):</span>
+                    <strong id="autoTrajDisplay" style="font-size: 1.25rem; color: #4ade80;">0 تراج</strong>
                 </div>
             </div>
 
-            <div class="traj-badge">
-                <span>عدد التراجات المحسوب تلقائياً:</span>
-                <strong id="autoTrajDisplay" style="font-size: 1.3rem; color: #4ade80;">0 تراج</strong>
-            </div>
+            <!-- صندوق التجليد السهل والواضح -->
+            <div class="binding-box">
+                <div class="grid-2">
+                    <div class="input-group" style="margin-bottom:0;">
+                        <label>مقاس التجليد (يحدد السعر تلقائياً حسب الورق):</label>
+                        <select id="calcBindingSelect" class="select-field" onchange="onBindingSelectChange()"></select>
+                    </div>
 
-            <div class="input-group" style="margin-top: 14px; margin-bottom:0;">
-                <label>نوع التجليد (يختار تلقائياً مع المقاس):</label>
-                <select id="calcBindingSelect" class="select-field" onchange="calculateFinalTotal()"></select>
+                    <div class="input-group" style="margin-bottom:0;">
+                        <label>سعر تجليد الدفتر الواحد (تلقائي أو اكتب يدوي):</label>
+                        <input type="number" id="calcBindUnitPrice" class="input-field" step="0.05" value="0" oninput="calculateFinalTotal()">
+                    </div>
+                </div>
+
+                <div class="binding-info-bar">
+                    <span id="bindingRuleExplanation">💡 السعر يتحدث تلقائياً مع المقاس ونوع الورق (أصل+صورة)، ويمكنك تعديل الخانة يدوياً.</span>
+                    <strong id="bindingQuickTotal" style="color: #60a5fa; font-size: 1.1rem;">إجمالي التجليد: 0.00 ج</strong>
+                </div>
             </div>
         </div>
 
@@ -534,7 +606,7 @@
             <div class="grid-2">
                 <div class="input-group" style="margin-bottom:0;">
                     <label>بيان الإضافات (اختياري):</label>
-                    <input type="text" id="extraNoteInput" class="input-field" placeholder="مثال: قص  - تغليف" oninput="calculateFinalTotal()">
+                    <input type="text" id="extraNoteInput" class="input-field" placeholder="مثال: قص - سلوفان - تغليف" oninput="calculateFinalTotal()">
                 </div>
 
                 <div class="input-group" style="margin-bottom:0;">
@@ -557,7 +629,7 @@
             </div>
         </div>
 
-        <!-- 5. النتيجة والإجمالي الكلي + مشاركة واتساب -->
+        <!-- 5. الفاتورة النهائية + مشاركة واتساب -->
         <div class="invoice-box">
             <div class="invoice-row">
                 <span>حساب الورق (<span id="resPaperCount">0</span> ورقة):</span>
@@ -572,7 +644,7 @@
                 <strong id="resZincCost">0.00 ج</strong>
             </div>
             <div class="invoice-row">
-                <span>حساب التجليد (<span id="resBindBooks">0</span> دفتر):</span>
+                <span>حساب التجليد (<span id="resBindBooks">0</span> دفتر × <span id="resBindUnit">0</span> ج):</span>
                 <strong id="resBindCost">0.00 ج</strong>
             </div>
             <div class="invoice-row" id="resExtraRow" style="display: none; color: #38bdf8;">
@@ -608,7 +680,7 @@
     <!-- ==================== 2. صفحة الإعدادات والأسعار ==================== -->
     <div id="settingsTab" class="tab-content">
 
-        <!-- أ) الثوابت العامة (الزنكة، التراج، ورق الدفتر) -->
+        <!-- أ) الثوابت العامة -->
         <div class="card">
             <div class="card-title">⚙️ الأسعار والثوابت العامة</div>
             <div class="grid-3">
@@ -629,25 +701,26 @@
 
         <!-- ب) إدارة أنواع الورق -->
         <div class="card">
-            <div class="card-title">📄 أنواع الورق المتاحة</div>
+            <div class="card-title">📄 أسعار الورق (من أصل+1 إلى أصل+7)</div>
             <div class="grid-3">
                 <input type="text" id="newPaperName" class="input-field" placeholder="الاسم (مثال: أصل+1)">
-                <input type="number" id="newPaperPrice" class="input-field" placeholder="السعر (مثال: 7.25)" step="0.01">
-                <input type="number" id="newPaperCopies" class="input-field" placeholder="عدد النسخ (مثال: 2)">
+                <input type="number" id="newPaperPrice" class="input-field" placeholder="السعر (مثال: 7.50)" step="0.01">
+                <input type="number" id="newPaperCopies" class="input-field" placeholder="عدد النسخ بالدفتر (مثال: 2)">
             </div>
             <button class="btn-green" onclick="addPaper()">+ إضافة نوع ورق جديد</button>
 
             <div class="items-grid" id="paperCardsContainer"></div>
         </div>
 
-        <!-- ج) إدارة أسعار التجليد -->
+        <!-- ج) إدارة أسعار التجليد الذكية -->
         <div class="card">
-            <div class="card-title">📚 قائمة أسعار التجليد (سمّيه بنفس اسم المقاس ليربط تلقائياً)</div>
-            <div class="grid-2">
-                <input type="text" id="newBindName" class="input-field" placeholder="اسم المقاس (مثال: 20*30 أو 11*2)">
-                <input type="number" id="newBindPrice" class="input-field" placeholder="سعر الدفتر (مثال: 3)" step="0.1">
+            <div class="card-title">📚 أسعار التجليد (سعر 1+1 أصل وصورة + الزيادة لكل صورة إضافية)</div>
+            <div class="grid-3">
+                <input type="text" id="newBindName" class="input-field" placeholder="اسم المقاس (مثال: 4*11)">
+                <input type="number" id="newBindPrice" class="input-field" placeholder="سعر أصل+1 (مثال: 1.25)" step="0.05">
+                <input type="number" id="newBindStep" class="input-field" placeholder="فرق كل صورة زيادة (0.25)" step="0.05" value="0.25">
             </div>
-            <button class="btn-green" onclick="addBinding()">+ إضافة سعر تجليد</button>
+            <button class="btn-green" onclick="addBinding()">+ إضافة سعر تجليد جديد</button>
 
             <div class="items-grid" id="bindingCardsContainer"></div>
         </div>
@@ -656,13 +729,13 @@
         <div class="card">
             <div class="card-title">📐 إدارة المقاسات والمعادلات</div>
             <div class="grid-3">
-                <input type="text" id="newFormulaName" class="input-field" placeholder="اسم المقاس (مثال: 11*2)">
-                <input type="text" id="newFormulaExp" class="input-field" placeholder="المعادلة: (50/2)/11">
+                <input type="text" id="newFormulaName" class="input-field" placeholder="اسم المقاس (مثال: 4*11)">
+                <input type="text" id="newFormulaExp" class="input-field" placeholder="المعادلة الأساس: 50 / 11">
                 <select id="newFormulaTrajForm" class="select-field">
-                    <option value="1">فورم التراج: 1</option>
-                    <option value="2">فورم التراج: 2</option>
-                    <option value="3">فورم التراج: 3</option>
-                    <option value="4">فورم التراج: 4</option>
+                    <option value="1">عدد الفورم والتراج: 1</option>
+                    <option value="2">عدد الفورم والتراج: 2</option>
+                    <option value="3">عدد الفورم والتراج: 3</option>
+                    <option value="4">عدد الفورم والتراج: 4</option>
                 </select>
             </div>
             <button class="btn-green" onclick="addFormula()">+ إضافة مقاس جديد</button>
@@ -670,10 +743,25 @@
             <div class="items-grid" id="formulaCardsContainer"></div>
         </div>
 
+        <!-- هـ) زرار مسح الداتا القديمة في مكان بعيد ومخفي لمنع الضغط بالخطأ -->
+        <div class="danger-zone">
+            <button type="button" class="danger-toggle-btn" onclick="toggleDangerZone()">
+                🛠️ خيارات الصيانة المتقدمة (إعادة ضبط المصنع للداتا)
+            </button>
+            <div class="danger-content" id="dangerZoneContent">
+                <p style="color: #fca5a5; font-size: 0.9rem; margin-bottom: 6px;">
+                    تنبيه: هذا الزر يمسح البيانات القديمة المحفوظة في المتصفح (LocalStorage) ويحفظ الأسعار والمعادلات الجديدة الافتراضية فوراً.
+                </p>
+                <button type="button" class="reset-storage-btn" onclick="resetLocalStorageData()">
+                    🗑️ مسح الداتا القديمة وحفظ الإعدادات الجديدة
+                </button>
+            </div>
+        </div>
+
     </div>
 </div>
 
-<!-- نافذة منبثقة لتعديل الورق أو التجليد أو المقاس -->
+<!-- نافذة منبثقة للتعديل (Modal) -->
 <div class="modal-overlay" id="editModal">
     <div class="modal-box">
         <div class="modal-title" id="modalTitle">تعديل البيانات</div>
@@ -686,8 +774,8 @@
             <input type="text" id="modalInput2" class="input-field">
         </div>
         <div class="input-group" id="modalGroup3" style="display: none;">
-            <label id="modalLabel3">عدد النسخ:</label>
-            <input type="number" id="modalInput3" class="input-field">
+            <label id="modalLabel3">قيمة إضافية:</label>
+            <input type="number" id="modalInput3" class="input-field" step="0.05">
         </div>
         <div class="card-actions" style="margin-top: 15px;">
             <button class="sm-btn edit-btn" style="padding: 12px;" onclick="saveModalEdit()">حفظ التعديل</button>
@@ -698,43 +786,61 @@
 
 <script>
     // =========================================================================
-    // 1. البيانات الافتراضية
+    // 1. البيانات الافتراضية الجديدة حسب الصور المرفقة
     // =========================================================================
+    const STORAGE_VERSION = 'darkcode_v8_store';
+
     const defaultSettings = { zincPrice: 65, trajPrice: 100, sheetsPerBook: 50 };
 
+    // أسعار الورق من أصل+1 إلى أصل+7 كما في الورقة الأولى
     const defaultPapers = {
-        'p1': { name: 'أصل+1', price: 7.25, copies: 2 },
-        'p2': { name: 'أصل+2', price: 11.20, copies: 3 },
-        'p3': { name: 'أصل+3', price: 15.15, copies: 4 },
-        'p4': { name: 'أصل+4', price: 19.10, copies: 5 },
-        'p5': { name: 'أصل+5', price: 23.05, copies: 6 },
-        'p6': { name: 'أصل+6', price: 27.00, copies: 7 },
-        'p7': { name: 'أصل+7', price: 30.00, copies: 8 },
-        'p8': { name: 'أصل+8', price: 34.90, copies: 9 }
+        'p1': { name: 'أصل+1', price: 7.50,  copies: 2 },
+        'p2': { name: 'أصل+2', price: 11.60, copies: 3 },
+        'p3': { name: 'أصل+3', price: 15.70, copies: 4 },
+        'p4': { name: 'أصل+4', price: 19.80, copies: 5 },
+        'p5': { name: 'أصل+5', price: 23.90, copies: 6 },
+        'p6': { name: 'أصل+6', price: 28.00, copies: 7 },
+        'p7': { name: 'أصل+7', price: 32.10, copies: 8 }
     };
 
+    // جميع المقاسات والمعادلات (baseExp هي المعادلة الأساسية قبل القسمة على الفورم الموحد)
     const defaultFormulas = {
-        '20*30': { exp: '50 / 11', trajForm: 1 },
-        '11*2':  { exp: '(50 / 2) / 11', trajForm: 2 },
-        '11*4':  { exp: '(50 / 4) / 11', trajForm: 4 },
-        '9':     { exp: '50 / 9', trajForm: 1 },
-        '2*9':   { exp: '(50 / 9) / 2', trajForm: 2 },
-        '9*4':   { exp: '(50 / 9) / 4', trajForm: 4 },
-        '8':     { exp: '50 / 8', trajForm: 1 },
-        '2*8':   { exp: '(50 / 8) / 2', trajForm: 2 },
-        '4*8':   { exp: '(50 / 8) / 4', trajForm: 4 }
+        '30*20': { exp: '50 / 11', trajForm: 1 },
+        '2*11':  { exp: '50 / 11', trajForm: 2 },
+        '3*11':  { exp: '50 / 11', trajForm: 3 },
+        '4*11':  { exp: '50 / 11', trajForm: 4 },
+        '9':     { exp: '50 / 9',  trajForm: 1 },
+        '2*9':   { exp: '50 / 9',  trajForm: 2 },
+        '3*9':   { exp: '50 / 9',  trajForm: 3 },
+        '4*9':   { exp: '50 / 9',  trajForm: 4 },
+        '8':     { exp: '50 / 8',  trajForm: 1 },
+        '2*8':   { exp: '50 / 8',  trajForm: 2 },
+        '4*8':   { exp: '50 / 8',  trajForm: 4 },
+        '25*20': { exp: '50 / 12', trajForm: 1 },
+        '40*30': { exp: '50 / 5',  trajForm: 1 },
+        '23*20': { exp: '50 / 15', trajForm: 1 },
+        '25*23': { exp: '50 / 12', trajForm: 1 }
     };
 
+    // أسعار التجليد حسب الورقة الثانية:
+    // basePrice = سعر (1+1 أصل وصورة)
+    // stepPrice = الزيادة الثابتة لكل صورة إضافية (0.25 ج للمقاسات الصغيرة، و 0.50 أو 1 ج للكبير)
     const defaultBindings = {
-        'b1': { name: '20*30', price: 3.00 },
-        'b2': { name: '11*2', price: 2.00 },
-        'b3': { name: '11*4', price: 1.50 },
-        'b4': { name: '9', price: 3.00 },
-        'b5': { name: '2*9', price: 2.00 },
-        'b6': { name: '9*4', price: 1.50 },
-        'b7': { name: '8', price: 3.00 },
-        'b8': { name: '2*8', price: 2.00 },
-        'b9': { name: '4*8', price: 1.50 }
+        'b1':  { name: '4*11',  label: '4*11 (10×10)',   basePrice: 1.25, stepPrice: 0.25 },
+        'b2':  { name: '2*11',  label: '2*11 (15×20)',   basePrice: 2.00, stepPrice: 0.25 },
+        'b3':  { name: '3*11',  label: '3*11 (10×20)',   basePrice: 1.75, stepPrice: 0.25 },
+        'b4':  { name: '30*20', label: '30*20 (1*11)',   basePrice: 4.00, stepPrice: 0.50 },
+        'b5':  { name: '4*9',   label: '4*9 (11×16)',    basePrice: 1.50, stepPrice: 0.25 },
+        'b6':  { name: '2*9',   label: '2*9 (16.5×23)',  basePrice: 2.25, stepPrice: 0.25 },
+        'b7':  { name: '3*9',   label: '3*9 (11×23)',    basePrice: 2.00, stepPrice: 0.25 },
+        'b8':  { name: '9',     label: '9 (23×33)',      basePrice: 4.00, stepPrice: 1.00 },
+        'b9':  { name: '4*8',   label: '4*8',            basePrice: 1.50, stepPrice: 0.25 },
+        'b10': { name: '2*8',   label: '2*8',            basePrice: 2.25, stepPrice: 0.25 },
+        'b11': { name: '8',     label: '8',              basePrice: 4.00, stepPrice: 1.00 },
+        'b12': { name: '25*20', label: '25*20',          basePrice: 4.00, stepPrice: 0.50 },
+        'b13': { name: '40*30', label: '40*30',          basePrice: 5.00, stepPrice: 1.00 },
+        'b14': { name: '23*20', label: '23*20',          basePrice: 4.00, stepPrice: 0.50 },
+        'b15': { name: '25*23', label: '25*23',          basePrice: 4.00, stepPrice: 0.50 }
     };
 
     let settings = {};
@@ -742,9 +848,8 @@
     let formulas = {};
     let bindings = {};
 
-    let currentFormula = '20*30';
-    let currentPaperForm = 1; // قسمة الفورم العادية للورق (1 أو 2 أو 3 أو 4)
-    let currentTrajForm = 1;  // قسمة فورم التراجات (1 أو 2 أو 3 أو 4)
+    let currentFormula = '30*20';
+    let currentUnifiedForm = 1; // الرقم الموحد لعدد الفورم والتراجات (1 أو 2 أو 3 أو 4)
     let lastSuggestedPaper = 0;
 
     let lastCalcData = {};
@@ -752,13 +857,13 @@
     let editTargetId = '';
 
     // =========================================================================
-    // 2. التحميل والحفظ
+    // 2. التحميل والحفظ ومسح اللوكل ستورج
     // =========================================================================
     function loadAll() {
-        settings = JSON.parse(localStorage.getItem('esraa_settings_v6')) || { ...defaultSettings };
-        papers   = JSON.parse(localStorage.getItem('esraa_papers_v6'))   || { ...defaultPapers };
-        formulas = JSON.parse(localStorage.getItem('esraa_formulas_v6')) || { ...defaultFormulas };
-        bindings = JSON.parse(localStorage.getItem('esraa_bindings_v6')) || { ...defaultBindings };
+        settings = JSON.parse(localStorage.getItem(STORAGE_VERSION + '_settings')) || JSON.parse(JSON.stringify(defaultSettings));
+        papers   = JSON.parse(localStorage.getItem(STORAGE_VERSION + '_papers'))   || JSON.parse(JSON.stringify(defaultPapers));
+        formulas = JSON.parse(localStorage.getItem(STORAGE_VERSION + '_formulas')) || JSON.parse(JSON.stringify(defaultFormulas));
+        bindings = JSON.parse(localStorage.getItem(STORAGE_VERSION + '_bindings')) || JSON.parse(JSON.stringify(defaultBindings));
 
         document.getElementById('setZincPrice').value = settings.zincPrice;
         document.getElementById('setTrajPrice').value = settings.trajPrice;
@@ -769,10 +874,10 @@
     }
 
     function saveAll() {
-        localStorage.setItem('esraa_settings_v6', JSON.stringify(settings));
-        localStorage.setItem('esraa_papers_v6', JSON.stringify(papers));
-        localStorage.setItem('esraa_formulas_v6', JSON.stringify(formulas));
-        localStorage.setItem('esraa_bindings_v6', JSON.stringify(bindings));
+        localStorage.setItem(STORAGE_VERSION + '_settings', JSON.stringify(settings));
+        localStorage.setItem(STORAGE_VERSION + '_papers', JSON.stringify(papers));
+        localStorage.setItem(STORAGE_VERSION + '_formulas', JSON.stringify(formulas));
+        localStorage.setItem(STORAGE_VERSION + '_bindings', JSON.stringify(bindings));
     }
 
     function saveGeneralSettings() {
@@ -781,6 +886,24 @@
         settings.sheetsPerBook = parseFloat(document.getElementById('setSheetsPerBook').value) || 50;
         saveAll();
         onInputsChange(false);
+    }
+
+    function toggleDangerZone() {
+        const el = document.getElementById('dangerZoneContent');
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function resetLocalStorageData() {
+        if (!confirm('تأكيد نهائي: هل تريد مسح جميع البيانات القديمة من المتصفح واستعادة الأسعار والمعادلات الجديدة؟')) return;
+        localStorage.clear();
+        settings = JSON.parse(JSON.stringify(defaultSettings));
+        papers   = JSON.parse(JSON.stringify(defaultPapers));
+        formulas = JSON.parse(JSON.stringify(defaultFormulas));
+        bindings = JSON.parse(JSON.stringify(defaultBindings));
+        saveAll();
+        loadAll();
+        document.getElementById('dangerZoneContent').style.display = 'none';
+        alert('✅ تم مسح الداتا القديمة وحفظ الأسعار والمعادلات الجديدة بنجاح!');
     }
 
     // =========================================================================
@@ -797,6 +920,23 @@
         return m ? parseInt(m[1], 10) + 1 : 2;
     }
 
+    function getCurrentCopies() {
+        const paperId = document.getElementById('calcPaperSelect').value;
+        if (paperId && papers[paperId]) {
+            return papers[paperId].copies || extractCopies(papers[paperId].name);
+        }
+        return 2;
+    }
+
+    // حساب سعر تجليد الدفتر بناءً على نوع الورق المختار (1+1، 1+2، إلخ)
+    function computeBindingPriceFor(bindObj, copiesCount) {
+        if (!bindObj) return 0;
+        const base = parseFloat(bindObj.basePrice ?? bindObj.price) || 0;
+        const step = parseFloat(bindObj.stepPrice ?? 0.25);
+        const extraImages = Math.max(0, (copiesCount || 2) - 2); // أصل+1 يعني نسختين (بدون زيادة)
+        return Math.round((base + extraImages * step) * 100) / 100;
+    }
+
     function renderPapers() {
         const sel = document.getElementById('calcPaperSelect');
         const grid = document.getElementById('paperCardsContainer');
@@ -811,14 +951,14 @@
 
             const opt = document.createElement('option');
             opt.value = id;
-            opt.textContent = p.name;
+            opt.textContent = `${p.name} (${p.price.toFixed(2)} ج)`;
             sel.appendChild(opt);
 
             grid.innerHTML += `
                 <div class="item-card">
                     <h4>${p.name}</h4>
                     <div class="price-tag">${p.price.toFixed(2)} جنيه</div>
-                    <div style="font-size:0.85rem; color:#94a3b8; margin-bottom:8px;">عدد النسخ بالدفتر: ${p.copies}</div>
+                    <div class="sub-tag">عدد النسخ بالدفتر: ${p.copies}</div>
                     <div class="card-actions">
                         <button class="sm-btn edit-btn" onclick="openEditModal('paper', '${id}')">تعديل</button>
                         <button class="sm-btn delete-btn" onclick="deleteItem('paper', '${id}')">حذف</button>
@@ -835,21 +975,31 @@
         const sel = document.getElementById('calcBindingSelect');
         const grid = document.getElementById('bindingCardsContainer');
         const prev = sel.value;
+        const copies = getCurrentCopies();
 
-        sel.innerHTML = '<option value="none">بدون تجليد (0 ج)</option>';
+        sel.innerHTML = '<option value="manual">✍️ تجليد يدوي / حر</option><option value="none">بدون تجليد (0 ج)</option>';
         grid.innerHTML = '';
 
         for (const id in bindings) {
             const b = bindings[id];
+            const base = parseFloat(b.basePrice ?? b.price) || 0;
+            const step = parseFloat(b.stepPrice ?? 0.25);
+            const priceNow = computeBindingPriceFor(b, copies);
+            const price1Plus2 = Math.round((base + step) * 100) / 100;
+
             const opt = document.createElement('option');
             opt.value = id;
-            opt.textContent = `${b.name} (${b.price} ج)`;
+            opt.textContent = `${b.label || b.name} ⬅️ (${priceNow.toFixed(2)} ج للدفتر)`;
             sel.appendChild(opt);
 
             grid.innerHTML += `
                 <div class="item-card">
-                    <h4>${b.name}</h4>
-                    <div class="price-tag">${b.price.toFixed(2)} جنيه</div>
+                    <h4>${b.label || b.name}</h4>
+                    <div class="price-tag">أصل+1: ${base.toFixed(2)} ج</div>
+                    <div class="sub-tag">
+                        أصل+2: <strong>${price1Plus2.toFixed(2)} ج</strong><br>
+                        الزيادة لكل صورة: +${step.toFixed(2)} ج
+                    </div>
                     <div class="card-actions">
                         <button class="sm-btn edit-btn" onclick="openEditModal('binding', '${id}')">تعديل</button>
                         <button class="sm-btn delete-btn" onclick="deleteItem('binding', '${id}')">حذف</button>
@@ -858,7 +1008,21 @@
             `;
         }
 
-        if (prev && (bindings[prev] || prev === 'none')) sel.value = prev;
+        if (prev && (bindings[prev] || prev === 'none' || prev === 'manual')) {
+            sel.value = prev;
+        }
+    }
+
+    // استخراج المعادلة الأساسية في حال كتب المستخدم معادلة مقسومة مسبقاً
+    function getDisplayFormulaText(exp, formNum) {
+        const clean = exp.trim();
+        if (formNum > 1 && !clean.includes('(')) {
+            const parts = clean.split('/');
+            if (parts.length === 2) {
+                return `(${parts[0].trim()} / ${formNum}) / ${parts[1].trim()}`;
+            }
+        }
+        return clean;
     }
 
     function renderFormulas() {
@@ -873,6 +1037,7 @@
 
         for (const name in formulas) {
             const f = formulas[name];
+            const fNum = f.trajForm || 1;
             const btn = document.createElement('button');
             btn.type = 'button';
             btn.className = 'pill-btn' + (name === currentFormula ? ' active' : '');
@@ -880,11 +1045,13 @@
             btn.onclick = () => selectFormula(name);
             pills.appendChild(btn);
 
+            const shownExp = getDisplayFormulaText(f.exp, fNum);
+
             grid.innerHTML += `
                 <div class="item-card">
                     <h4>${name}</h4>
-                    <div class="price-tag" dir="ltr">${f.exp}</div>
-                    <div style="font-size:0.85rem; color:#94a3b8; margin-bottom:8px;">فورم التراج: ${f.trajForm || 1}</div>
+                    <div class="price-tag" dir="ltr">${shownExp}</div>
+                    <div class="sub-tag">الفورم والتراج: ${fNum}</div>
                     <div class="card-actions">
                         <button class="sm-btn edit-btn" onclick="openEditModal('formula', '${name}')">تعديل</button>
                         <button class="sm-btn delete-btn" onclick="deleteItem('formula', '${name}')">حذف</button>
@@ -895,7 +1062,7 @@
     }
 
     // =========================================================================
-    // 4. منطق النسبة والحسابات التلقائية
+    // 4. منطق الحساب الموحد (الورق + الفورم والتراج + التجليد التلقائي/اليدوي)
     // =========================================================================
     function setQuickPercent(pct) {
         document.getElementById('profitPercent').value = pct;
@@ -920,6 +1087,9 @@
         if (id && papers[id]) {
             document.getElementById('calcPaperPrice').value = papers[id].price;
         }
+        // تحديث أسعار التجليد المعروضة في القائمة لتناسب عدد النسخ الجديد
+        renderBindings();
+        syncBindingUnitPriceFromSelection();
         onInputsChange(false);
     }
 
@@ -928,38 +1098,77 @@
         renderFormulas();
 
         const f = formulas[name];
-        if (f && f.trajForm) {
-            setTrajForm(parseInt(f.trajForm, 10));
-        }
+        const targetForm = (f && f.trajForm) ? parseInt(f.trajForm, 10) : 1;
 
+        // اختيار مقاس التجليد المطابق تلقائياً
         const bindSelect = document.getElementById('calcBindingSelect');
+        let matchedBind = false;
         for (const id in bindings) {
             if (bindings[id].name.trim() === name.trim()) {
                 bindSelect.value = id;
+                matchedBind = true;
                 break;
             }
         }
+        if (matchedBind) {
+            syncBindingUnitPriceFromSelection();
+        }
 
-        onInputsChange(true);
+        // ضبط الفورم والتراج معاً
+        setUnifiedForm(targetForm, true);
     }
 
-    // دالة اختيار قسمة الفورم العادية (الخاصة بعدد أفرخ الورق)
-    function setPaperForm(num) {
-        currentPaperForm = num;
-        document.querySelectorAll('#paperFormPills .pill-btn').forEach(btn => {
-            btn.classList.toggle('active', parseInt(btn.dataset.pform, 10) === num);
-        });
-        document.getElementById('paperFormLabel').textContent = num;
-        onInputsChange(true);
+    function onBindingSelectChange() {
+        syncBindingUnitPriceFromSelection();
+        calculateFinalTotal();
     }
 
-    // دالة اختيار قسمة فورم التراجات (الخاصة بحساب التراجات)
-    function setTrajForm(num) {
-        currentTrajForm = num;
-        document.querySelectorAll('#trajFormPills .pill-btn').forEach(btn => {
-            btn.classList.toggle('active', parseInt(btn.dataset.form, 10) === num);
+    function syncBindingUnitPriceFromSelection() {
+        const bindId = document.getElementById('calcBindingSelect').value;
+        const unitInput = document.getElementById('calcBindUnitPrice');
+        const ruleText = document.getElementById('bindingRuleExplanation');
+        const copies = getCurrentCopies();
+        const paperId = document.getElementById('calcPaperSelect').value;
+        const paperName = (paperId && papers[paperId]) ? papers[paperId].name : 'أصل+1';
+
+        if (bindId === 'none') {
+            unitInput.value = 0;
+            ruleText.textContent = 'بدون تجليد (0 جنيه).';
+        } else if (bindId === 'manual') {
+            ruleText.textContent = '✍️ وضع التجليد اليدوي: اكتب سعر تجليد الدفتر في الخانة وسيُضرب في عدد الدفاتر.';
+        } else if (bindings[bindId]) {
+            const b = bindings[bindId];
+            const calcPrice = computeBindingPriceFor(b, copies);
+            unitInput.value = calcPrice;
+            const base = parseFloat(b.basePrice ?? b.price) || 0;
+            const step = parseFloat(b.stepPrice ?? 0.25);
+            ruleText.textContent = `📐 تجليد مقاس (${b.label || b.name}) لورق (${paperName}): الأساس ${base.toFixed(2)} ج + (${step.toFixed(2)} ج لكل صورة زيادة) = ${calcPrice.toFixed(2)} ج للدفتر.`;
+        }
+    }
+
+    // دالة اختيار عدد الفورم والتراج الموحد (1 أو 2 أو 3 أو 4)
+    function setUnifiedForm(num, autoCopyPaper) {
+        currentUnifiedForm = num;
+        document.querySelectorAll('#unifiedFormPills .pill-btn').forEach(btn => {
+            btn.classList.toggle('active', parseInt(btn.dataset.uform, 10) === num);
         });
-        onInputsChange(false);
+        document.getElementById('unifiedFormLabel').textContent = num;
+        document.getElementById('trajFormBadgeText').textContent = num;
+        onInputsChange(autoCopyPaper);
+    }
+
+    // حساب قيمة المعادلة مع عدم تكرار القسمة لو كانت مكتوبة داخل المعادلة
+    function evaluateFormulaSmart(expStr, numBooks, unifiedForm) {
+        const clean = expStr.trim();
+        // إذا كانت المعادلة مكتوبة على شكل (50 / 4) / 11 مسبقاً، نستخرج الرقم الأساسي 50/11 ونقسمه على الفورم المختار
+        const preDivMatch = clean.match(/^\(\s*(\d+(?:\.\d+)?)\s*\/\s*\d+(?:\.\d+)?\s*\)\s*\/\s*(\d+(?:\.\d+)?)$/);
+        if (preDivMatch) {
+            const sheets = parseFloat(preDivMatch[1]);
+            const divisor = parseFloat(preDivMatch[2]);
+            return ((sheets / unifiedForm) / divisor) * numBooks;
+        }
+        const baseVal = eval(clean) * numBooks;
+        return baseVal / (unifiedForm || 1);
     }
 
     function onInputsChange(autoCopyPaper) {
@@ -967,10 +1176,10 @@
 
         if (currentFormula && formulas[currentFormula]) {
             try {
-                // حساب الورق بالمعادلة ثم قسمته على عدد الفورم العادية المختار (1 أو 2 أو 3 أو 4)
-                const baseVal = eval(formulas[currentFormula].exp) * numBooks;
-                const rawVal = baseVal / (currentPaperForm || 1);
+                const exp = formulas[currentFormula].exp;
+                const rawVal = evaluateFormulaSmart(exp, numBooks, currentUnifiedForm);
                 lastSuggestedPaper = Math.round(rawVal * 100) / 100;
+                document.getElementById('formulaExpLabel').textContent = getDisplayFormulaText(exp, currentUnifiedForm);
                 document.getElementById('suggestedPaperText').textContent = lastSuggestedPaper;
                 if (autoCopyPaper) {
                     document.getElementById('manualPapersInput').value = Math.ceil(lastSuggestedPaper);
@@ -1000,10 +1209,10 @@
         const numBooks = parseFloat(document.getElementById('numBooks').value) || 0;
         const paperId = document.getElementById('calcPaperSelect').value;
         const paperName = (paperId && papers[paperId]) ? papers[paperId].name : 'غير محدد';
-        const copies = (paperId && papers[paperId]) ? (papers[paperId].copies || extractCopies(papers[paperId].name)) : 2;
+        const copies = getCurrentCopies();
 
-        // 1. حساب التراجات تلقائياً (باستخدام فورم التراجات المستقلة)
-        const pullsPerCopy = (settings.sheetsPerBook * numBooks) / currentTrajForm;
+        // 1. حساب التراجات تلقائياً (باستخدام الفورم الموحد)
+        const pullsPerCopy = (settings.sheetsPerBook * numBooks) / currentUnifiedForm;
         const totalPulls = pullsPerCopy * copies;
         const trajCount = totalPulls > 0 ? Math.ceil(totalPulls / 1000) : 0;
 
@@ -1019,18 +1228,19 @@
         const numZinc = parseFloat(document.getElementById('numZinc').value) || 0;
         const zincCost = numZinc * settings.zincPrice;
 
+        // حساب التجليد (سعر الدفتر في الخانة × عدد الدفاتر)
         const bindId = document.getElementById('calcBindingSelect').value;
-        const bindName = (bindId && bindings[bindId]) ? bindings[bindId].name : 'بدون';
-        const bindUnit = (bindId && bindings[bindId]) ? bindings[bindId].price : 0;
+        const bindName = (bindId && bindings[bindId]) ? bindings[bindId].name : (bindId === 'manual' ? 'يدوي' : 'بدون');
+        const bindUnit = parseFloat(document.getElementById('calcBindUnitPrice').value) || 0;
         const bindCost = numBooks * bindUnit;
+
+        document.getElementById('bindingQuickTotal').textContent = `إجمالي التجليد: ${bindCost.toFixed(2)} ج (${numBooks} × ${bindUnit})`;
 
         const extraNote = document.getElementById('extraNoteInput').value.trim() || 'إضافات';
         const extraCost = parseFloat(document.getElementById('extraCostInput').value) || 0;
 
-        // الإجمالي قبل النسبة
         const subTotal = paperCost + trajCost + zincCost + bindCost + extraCost;
 
-        // حساب النسبة المئوية فوق الإجمالي الكلي
         const profitPercent = parseFloat(document.getElementById('profitPercent').value) || 0;
         const profitCost = subTotal * (profitPercent / 100);
         const grandTotal = subTotal + profitCost;
@@ -1043,6 +1253,7 @@
         document.getElementById('resZincCount').textContent = numZinc;
         document.getElementById('resZincCost').textContent = zincCost.toFixed(2) + ' ج';
         document.getElementById('resBindBooks').textContent = numBooks;
+        document.getElementById('resBindUnit').textContent = bindUnit.toFixed(2);
         document.getElementById('resBindCost').textContent = bindCost.toFixed(2) + ' ج';
 
         const extraRow = document.getElementById('resExtraRow');
@@ -1072,8 +1283,7 @@
         lastCalcData = {
             numBooks,
             formula: currentFormula,
-            paperForm: currentPaperForm,
-            trajForm: currentTrajForm,
+            unifiedForm: currentUnifiedForm,
             paperName,
             manualPapers,
             paperPrice,
@@ -1083,6 +1293,7 @@
             numZinc,
             zincCost,
             bindName,
+            bindUnit,
             bindCost,
             extraName: extraNote,
             extraCost,
@@ -1094,7 +1305,7 @@
     }
 
     // =========================================================================
-    // 5. مشاركة الحساب عبر واتساب (ملخص للعميل / أو تفاصيل كاملة)
+    // 5. مشاركة الحساب عبر واتساب
     // =========================================================================
     function shareWhatsApp(mode) {
         const d = lastCalcData;
@@ -1110,12 +1321,12 @@
             text = 
                    `📘 *عدد الدفاتر:* ${d.numBooks} دفتر\n` +
                    `📐 *المقاس:* ${d.formula} | *الورق:* ${d.paperName}\n` +
-                   `🔢 *فورم الورق:* ${d.paperForm} | *فورم التراج:* ${d.trajForm}\n` +
+                   `🔢 *عدد الفورم والتراج:* ${d.unifiedForm}\n` +
                    `━━━━━━━━━━━━━━\n` +
                    `📄 *الورق:* ${d.manualPapers} ورقة × ${d.paperPrice} ج = ${d.paperCost.toFixed(2)} ج\n` +
                    `⚙️ *التراجات:* ${d.trajCount} تراج = ${d.trajCost.toFixed(2)} ج\n` +
                    `💿 *الزنكات:* ${d.numZinc} زنكة = ${d.zincCost.toFixed(2)} ج\n` +
-                   `📚 *التجليد (${d.bindName}):* ${d.bindCost.toFixed(2)} ج\n`;
+                   `📚 *التجليد (${d.bindName} - ${d.bindUnit} ج/دفتر):* ${d.bindCost.toFixed(2)} ج\n`;
 
             if (d.extraCost > 0) {
                 text += `➕ *الإضافات (${d.extraName}):* ${d.extraCost.toFixed(2)} ج\n`;
@@ -1134,7 +1345,7 @@
     }
 
     // =========================================================================
-    // 6. الإضافة والتعديل السريع من داخل الصفحة (Modal)
+    // 6. الإضافة والتعديل السريع من داخل صفحة الإعدادات
     // =========================================================================
     function addPaper() {
         const name = document.getElementById('newPaperName').value.trim();
@@ -1152,10 +1363,16 @@
 
     function addBinding() {
         const name = document.getElementById('newBindName').value.trim();
-        const price = parseFloat(document.getElementById('newBindPrice').value);
-        if (!name || isNaN(price)) return alert('أدخل اسم وسعر التجليد');
+        const basePrice = parseFloat(document.getElementById('newBindPrice').value);
+        const stepPrice = parseFloat(document.getElementById('newBindStep').value);
+        if (!name || isNaN(basePrice)) return alert('أدخل اسم المقاس وسعر تجليد (أصل+1)');
 
-        bindings['b_' + Date.now()] = { name, price };
+        bindings['b_' + Date.now()] = {
+            name,
+            label: name,
+            basePrice,
+            stepPrice: isNaN(stepPrice) ? 0.25 : stepPrice
+        };
         saveAll();
         renderBindings();
         document.getElementById('newBindName').value = '';
@@ -1189,25 +1406,27 @@
             document.getElementById('modalLabel2').textContent = 'سعر الورقة:';
             document.getElementById('modalInput2').value = p.price;
             g3.style.display = 'block';
-            document.getElementById('modalLabel3').textContent = 'عدد النسخ بالدفتر:';
+            document.getElementById('modalLabel3').textContent = 'عدد النسخ بالدفتر (أصل+1 = 2):';
             document.getElementById('modalInput3').value = p.copies || 2;
         } else if (type === 'binding') {
             const b = bindings[id];
-            document.getElementById('modalTitle').textContent = 'تعديل التجليد';
-            document.getElementById('modalLabel1').textContent = 'اسم التجليد / المقاس:';
+            document.getElementById('modalTitle').textContent = 'تعديل سعر التجليد';
+            document.getElementById('modalLabel1').textContent = 'اسم المقاس:';
             document.getElementById('modalInput1').value = b.name;
-            document.getElementById('modalLabel2').textContent = 'سعر الدفتر:';
-            document.getElementById('modalInput2').value = b.price;
-            g3.style.display = 'none';
+            document.getElementById('modalLabel2').textContent = 'سعر (1+1 أصل وصورة):';
+            document.getElementById('modalInput2').value = b.basePrice ?? b.price ?? 0;
+            g3.style.display = 'block';
+            document.getElementById('modalLabel3').textContent = 'فرق السعر لكل صورة زيادة (مثل 0.25):';
+            document.getElementById('modalInput3').value = b.stepPrice ?? 0.25;
         } else if (type === 'formula') {
             const f = formulas[id];
-            document.getElementById('modalTitle').textContent = 'تعديل المقاس';
+            document.getElementById('modalTitle').textContent = 'تعديل المقاس والمعادلة';
             document.getElementById('modalLabel1').textContent = 'اسم المقاس:';
             document.getElementById('modalInput1').value = id;
-            document.getElementById('modalLabel2').textContent = 'المعادلة:';
+            document.getElementById('modalLabel2').textContent = 'المعادلة الأساس (مثال: 50 / 11):';
             document.getElementById('modalInput2').value = f.exp;
             g3.style.display = 'block';
-            document.getElementById('modalLabel3').textContent = 'فورم التراج (1 أو 2 أو 3 أو 4):';
+            document.getElementById('modalLabel3').textContent = 'عدد الفورم والتراج (1 أو 2 أو 3 أو 4):';
             document.getElementById('modalInput3').value = f.trajForm || 1;
         }
 
@@ -1229,11 +1448,15 @@
             };
             renderPapers();
         } else if (editMode === 'binding') {
+            const prevLabel = bindings[editTargetId]?.label;
             bindings[editTargetId] = {
                 name: val1,
-                price: parseFloat(val2) || 0
+                label: (prevLabel && prevLabel.startsWith(bindings[editTargetId].name)) ? val1 : val1,
+                basePrice: parseFloat(val2) || 0,
+                stepPrice: isNaN(parseFloat(val3)) ? 0.25 : parseFloat(val3)
             };
             renderBindings();
+            syncBindingUnitPriceFromSelection();
         } else if (editMode === 'formula') {
             const newForm = parseInt(val3, 10) || 1;
             if (val1 !== editTargetId) {
