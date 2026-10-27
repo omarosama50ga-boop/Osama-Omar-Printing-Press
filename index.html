@@ -6,6 +6,78 @@
     <title>Dark Code - الحاسبة المتكاملة</title>
     <link rel="icon" href="./1.svg" type="Dark Code">
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --text-sub: #94a3b8;
+            --container-bg: rgba(30, 41, 59, 0.95);
+            --container-border: rgba(255, 255, 255, 0.12);
+            --tabs-bg: #0f172a;
+            --tabs-border: #334155;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --card-title: #60a5fa;
+            --input-bg: #0f172a;
+            --input-border: #334155;
+            --input-text: #ffffff;
+            --pill-bg: #1e293b;
+            --pill-border: #334155;
+            --pill-text: #e2e8f0;
+            --paper-box-bg: rgba(15, 23, 42, 0.7);
+            --calc-val-text: #93c5fd;
+            --green-highlight: #4ade80;
+            --traj-badge-bg: rgba(16, 185, 129, 0.12);
+            --traj-badge-text: #a7f3d0;
+            --binding-box-bg: rgba(59, 130, 246, 0.08);
+            --pct-btn-bg: #1e293b;
+            --pct-btn-text: #fbbf24;
+            --invoice-bg: linear-gradient(135deg, #1e3a8a, #0f172a);
+            --invoice-text: #f8fafc;
+            --item-card-bg: #0f172a;
+            --item-card-border: #334155;
+            --item-card-title: #ffffff;
+            --price-tag-color: #38bdf8;
+            --modal-bg: #1e293b;
+            --danger-bg: rgba(15, 23, 42, 0.6);
+        }
+
+        body.light-mode {
+            --bg-gradient: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 100%);
+            --text-main: #0f172a;
+            --text-muted: #334155;
+            --text-sub: #64748b;
+            --container-bg: #ffffff;
+            --container-border: #cbd5e1;
+            --tabs-bg: #f1f5f9;
+            --tabs-border: #cbd5e1;
+            --card-bg: #f8fafc;
+            --card-border: #e2e8f0;
+            --card-title: #1d4ed8;
+            --input-bg: #ffffff;
+            --input-border: #cbd5e1;
+            --input-text: #0f172a;
+            --pill-bg: #f1f5f9;
+            --pill-border: #cbd5e1;
+            --pill-text: #1e293b;
+            --paper-box-bg: #eff6ff;
+            --calc-val-text: #1e40af;
+            --green-highlight: #16a34a;
+            --traj-badge-bg: #ecfdf5;
+            --traj-badge-text: #065f46;
+            --binding-box-bg: #eff6ff;
+            --pct-btn-bg: #fffbeb;
+            --pct-btn-text: #b45309;
+            --invoice-bg: linear-gradient(135deg, #eff6ff, #dbeafe);
+            --invoice-text: #0f172a;
+            --item-card-bg: #ffffff;
+            --item-card-border: #cbd5e1;
+            --item-card-title: #0f172a;
+            --price-tag-color: #0284c7;
+            --modal-bg: #ffffff;
+            --danger-bg: #fef2f2;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,41 +86,65 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #f8fafc;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             padding: 12px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
+            transition: background 0.3s, color 0.3s;
         }
 
         .container {
             max-width: 840px;
             width: 100%;
-            background: rgba(30, 41, 59, 0.95);
+            background: var(--container-bg);
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--container-border);
             overflow: hidden;
+            transition: background 0.3s, border-color 0.3s;
         }
 
         .header {
-            text-align: center;
-            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
             background: linear-gradient(45deg, #1e40af, #3b82f6);
         }
 
         .header h1 {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             color: white;
+            margin: 0;
+        }
+
+        .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* التبويبات */
         .tabs-nav {
             display: flex;
-            background: #0f172a;
-            border-bottom: 2px solid #334155;
+            background: var(--tabs-bg);
+            border-bottom: 2px solid var(--tabs-border);
         }
 
         .tab-btn {
@@ -56,7 +152,7 @@
             padding: 14px 10px;
             background: none;
             border: none;
-            color: #94a3b8;
+            color: var(--text-sub);
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
@@ -65,7 +161,7 @@
         }
 
         .tab-btn.active {
-            color: #60a5fa;
+            color: var(--card-title);
             border-bottom-color: #3b82f6;
             background: rgba(59, 130, 246, 0.1);
         }
@@ -81,15 +177,15 @@
 
         /* الكروت */
         .card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             border-radius: 12px;
             padding: 16px;
             margin-bottom: 16px;
         }
 
         .card-title {
-            color: #60a5fa;
+            color: var(--card-title);
             font-size: 1.15rem;
             font-weight: bold;
             margin-bottom: 14px;
@@ -116,7 +212,7 @@
         .input-group label {
             display: block;
             margin-bottom: 6px;
-            color: #cbd5e1;
+            color: var(--text-muted);
             font-weight: bold;
             font-size: 0.96rem;
         }
@@ -124,12 +220,13 @@
         .input-field, .select-field {
             width: 100%;
             padding: 12px;
-            border: 2px solid #334155;
+            border: 2px solid var(--input-border);
             border-radius: 10px;
-            background: #0f172a;
-            color: white;
+            background: var(--input-bg);
+            color: var(--input-text);
             font-size: 1.1rem;
             font-weight: bold;
+            transition: 0.2s;
         }
 
         .input-field:focus, .select-field:focus {
@@ -145,10 +242,10 @@
         }
 
         .pill-btn {
-            background: #1e293b;
-            border: 2px solid #334155;
+            background: var(--pill-bg);
+            border: 2px solid var(--pill-border);
             border-radius: 8px;
-            color: #e2e8f0;
+            color: var(--pill-text);
             padding: 10px 14px;
             font-size: 1.05rem;
             font-weight: bold;
@@ -166,7 +263,7 @@
 
         /* منطقة حساب الورق والعداد */
         .paper-calc-box {
-            background: rgba(15, 23, 42, 0.7);
+            background: var(--paper-box-bg);
             border: 1px dashed #3b82f6;
             border-radius: 10px;
             padding: 12px;
@@ -180,12 +277,12 @@
 
         .calc-val-text {
             font-size: 1.02rem;
-            color: #93c5fd;
+            color: var(--calc-val-text);
         }
 
         .calc-val-text strong {
             font-size: 1.35rem;
-            color: #4ade80;
+            color: var(--green-highlight);
         }
 
         .use-paper-btn {
@@ -224,9 +321,9 @@
 
         /* ملخص التراجات والتجليد */
         .traj-badge {
-            background: rgba(16, 185, 129, 0.12);
+            background: var(--traj-badge-bg);
             border: 1px solid #10b981;
-            color: #a7f3d0;
+            color: var(--traj-badge-text);
             padding: 10px 14px;
             border-radius: 8px;
             font-size: 1.05rem;
@@ -239,11 +336,35 @@
         }
 
         .binding-box {
-            background: rgba(59, 130, 246, 0.08);
+            background: var(--binding-box-bg);
             border: 1px solid rgba(96, 165, 250, 0.35);
             border-radius: 10px;
             padding: 14px;
             margin-top: 14px;
+        }
+
+        .bind-input-row {
+            display: flex;
+            gap: 6px;
+            align-items: stretch;
+        }
+
+        .quarter-btn {
+            background: #059669;
+            color: white;
+            border: 1px solid #10b981;
+            padding: 0 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .quarter-btn.minus {
+            background: #dc2626;
+            border-color: #ef4444;
         }
 
         .binding-info-bar {
@@ -254,9 +375,9 @@
             gap: 8px;
             margin-top: 10px;
             padding-top: 10px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.15);
+            border-top: 1px dashed rgba(148, 163, 184, 0.3);
             font-size: 0.98rem;
-            color: #cbd5e1;
+            color: var(--text-muted);
         }
 
         /* أزرار النسبة السريعة */
@@ -269,9 +390,9 @@
 
         .pct-btn {
             flex: 1;
-            background: #1e293b;
-            border: 1px solid #475569;
-            color: #fbbf24;
+            background: var(--pct-btn-bg);
+            border: 1px solid #d97706;
+            color: var(--pct-btn-text);
             padding: 8px 10px;
             border-radius: 6px;
             font-weight: bold;
@@ -288,7 +409,8 @@
 
         /* الفاتورة النهائية */
         .invoice-box {
-            background: linear-gradient(135deg, #1e3a8a, #0f172a);
+            background: var(--invoice-bg);
+            color: var(--invoice-text);
             border: 2px solid #3b82f6;
             border-radius: 14px;
             padding: 18px;
@@ -298,18 +420,18 @@
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+            border-bottom: 1px dashed rgba(148, 163, 184, 0.35);
             font-size: 1.05rem;
         }
 
         .invoice-total {
             font-size: 2rem;
             font-weight: bold;
-            color: #4ade80;
+            color: var(--green-highlight);
             text-align: center;
             margin-top: 12px;
             padding-top: 12px;
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            border-top: 2px solid rgba(59, 130, 246, 0.35);
         }
 
         /* أزرار مشاركة واتساب */
@@ -354,8 +476,8 @@
         }
 
         .item-card {
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: var(--item-card-bg);
+            border: 1px solid var(--item-card-border);
             border-radius: 10px;
             padding: 12px;
             text-align: center;
@@ -364,11 +486,11 @@
         .item-card h4 {
             font-size: 1.15rem;
             margin-bottom: 4px;
-            color: #fff;
+            color: var(--item-card-title);
         }
 
         .item-card .price-tag {
-            color: #38bdf8;
+            color: var(--price-tag-color);
             font-weight: bold;
             font-size: 1.08rem;
             margin-bottom: 6px;
@@ -376,7 +498,7 @@
 
         .item-card .sub-tag {
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: var(--text-sub);
             margin-bottom: 10px;
             line-height: 1.4;
         }
@@ -418,14 +540,14 @@
             padding: 16px;
             border: 1px dashed rgba(239, 68, 68, 0.35);
             border-radius: 12px;
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--danger-bg);
             text-align: center;
         }
 
         .danger-toggle-btn {
             background: transparent;
             border: 1px solid #475569;
-            color: #64748b;
+            color: var(--text-sub);
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 0.82rem;
@@ -464,7 +586,7 @@
         }
 
         .modal-box {
-            background: #1e293b;
+            background: var(--modal-bg);
             border: 2px solid #3b82f6;
             border-radius: 14px;
             padding: 20px;
@@ -474,7 +596,7 @@
 
         .modal-title {
             font-size: 1.3rem;
-            color: #60a5fa;
+            color: var(--card-title);
             margin-bottom: 15px;
             text-align: center;
             font-weight: bold;
@@ -486,6 +608,9 @@
 <div class="container">
     <header class="header">
         <h1>Dark Code</h1>
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+            ☀️ الوضع النهاري
+        </button>
     </header>
 
     <!-- شريط الصفحات -->
@@ -574,7 +699,7 @@
 
                 <div class="traj-badge" style="margin-top:0;">
                     <span>التراجات (على فورمة <strong id="trajFormBadgeText">1</strong>):</span>
-                    <strong id="autoTrajDisplay" style="font-size: 1.25rem; color: #4ade80;">0 تراج</strong>
+                    <strong id="autoTrajDisplay" style="font-size: 1.25rem; color: var(--green-highlight);">0 تراج</strong>
                 </div>
             </div>
 
@@ -587,14 +712,18 @@
                     </div>
 
                     <div class="input-group" style="margin-bottom:0;">
-                        <label>سعر تجليد الدفتر الواحد (تلقائي أو اكتب يدوي):</label>
-                        <input type="number" id="calcBindUnitPrice" class="input-field" step="0.05" value="0" oninput="calculateFinalTotal()">
+                        <label>سعر تجليد الدفتر الواحد (تلقائي أو يدوي):</label>
+                        <div class="bind-input-row">
+                            <input type="number" id="calcBindUnitPrice" class="input-field" step="0.05" value="0" oninput="calculateFinalTotal()">
+                            <button type="button" class="quarter-btn" onclick="adjustBindUnitPrice(0.25)" title="زيادة ربع جنيه">+0.25 ج</button>
+                            <button type="button" class="quarter-btn minus" onclick="adjustBindUnitPrice(-0.25)" title="خصم ربع جنيه">-0.25</button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="binding-info-bar">
-                    <span id="bindingRuleExplanation">💡 السعر يتحدث تلقائياً مع المقاس ونوع الورق (أصل+صورة)، ويمكنك تعديل الخانة يدوياً.</span>
-                    <strong id="bindingQuickTotal" style="color: #60a5fa; font-size: 1.1rem;">إجمالي التجليد: 0.00 ج</strong>
+                    <span id="bindingRuleExplanation">💡 السعر يتحدث تلقائياً مع المقاس ونوع الورق (تم زيادة 0.25 ج على الأسعار)، ويمكنك تعديل الخانة يدوياً.</span>
+                    <strong id="bindingQuickTotal" style="color: var(--card-title); font-size: 1.1rem;">إجمالي التجليد: 0.00 ج</strong>
                 </div>
             </div>
         </div>
@@ -606,7 +735,7 @@
             <div class="grid-2">
                 <div class="input-group" style="margin-bottom:0;">
                     <label>بيان الإضافات (اختياري):</label>
-                    <input type="text" id="extraNoteInput" class="input-field" placeholder="مثال: قص - سلوفان - تغليف" oninput="calculateFinalTotal()">
+                    <input type="text" id="extraNoteInput" class="input-field" placeholder="مثال:  - قص  - تغليف" oninput="calculateFinalTotal()">
                 </div>
 
                 <div class="input-group" style="margin-bottom:0;">
@@ -647,15 +776,15 @@
                 <span>حساب التجليد (<span id="resBindBooks">0</span> دفتر × <span id="resBindUnit">0</span> ج):</span>
                 <strong id="resBindCost">0.00 ج</strong>
             </div>
-            <div class="invoice-row" id="resExtraRow" style="display: none; color: #38bdf8;">
+            <div class="invoice-row" id="resExtraRow" style="display: none; color: var(--price-tag-color);">
                 <span>الإضافات (<span id="resExtraName">قص/خدمات</span>):</span>
                 <strong id="resExtraCost">0.00 ج</strong>
             </div>
-            <div class="invoice-row" id="resSubTotalRow" style="display: none; color: #cbd5e1;">
+            <div class="invoice-row" id="resSubTotalRow" style="display: none; color: var(--text-muted);">
                 <span>إجمالي الشغلانة قبل النسبة:</span>
                 <strong id="resSubTotalCost">0.00 ج</strong>
             </div>
-            <div class="invoice-row" id="resProfitRow" style="display: none; color: #fbbf24;">
+            <div class="invoice-row" id="resProfitRow" style="display: none; color: #d97706;">
                 <span>قيمة النسبة المضافة (<span id="resProfitPct">0</span>%):</span>
                 <strong id="resProfitCost">0.00 ج</strong>
             </div>
@@ -717,7 +846,7 @@
             <div class="card-title">📚 أسعار التجليد (سعر 1+1 أصل وصورة + الزيادة لكل صورة إضافية)</div>
             <div class="grid-3">
                 <input type="text" id="newBindName" class="input-field" placeholder="اسم المقاس (مثال: 4*11)">
-                <input type="number" id="newBindPrice" class="input-field" placeholder="سعر أصل+1 (مثال: 1.25)" step="0.05">
+                <input type="number" id="newBindPrice" class="input-field" placeholder="سعر أصل+1 (مثال: 1.50)" step="0.05">
                 <input type="number" id="newBindStep" class="input-field" placeholder="فرق كل صورة زيادة (0.25)" step="0.05" value="0.25">
             </div>
             <button class="btn-green" onclick="addBinding()">+ إضافة سعر تجليد جديد</button>
@@ -749,7 +878,7 @@
                 🛠️ خيارات الصيانة المتقدمة (إعادة ضبط المصنع للداتا)
             </button>
             <div class="danger-content" id="dangerZoneContent">
-                <p style="color: #fca5a5; font-size: 0.9rem; margin-bottom: 6px;">
+                <p style="color: #ef4444; font-size: 0.9rem; margin-bottom: 6px;">
                     تنبيه: هذا الزر يمسح البيانات القديمة المحفوظة في المتصفح (LocalStorage) ويحفظ الأسعار والمعادلات الجديدة الافتراضية فوراً.
                 </p>
                 <button type="button" class="reset-storage-btn" onclick="resetLocalStorageData()">
@@ -786,13 +915,13 @@
 
 <script>
     // =========================================================================
-    // 1. البيانات الافتراضية الجديدة حسب الصور المرفقة
+    // 1. البيانات الافتراضية الجديدة بعد زيادة 0.25 ج على أسعار التجليد
     // =========================================================================
-    const STORAGE_VERSION = 'darkcode_v8_store';
+    const STORAGE_VERSION = 'darkcode_v9_store';
 
     const defaultSettings = { zincPrice: 65, trajPrice: 100, sheetsPerBook: 50 };
 
-    // أسعار الورق من أصل+1 إلى أصل+7 كما في الورقة الأولى
+    // أسعار الورق من أصل+1 إلى أصل+7
     const defaultPapers = {
         'p1': { name: 'أصل+1', price: 7.50,  copies: 2 },
         'p2': { name: 'أصل+2', price: 11.60, copies: 3 },
@@ -803,7 +932,7 @@
         'p7': { name: 'أصل+7', price: 32.10, copies: 8 }
     };
 
-    // جميع المقاسات والمعادلات (baseExp هي المعادلة الأساسية قبل القسمة على الفورم الموحد)
+    // جميع المقاسات والمعادلات
     const defaultFormulas = {
         '30*20': { exp: '50 / 11', trajForm: 1 },
         '2*11':  { exp: '50 / 11', trajForm: 2 },
@@ -822,25 +951,23 @@
         '25*23': { exp: '50 / 12', trajForm: 1 }
     };
 
-    // أسعار التجليد حسب الورقة الثانية:
-    // basePrice = سعر (1+1 أصل وصورة)
-    // stepPrice = الزيادة الثابتة لكل صورة إضافية (0.25 ج للمقاسات الصغيرة، و 0.50 أو 1 ج للكبير)
+    // أسعار التجليد بعد زيادة ربع جنيه (+0.25 ج) على كل الأسعار الأساسية
     const defaultBindings = {
-        'b1':  { name: '4*11',  label: '4*11 (10×10)',   basePrice: 1.25, stepPrice: 0.25 },
-        'b2':  { name: '2*11',  label: '2*11 (15×20)',   basePrice: 2.00, stepPrice: 0.25 },
-        'b3':  { name: '3*11',  label: '3*11 (10×20)',   basePrice: 1.75, stepPrice: 0.25 },
-        'b4':  { name: '30*20', label: '30*20 (1*11)',   basePrice: 4.00, stepPrice: 0.50 },
-        'b5':  { name: '4*9',   label: '4*9 (11×16)',    basePrice: 1.50, stepPrice: 0.25 },
-        'b6':  { name: '2*9',   label: '2*9 (16.5×23)',  basePrice: 2.25, stepPrice: 0.25 },
-        'b7':  { name: '3*9',   label: '3*9 (11×23)',    basePrice: 2.00, stepPrice: 0.25 },
-        'b8':  { name: '9',     label: '9 (23×33)',      basePrice: 4.00, stepPrice: 1.00 },
-        'b9':  { name: '4*8',   label: '4*8',            basePrice: 1.50, stepPrice: 0.25 },
-        'b10': { name: '2*8',   label: '2*8',            basePrice: 2.25, stepPrice: 0.25 },
-        'b11': { name: '8',     label: '8',              basePrice: 4.00, stepPrice: 1.00 },
-        'b12': { name: '25*20', label: '25*20',          basePrice: 4.00, stepPrice: 0.50 },
-        'b13': { name: '40*30', label: '40*30',          basePrice: 5.00, stepPrice: 1.00 },
-        'b14': { name: '23*20', label: '23*20',          basePrice: 4.00, stepPrice: 0.50 },
-        'b15': { name: '25*23', label: '25*23',          basePrice: 4.00, stepPrice: 0.50 }
+        'b1':  { name: '4*11',  label: '4*11 (10×10)',   basePrice: 1.50, stepPrice: 0.25 },
+        'b2':  { name: '2*11',  label: '2*11 (15×20)',   basePrice: 2.25, stepPrice: 0.25 },
+        'b3':  { name: '3*11',  label: '3*11 (10×20)',   basePrice: 2.00, stepPrice: 0.25 },
+        'b4':  { name: '30*20', label: '30*20 (1*11)',   basePrice: 4.25, stepPrice: 0.50 },
+        'b5':  { name: '4*9',   label: '4*9 (11×16)',    basePrice: 1.75, stepPrice: 0.25 },
+        'b6':  { name: '2*9',   label: '2*9 (16.5×23)',  basePrice: 2.50, stepPrice: 0.25 },
+        'b7':  { name: '3*9',   label: '3*9 (11×23)',    basePrice: 2.25, stepPrice: 0.25 },
+        'b8':  { name: '9',     label: '9 (23×33)',      basePrice: 4.25, stepPrice: 1.00 },
+        'b9':  { name: '4*8',   label: '4*8',            basePrice: 1.75, stepPrice: 0.25 },
+        'b10': { name: '2*8',   label: '2*8',            basePrice: 2.50, stepPrice: 0.25 },
+        'b11': { name: '8',     label: '8',              basePrice: 4.25, stepPrice: 1.00 },
+        'b12': { name: '25*20', label: '25*20',          basePrice: 4.25, stepPrice: 0.50 },
+        'b13': { name: '40*30', label: '40*30',          basePrice: 5.25, stepPrice: 1.00 },
+        'b14': { name: '23*20', label: '23*20',          basePrice: 4.25, stepPrice: 0.50 },
+        'b15': { name: '25*23', label: '25*23',          basePrice: 4.25, stepPrice: 0.50 }
     };
 
     let settings = {};
@@ -849,7 +976,7 @@
     let bindings = {};
 
     let currentFormula = '30*20';
-    let currentUnifiedForm = 1; // الرقم الموحد لعدد الفورم والتراجات (1 أو 2 أو 3 أو 4)
+    let currentUnifiedForm = 1;
     let lastSuggestedPaper = 0;
 
     let lastCalcData = {};
@@ -857,9 +984,35 @@
     let editTargetId = '';
 
     // =========================================================================
+    // التحكم في اللايت والدارك مود
+    // =========================================================================
+    function initTheme() {
+        const savedTheme = localStorage.getItem('darkcode_theme') || 'dark';
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+        }
+        updateThemeBtnText();
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+        const isLight = document.body.classList.contains('light-mode');
+        localStorage.setItem('darkcode_theme', isLight ? 'light' : 'dark');
+        updateThemeBtnText();
+    }
+
+    function updateThemeBtnText() {
+        const btn = document.getElementById('themeToggleBtn');
+        const isLight = document.body.classList.contains('light-mode');
+        btn.innerHTML = isLight ? '🌙 الوضع الليلي' : '☀️ الوضع النهاري';
+    }
+
+    // =========================================================================
     // 2. التحميل والحفظ ومسح اللوكل ستورج
     // =========================================================================
     function loadAll() {
+        initTheme();
+
         settings = JSON.parse(localStorage.getItem(STORAGE_VERSION + '_settings')) || JSON.parse(JSON.stringify(defaultSettings));
         papers   = JSON.parse(localStorage.getItem(STORAGE_VERSION + '_papers'))   || JSON.parse(JSON.stringify(defaultPapers));
         formulas = JSON.parse(localStorage.getItem(STORAGE_VERSION + '_formulas')) || JSON.parse(JSON.stringify(defaultFormulas));
@@ -895,7 +1048,10 @@
 
     function resetLocalStorageData() {
         if (!confirm('تأكيد نهائي: هل تريد مسح جميع البيانات القديمة من المتصفح واستعادة الأسعار والمعادلات الجديدة؟')) return;
+        const currentTheme = localStorage.getItem('darkcode_theme');
         localStorage.clear();
+        if (currentTheme) localStorage.setItem('darkcode_theme', currentTheme);
+
         settings = JSON.parse(JSON.stringify(defaultSettings));
         papers   = JSON.parse(JSON.stringify(defaultPapers));
         formulas = JSON.parse(JSON.stringify(defaultFormulas));
@@ -928,12 +1084,11 @@
         return 2;
     }
 
-    // حساب سعر تجليد الدفتر بناءً على نوع الورق المختار (1+1، 1+2، إلخ)
     function computeBindingPriceFor(bindObj, copiesCount) {
         if (!bindObj) return 0;
         const base = parseFloat(bindObj.basePrice ?? bindObj.price) || 0;
         const step = parseFloat(bindObj.stepPrice ?? 0.25);
-        const extraImages = Math.max(0, (copiesCount || 2) - 2); // أصل+1 يعني نسختين (بدون زيادة)
+        const extraImages = Math.max(0, (copiesCount || 2) - 2);
         return Math.round((base + extraImages * step) * 100) / 100;
     }
 
@@ -1013,7 +1168,6 @@
         }
     }
 
-    // استخراج المعادلة الأساسية في حال كتب المستخدم معادلة مقسومة مسبقاً
     function getDisplayFormulaText(exp, formNum) {
         const clean = exp.trim();
         if (formNum > 1 && !clean.includes('(')) {
@@ -1062,7 +1216,7 @@
     }
 
     // =========================================================================
-    // 4. منطق الحساب الموحد (الورق + الفورم والتراج + التجليد التلقائي/اليدوي)
+    // 4. منطق الحساب الموحد
     // =========================================================================
     function setQuickPercent(pct) {
         document.getElementById('profitPercent').value = pct;
@@ -1087,7 +1241,6 @@
         if (id && papers[id]) {
             document.getElementById('calcPaperPrice').value = papers[id].price;
         }
-        // تحديث أسعار التجليد المعروضة في القائمة لتناسب عدد النسخ الجديد
         renderBindings();
         syncBindingUnitPriceFromSelection();
         onInputsChange(false);
@@ -1100,7 +1253,6 @@
         const f = formulas[name];
         const targetForm = (f && f.trajForm) ? parseInt(f.trajForm, 10) : 1;
 
-        // اختيار مقاس التجليد المطابق تلقائياً
         const bindSelect = document.getElementById('calcBindingSelect');
         let matchedBind = false;
         for (const id in bindings) {
@@ -1114,12 +1266,19 @@
             syncBindingUnitPriceFromSelection();
         }
 
-        // ضبط الفورم والتراج معاً
         setUnifiedForm(targetForm, true);
     }
 
     function onBindingSelectChange() {
         syncBindingUnitPriceFromSelection();
+        calculateFinalTotal();
+    }
+
+    function adjustBindUnitPrice(delta) {
+        const unitInput = document.getElementById('calcBindUnitPrice');
+        const current = parseFloat(unitInput.value) || 0;
+        const next = Math.max(0, Math.round((current + delta) * 100) / 100);
+        unitInput.value = next;
         calculateFinalTotal();
     }
 
@@ -1146,7 +1305,6 @@
         }
     }
 
-    // دالة اختيار عدد الفورم والتراج الموحد (1 أو 2 أو 3 أو 4)
     function setUnifiedForm(num, autoCopyPaper) {
         currentUnifiedForm = num;
         document.querySelectorAll('#unifiedFormPills .pill-btn').forEach(btn => {
@@ -1157,10 +1315,8 @@
         onInputsChange(autoCopyPaper);
     }
 
-    // حساب قيمة المعادلة مع عدم تكرار القسمة لو كانت مكتوبة داخل المعادلة
     function evaluateFormulaSmart(expStr, numBooks, unifiedForm) {
         const clean = expStr.trim();
-        // إذا كانت المعادلة مكتوبة على شكل (50 / 4) / 11 مسبقاً، نستخرج الرقم الأساسي 50/11 ونقسمه على الفورم المختار
         const preDivMatch = clean.match(/^\(\s*(\d+(?:\.\d+)?)\s*\/\s*\d+(?:\.\d+)?\s*\)\s*\/\s*(\d+(?:\.\d+)?)$/);
         if (preDivMatch) {
             const sheets = parseFloat(preDivMatch[1]);
@@ -1211,14 +1367,12 @@
         const paperName = (paperId && papers[paperId]) ? papers[paperId].name : 'غير محدد';
         const copies = getCurrentCopies();
 
-        // 1. حساب التراجات تلقائياً (باستخدام الفورم الموحد)
         const pullsPerCopy = (settings.sheetsPerBook * numBooks) / currentUnifiedForm;
         const totalPulls = pullsPerCopy * copies;
         const trajCount = totalPulls > 0 ? Math.ceil(totalPulls / 1000) : 0;
 
         document.getElementById('autoTrajDisplay').textContent = `${trajCount} تراج (${Math.round(totalPulls)} سحبة)`;
 
-        // 2. حساب التكاليف
         const manualPapers = parseFloat(document.getElementById('manualPapersInput').value) || 0;
         const paperPrice = parseFloat(document.getElementById('calcPaperPrice').value) || 0;
         const paperCost = manualPapers * paperPrice;
@@ -1228,7 +1382,6 @@
         const numZinc = parseFloat(document.getElementById('numZinc').value) || 0;
         const zincCost = numZinc * settings.zincPrice;
 
-        // حساب التجليد (سعر الدفتر في الخانة × عدد الدفاتر)
         const bindId = document.getElementById('calcBindingSelect').value;
         const bindName = (bindId && bindings[bindId]) ? bindings[bindId].name : (bindId === 'manual' ? 'يدوي' : 'بدون');
         const bindUnit = parseFloat(document.getElementById('calcBindUnitPrice').value) || 0;
@@ -1245,7 +1398,6 @@
         const profitCost = subTotal * (profitPercent / 100);
         const grandTotal = subTotal + profitCost;
 
-        // 3. تحديث الفاتورة
         document.getElementById('resPaperCount').textContent = manualPapers;
         document.getElementById('resPaperCost').textContent = paperCost.toFixed(2) + ' ج';
         document.getElementById('resTrajCount').textContent = trajCount;
@@ -1448,10 +1600,9 @@
             };
             renderPapers();
         } else if (editMode === 'binding') {
-            const prevLabel = bindings[editTargetId]?.label;
             bindings[editTargetId] = {
                 name: val1,
-                label: (prevLabel && prevLabel.startsWith(bindings[editTargetId].name)) ? val1 : val1,
+                label: val1,
                 basePrice: parseFloat(val2) || 0,
                 stepPrice: isNaN(parseFloat(val3)) ? 0.25 : parseFloat(val3)
             };
